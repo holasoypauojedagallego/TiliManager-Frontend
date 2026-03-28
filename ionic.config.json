@@ -1,0 +1,7 @@
+{
+  "name": "TiliManager-Frontend",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
