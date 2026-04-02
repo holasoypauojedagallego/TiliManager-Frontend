@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 85%;
+  gap: 15px;
+}
+
+h2 {
+  font-weight: bold;
+  margin-top: 20px;
+  font-size: 32px;
+
+  i{
+    font-style: italic;
+  }
+}
+
+p{
+    font-size: 22px;
+}
+
+ion-button{
+    margin-top: 20px;
+    transform: scale(1.15);
+}
+
+ion-content{
+    --scrollbar-width: 10px;
+}

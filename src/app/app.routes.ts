@@ -10,4 +10,18 @@ export const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
+  {
+    path: 'login',
+    loadComponent: () => import('./login/login.page').then( m => m.LoginPage)
+  },
+
+
+
+
+  
+
+  {
+    path: '**',
+    loadComponent: () => import('./error404/error404.page').then( m => m.Error404Page)
+  },
 ];

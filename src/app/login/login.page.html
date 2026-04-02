@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true" class="ion-padding image">
+  <div class="login-container">
+
+    <div class="header-section ion-text-center">
+      <h1 class="Raleway-bold"><span>T</span>ili<span>M</span>anager</h1>
+      <h3 class="text-2xl">Iniciar sesión </h3>
+    </div>
+
+    <form formGroup="loginForm" class="form-section mt-3" method="post" (ngSubmit)="login()">
+
+      <ion-item fill="outline" mode="md" class="mb-6">
+        <ion-input label="Correo Electrónico" label-placement="floating" type="email"
+                  placeholder="ejemplo@email.com" class="min-h-15" formControlName="email" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-item fill="outline" mode="md" class="mb-6">
+        <ion-input label="Contraseña" label-placement="floating" type="password"
+                  placeholder="********" class="min-h-15" formControlName="password" required>
+        </ion-input>
+      </ion-item>
+
+      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" >
+        ENTRAR
+      </ion-button>
+
+      <!-- <ion-note *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" color="danger">
+        El formato del correo no es válido.
+      </ion-note> -->
+      
+    </form>
+
+    <div class="ion-text-center mt-12">
+      <a routerLink="/forgot-password" class="forgot-link pt-3">¿Olvidaste tu contraseña?</a>
+    </div>
+    <div class="footer-section ion-text-center mt-2">
+      <p class="pl-5">¿No tienes cuenta? <a routerLink="/register" class="pr-5 pb-2">Regístrate</a></p>
+    </div>
+
+  </div>
+</ion-content>

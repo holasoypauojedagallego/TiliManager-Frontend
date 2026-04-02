@@ -25,3 +25,17 @@
 #container a {
   text-decoration: none;
 }
+
+ion-card {
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+
+  &:hover {
+    transform: scale(1.01); // Pequeño efecto al pasar el ratón
+  }
+
+  img {
+    object-fit: cover; // Para que la imagen no se deforme
+  }
+}

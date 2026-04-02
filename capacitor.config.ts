@@ -1,9 +1,12 @@
 import type { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'TiliManager-Frontend',
-  webDir: 'www'
+  appId: 'com.tilimanager.app',
+  appName: 'TiliManager',
+  webDir: 'www',
+  server: {
+    androidScheme: 'https'
+  }
 };
 
 export default config;
