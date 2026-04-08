@@ -1,12 +1,18 @@
 <ion-content [fullscreen]="true" class="ion-padding image">
-  <div class="login-container">
+  <div class="register-container">
 
     <div class="header-section ion-text-center">
       <h1 class="Raleway-bold"><span class="animate-saltitos-hover cursor-grab">T</span>ili<span class="animate-mini-saltitos-hover cursor-grab">M</span>anager</h1>
-      <h2>Iniciar sesión </h2>
+      <h2>Registro</h2>
     </div>
 
-    <form class="form-section mt-3" method="post" (ngSubmit)="onLogin()">
+    <form class="form-section mt-3" method="post" (ngSubmit)="onRegister()">
+
+      <ion-item fill="outline" mode="md" class="mb-6">
+        <ion-input label="Nombre de usuario" label-placement="floating" type="text"
+                  placeholder="User1234..." class="min-h-15" [(ngModel)]="username" name="username" required>
+        </ion-input>
+      </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email"
@@ -20,9 +26,8 @@
         </ion-input>
       </ion-item>
 
-      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8">
-        ENTRAR
-      </ion-button>
+      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" >REGISTRAR</ion-button>
+      <ion-note ></ion-note>
 
       <!-- <ion-note *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" color="danger">
         El formato del correo no es válido.
@@ -30,11 +35,8 @@
       
     </form>
 
-    <div class="ion-text-center mt-12">
-      <a routerLink="/forgot-password" class="forgot-link text-[1rem] pt-3 cursor-pointer">¿Olvidaste tu contraseña?</a>
-    </div>
-    <div class="text-[1.1rem] ion-text-center mt-2">
-      <p class="pl-5">¿No tienes cuenta? <a (click)="goToRegister()" class="pr-5 pb-2 cursor-pointer">Regístrate</a></p>
+    <div class="text-[1.1rem] ion-text-center mt-12">
+      <p class="pl-5">¿Tienes cuenta? <a (click)="goToLogin()" class="pr-5 pb-2 cursor-pointer">Inicia sesión</a></p>
     </div>
     <img src="assets/img/TiliManager1.png" alt="Volver, es el Logo de TiliManager" loading="lazy" 
     (click)="goToHome()" class="w-22 h-fit m-auto mt-19 mb-0 rounded-full cursor-pointer animate-saltitos-hover active:scale-90 duration-75">

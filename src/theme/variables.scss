@@ -8,3 +8,59 @@ a:hover{
 .input-label-placement-stacked.sc-ion-input-md-h input.sc-ion-input-md, .input-label-placement-floating.sc-ion-input-md-h input.sc-ion-input-md{
     margin-top: 5px !important;
 }
+
+@layer utilities {
+  @keyframes saltitos {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px); 
+    }
+  }
+
+  .animate-saltitos-hover {
+    animation: saltitos 0.5s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .animate-saltitos-hover:hover {
+    animation-play-state: running;
+  }
+}
+
+@layer utilities {
+  @keyframes saltitos {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px); 
+    }
+  }
+  @keyframes mini-saltitos {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px); 
+    }
+  }
+  
+  .animate-saltitos-hover {
+    display: inline-block;
+    animation: saltitos 0.5s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .animate-mini-saltitos-hover {
+    display: inline-block;
+    animation: mini-saltitos 0.45s ease-in-out infinite;
+    animation-play-state: paused;
+  }
+
+  .animate-saltitos-hover:hover, 
+  .animate-mini-saltitos-hover:hover {
+    animation-play-state: running;
+  }
+}
