@@ -29,11 +29,11 @@ export class RegisterPage {
 
     this.auth.register(registerData).subscribe({
       next : (response) => {
-        console.log("YUJUUUUUU : " + response);
+        console.log("YUJUUUUUU : ", response);
       },
       error : (error) => {
         console.log("Username: " + this.username);
-        console.log("NOVA jo " + error);
+        console.log("no ba, jo " + error);
       }
     });
   }

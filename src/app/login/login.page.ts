@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
 import { Auth } from '../services/auth';
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonContent, IonItem, IonInput, IonButton, RouterLink,
+  imports: [IonIcon, IonContent, IonItem, IonInput, IonButton, RouterLink,
     CommonModule, ReactiveFormsModule]
 })
 export class LoginPage implements OnInit {
@@ -42,12 +42,13 @@ export class LoginPage implements OnInit {
       this.auth.login(loginData).subscribe({
         next: (response) => {
           console.log('Login correcto', response);
+          this.loginForm.controls['password'].reset();
           this.router.navigate(['/home']);
-          this.loginForm.value.password = '';
         },
         error: (err) => {
           console.error('Error login', err);
           console.log("Email: " + this.loginForm.value.email);
+          this.loginForm.get('password')?.setValue('');
         }
       });
     } else {

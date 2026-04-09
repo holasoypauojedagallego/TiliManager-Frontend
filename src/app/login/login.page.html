@@ -20,12 +20,20 @@
 
     <form class="form-section mt-3" method="post" [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
-      <div class="h-5 ml-4 p-2 flex items-center mb-3 text-red-500 text-sm font-semibold bg-amber-200 rounded-sm w-fit" 
-       *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-    <span *ngIf="loginForm.get('email')?.hasError('required')">El correo es obligatorio.</span>
-    <span *ngIf="loginForm.get('email')?.hasError('minlength')">Debe tener al menos 5 caracteres.</span>
-    <span *ngIf="loginForm.get('email')?.hasError('email')">Debe contener un '@' y un dominio válido.</span>
-  </div>
+      @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+        <div class="mt-1.5 flex w-fit items-start gap-2 px-3 sm:py-2 py-1.5 text-sm bg-rose-50 border-l-4 border-rose-500 rounded-r-lg shadow-sm transition-all duration-200 ease-in-out">
+          <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-rose-600 text-base mt-0.5 shrink-0 animate-pulse">
+          </ion-icon>
+          
+          <span class="text-rose-800 font-medium leading-tight">
+            @if (loginForm.get('email')?.hasError('required')) {
+              El correo electrónico es obligatorio.
+            } @else if (loginForm.get('email')?.hasError('email')) {
+              Ingresa un correo válido (ejemplo@email.com).
+            }
+          </span>
+        </div>
+      }
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email"
                   placeholder="ejemplo@email.com" class="min-h-15" formControlName="email" name="email" required>
@@ -38,9 +46,7 @@
         </ion-input>
       </ion-item>
 
-      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="!this.loginForm.valid">
-        ENTRAR
-      </ion-button>
+      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="!loginForm.valid">ENTRAR</ion-button>
 
       <!-- <ion-note *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" color="danger">
         El formato del correo no es válido.
