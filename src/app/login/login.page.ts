@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
-import { Auth } from '../services/auth';
+import { AuthService } from '../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -19,8 +19,10 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup = new FormGroup({});
 
+  error401: boolean = false;
+
   constructor(
-    private auth: Auth,
+    private auth: AuthService,
     private router: Router,
     private fb : FormBuilder
   ) {}
@@ -28,32 +30,43 @@ export class LoginPage implements OnInit {
   ngOnInit() {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      password: ['',[Validators.required, Validators.minLength(6)]]
+      password: ['',[Validators.required, Validators.minLength(6), Validators.maxLength(64)]]
     });
+    this.loginForm.controls['password'].reset();
   }
 
   onLogin() {
-    if (this.loginForm.valid) {
-      const loginData = {
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password
-      };
-
-      this.auth.login(loginData).subscribe({
-        next: (response) => {
-          console.log('Login correcto', response);
-          this.loginForm.controls['password'].reset();
-          this.router.navigate(['/home']);
-        },
-        error: (err) => {
-          console.error('Error login', err);
-          console.log("Email: " + this.loginForm.value.email);
-          this.loginForm.get('password')?.setValue('');
-        }
-      });
-    } else {
+    if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
     }
+
+    const loginData = {
+      email: this.loginForm.value.email,
+      password: this.loginForm.value.password
+    };
+
+    this.auth.login(loginData).subscribe({
+      next: (response) => {
+        console.log('Login correcto', response);
+        this.loginForm.controls['password'].reset();
+        this.router.navigate(['/home']);
+      },
+
+      error: (err) => {
+        console.error('Error login', err);
+        if (err.status == 401) {
+          this.error401 = true;
+        }
+        console.log("Email: " + this.loginForm.value.email);
+        this.loginForm.get('password')?.setValue('');
+      }
+    });
+
+
+  }
+
+  ionViewWillLeave() {
+    this.loginForm.controls['password'].reset();
   }
 
   goToRegister(){
@@ -67,6 +80,7 @@ export class LoginPage implements OnInit {
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();
     }
+    this.loginForm.get('password')?.markAsUntouched;
     this.router.navigate(['/']);
   }
 }

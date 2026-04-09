@@ -17,7 +17,7 @@ export interface RegisterRequest{
   providedIn: 'root',
 })
 
-export class Auth {
+export class AuthService {
 
   private apiURL = "http://192.168.3.142:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
 

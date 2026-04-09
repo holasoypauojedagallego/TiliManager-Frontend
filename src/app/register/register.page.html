@@ -2,36 +2,68 @@
   <div class="register-container">
 
     <div class="header-section ion-text-center">
-      <h1 class="Raleway-bold"><span class="animate-saltitos-hover cursor-grab">T</span>ili<span class="animate-mini-saltitos-hover cursor-grab">M</span>anager</h1>
+      <h1 class="Raleway-bold">
+        <span class="animate-saltitos-hover cursor-grab span">T</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">i</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">l</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">i</span>
+        <span class="animate-saltitos-hover cursor-grab span">M</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">a</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">n</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">a</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">g</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">e</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">r</span>
+      </h1>
       <h2>Registro</h2>
     </div>
 
-    <form class="form-section mt-3" method="post" (ngSubmit)="onRegister()">
+    <form class="form-section mt-3" method="post" [formGroup]="registerForm" (ngSubmit)="onRegister()">
+
+      @if ((registerForm.get('username')?.invalid && registerForm.get('username')?.touched) || 
+      (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) || 
+      (registerForm.get('password')?.invalid && registerForm.get('password')?.touched)) {
+        <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
+          <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0"/>
+          <span class="text-[#d84e57] font-semibold">
+            @if (registered) {
+              La contraseña o el correo son incorrectos
+            } @else if (registerForm.get('username')?.hasError('pattern') || registerForm.get('username')?.hasError('required')) {
+              Ingresa un nombre de usuario válido.
+            }@else if (registerForm.get('username')?.hasError('minlength')) {
+              El nombre de usuario ha de tener 3 caracteres como mínimo.
+            } @else if (registerForm.get('username')?.hasError('maxlength')) {
+              El nombre de usuario ha de tener 16 caracteres como máximo.
+            } @else if (registerForm.get('email')?.hasError('email') || registerForm.get('email')?.hasError('required')) {
+              Ingresa un correo válido (ejemplo@email.com).
+            } @else if (registerForm.get('password')?.hasError('required')) {
+              La contraseña es obligatoria.
+            } @else if (registerForm.get('password')?.hasError('minlength')) {
+              La contraseña, como mínimo, ha de tener 6 caracteres.
+            }
+          </span>
+        </div>
+      }
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Nombre de usuario" label-placement="floating" type="text"
-                  placeholder="User1234..." class="min-h-15" [(ngModel)]="username" name="username" required>
+                  placeholder="User1234..." class="min-h-15" formControlName="username" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email"
-                  placeholder="ejemplo@email.com" class="min-h-15" [(ngModel)]="email" name="email" required>
+                  placeholder="ejemplo@email.com" class="min-h-15" formControlName="email" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Contraseña" label-placement="floating" type="password"
-                  placeholder="********" class="min-h-15" [(ngModel)]="password" name="password" required>
+                  placeholder="********" class="min-h-15" formControlName="password" required>
         </ion-input>
       </ion-item>
 
-      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" >REGISTRAR</ion-button>
-      <ion-note ></ion-note>
-
-      <!-- <ion-note *ngIf="loginForm.get('email')?.errors?.['email'] && loginForm.get('email')?.touched" color="danger">
-        El formato del correo no es válido.
-      </ion-note> -->
+      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="registerForm.invalid">REGISTRAR</ion-button>
       
     </form>
 
