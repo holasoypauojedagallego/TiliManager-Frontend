@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
 import { Auth } from '../services/auth';
 
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -13,35 +13,46 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [IonContent, IonItem, IonInput, IonButton, RouterLink,
-    CommonModule, FormsModule]
+    CommonModule, ReactiveFormsModule]
 })
-export class LoginPage {
+export class LoginPage implements OnInit {
 
-  email: string = '';
-  password: string = '';
+  loginForm: FormGroup = new FormGroup({});
 
   constructor(
     private auth: Auth,
-    private router: Router
+    private router: Router,
+    private fb : FormBuilder
   ) {}
 
-  onLogin() {
-    const loginData = {
-      email: this.email,
-      password: this.password
-    };
-
-    this.auth.login(loginData).subscribe({
-      next: (response) => {
-        console.log('Login correcto', response);
-        this.router.navigate(['/home']);
-        this.password = '';
-      },
-      error: (err) => {
-        console.error('Error login', err);
-        console.log("Email: " + this.email);
-      }
+  ngOnInit() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['',[Validators.required, Validators.minLength(6)]]
     });
+  }
+
+  onLogin() {
+    if (this.loginForm.valid) {
+      const loginData = {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      };
+
+      this.auth.login(loginData).subscribe({
+        next: (response) => {
+          console.log('Login correcto', response);
+          this.router.navigate(['/home']);
+          this.loginForm.value.password = '';
+        },
+        error: (err) => {
+          console.error('Error login', err);
+          console.log("Email: " + this.loginForm.value.email);
+        }
+      });
+    } else {
+      this.loginForm.markAllAsTouched();
+    }
   }
 
   goToRegister(){

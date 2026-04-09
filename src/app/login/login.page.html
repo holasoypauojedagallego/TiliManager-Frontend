@@ -2,25 +2,43 @@
   <div class="login-container">
 
     <div class="header-section ion-text-center">
-      <h1 class="Raleway-bold"><span class="animate-saltitos-hover cursor-grab">T</span>ili<span class="animate-mini-saltitos-hover cursor-grab">M</span>anager</h1>
+      <h1 class="Raleway-bold">
+        <span class="animate-saltitos-hover cursor-grab span">T</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">i</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">l</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">i</span>
+        <span class="animate-saltitos-hover cursor-grab span">M</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">a</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">n</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">a</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">g</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">e</span>
+        <span class="animate-mini-saltitos-hover cursor-grab">r</span>
+      </h1>
       <h2>Iniciar sesión </h2>
     </div>
 
-    <form class="form-section mt-3" method="post" (ngSubmit)="onLogin()">
+    <form class="form-section mt-3" method="post" [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
+      <div class="h-5 ml-4 p-2 flex items-center mb-3 text-red-500 text-sm font-semibold bg-amber-200 rounded-sm w-fit" 
+       *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+    <span *ngIf="loginForm.get('email')?.hasError('required')">El correo es obligatorio.</span>
+    <span *ngIf="loginForm.get('email')?.hasError('minlength')">Debe tener al menos 5 caracteres.</span>
+    <span *ngIf="loginForm.get('email')?.hasError('email')">Debe contener un '@' y un dominio válido.</span>
+  </div>
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email"
-                  placeholder="ejemplo@email.com" class="min-h-15" [(ngModel)]="email" name="email" required>
+                  placeholder="ejemplo@email.com" class="min-h-15" formControlName="email" name="email" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Contraseña" label-placement="floating" type="password"
-                  placeholder="********" class="min-h-15" [(ngModel)]="password" name="password" required>
+                  placeholder="********" class="min-h-15" formControlName="password" name="password" required>
         </ion-input>
       </ion-item>
 
-      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8">
+      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="!this.loginForm.valid">
         ENTRAR
       </ion-button>
 
@@ -36,7 +54,7 @@
     <div class="text-[1.1rem] ion-text-center mt-2">
       <p class="pl-5">¿No tienes cuenta? <a (click)="goToRegister()" class="pr-5 pb-2 cursor-pointer">Regístrate</a></p>
     </div>
-    <img src="assets/img/TiliManager1.png" alt="Volver, es el Logo de TiliManager" loading="lazy" 
+    <img src="assets/img/TiliManager1.png" alt="Volver, es el Logo de TiliManager" loading="eager" 
     (click)="goToHome()" class="w-22 h-fit m-auto mt-19 mb-0 rounded-full cursor-pointer animate-saltitos-hover active:scale-90 duration-75">
 
   </div>
