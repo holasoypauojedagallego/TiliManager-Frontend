@@ -18,6 +18,7 @@ export class RegisterPage implements OnInit {
 
   registerForm : FormGroup = new FormGroup({});
   registered : boolean = false; 
+  submited : boolean = false; 
 
   constructor(private router : Router, private auth : AuthService, private fb : FormBuilder) { }
 
@@ -51,6 +52,8 @@ export class RegisterPage implements OnInit {
         this.registered = false;
       }
     });
+    this.registerForm.controls['password']?.reset();
+    this.submited = true;
   }
 
   ionViewWillLeave() {

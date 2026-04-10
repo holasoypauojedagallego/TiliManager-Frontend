@@ -19,27 +19,34 @@
     </div>
 
     <form class="form-section mt-3" method="post" [formGroup]="registerForm" (ngSubmit)="onRegister()">
-
+      @if (submited ) {
+        <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
+          <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-cyan-400 scale-133 shrink-0"/>
+          <span class="text-[#ffffff] font-semibold">
+            @if (registered) {
+              ¡Usuario creado correctamente!
+            } @else {
+              No es posible crear el usuario
+            }
+          </span>
+        </div>
+      }
       @if ((registerForm.get('username')?.invalid && registerForm.get('username')?.touched) || 
       (registerForm.get('email')?.invalid && registerForm.get('email')?.touched) || 
       (registerForm.get('password')?.invalid && registerForm.get('password')?.touched)) {
         <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
           <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0"/>
           <span class="text-[#d84e57] font-semibold">
-            @if (registered) {
-              La contraseña o el correo son incorrectos
-            } @else if (registerForm.get('username')?.hasError('pattern') || registerForm.get('username')?.hasError('required')) {
-              Ingresa un nombre de usuario válido.
+            @if (registerForm.get('username')?.hasError('pattern') || registerForm.get('username')?.hasError('required')) {
+              Ingresa un nombre de usuario válido (Caracteres: [a-zA-Z0-9._+-]).
             }@else if (registerForm.get('username')?.hasError('minlength')) {
               El nombre de usuario ha de tener 3 caracteres como mínimo.
             } @else if (registerForm.get('username')?.hasError('maxlength')) {
               El nombre de usuario ha de tener 16 caracteres como máximo.
             } @else if (registerForm.get('email')?.hasError('email') || registerForm.get('email')?.hasError('required')) {
               Ingresa un correo válido (ejemplo@email.com).
-            } @else if (registerForm.get('password')?.hasError('required')) {
+            } @else if (registerForm.get('password')?.hasError('minlength') || registerForm.get('password')?.hasError('required')) {
               La contraseña es obligatoria.
-            } @else if (registerForm.get('password')?.hasError('minlength')) {
-              La contraseña, como mínimo, ha de tener 6 caracteres.
             }
           </span>
         </div>
