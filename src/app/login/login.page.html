@@ -19,6 +19,15 @@
     </div>
 
     <form class="form-section mt-3" method="post" [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      
+      @if (submited && logged ) {
+        <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
+          <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-cyan-400 scale-133 shrink-0"/>
+          <span class="text-[#ffffff] font-semibold">
+              ¡Usuario creado correctamente! Ahora Inicie sesión
+          </span>
+        </div>
+      }
 
       @if ((loginForm.get('email')?.invalid && loginForm.get('email')?.touched) || (loginForm.get('password')?.invalid && loginForm.get('password')?.touched)) {
         <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
@@ -26,9 +35,7 @@
           <span class="text-[#d84e57] font-semibold">
             @if (error401) {
               La contraseña o el correo son incorrectos
-            } @else if (loginForm.get('email')?.hasError('required')) {
-              El correo electrónico es obligatorio.
-            } @else if (loginForm.get('email')?.hasError('email')) {
+            } @else if (loginForm.get('email')?.hasError('email') || loginForm.get('email')?.hasError('required')) {
               Ingresa un correo válido (ejemplo@email.com).
             } @else if (loginForm.get('password')?.hasError('minlength') || loginForm.get('password')?.hasError('required')) {
               La contraseña, como mínimo, ha de tener 6 caracteres.

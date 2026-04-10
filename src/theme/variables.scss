@@ -18,26 +18,6 @@ a:hover{
       transform: translateY(-8px); 
     }
   }
-
-  .animate-saltitos-hover {
-    animation: saltitos 0.5s ease-in-out infinite;
-    animation-play-state: paused;
-  }
-
-  .animate-saltitos-hover:hover {
-    animation-play-state: running;
-  }
-}
-
-@layer utilities {
-  @keyframes saltitos {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px); 
-    }
-  }
   @keyframes mini-saltitos {
     0%, 100% {
       transform: translateY(0);

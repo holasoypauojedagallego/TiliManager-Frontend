@@ -13,13 +13,17 @@ export interface RegisterRequest{
   password : string;
 }
 
+export interface EmailRegisteredRequest {
+  email : string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 
 export class AuthService {
 
-  private apiURL = "http://192.168.3.142:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://127.0.0.1:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
 
   constructor(private http: HttpClient) {}
 
@@ -29,5 +33,9 @@ export class AuthService {
 
   register(data : RegisterRequest) : Observable<any> {
     return this.http.post(`${this.apiURL}/users/register`, data);
+  }
+
+  emailRegistered(data : EmailRegisteredRequest) : Observable<any> {
+     return this.http.get(`${this.apiURL}/users/email/${data}`);
   }
 }

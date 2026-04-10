@@ -20,6 +20,8 @@ export class LoginPage implements OnInit {
   loginForm: FormGroup = new FormGroup({});
 
   error401: boolean = false;
+  logged : boolean = false; 
+  submited : boolean = false; 
 
   constructor(
     private auth: AuthService,
@@ -49,6 +51,8 @@ export class LoginPage implements OnInit {
       next: (response) => {
         console.log('Login correcto', response);
         this.loginForm.controls['password'].reset();
+        this.loginForm.controls['password'].markAsUntouched();
+        this.logged = true;
         this.router.navigate(['/home']);
       },
 
@@ -58,10 +62,11 @@ export class LoginPage implements OnInit {
           this.error401 = true;
         }
         console.log("Email: " + this.loginForm.value.email);
+        this.logged = false;
         this.loginForm.get('password')?.setValue('');
       }
     });
-
+    this.submited = true;
 
   }
 

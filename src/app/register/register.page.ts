@@ -20,6 +20,9 @@ export class RegisterPage implements OnInit {
   registered : boolean = false; 
   submited : boolean = false; 
 
+  usernameRegistered : boolean = false;
+  emailRegistered : boolean = false;
+
   constructor(private router : Router, private auth : AuthService, private fb : FormBuilder) { }
 
   ngOnInit() {
@@ -31,10 +34,17 @@ export class RegisterPage implements OnInit {
   }
 
   onRegister(){
+    this.usernameRegistered = false;
+    this.emailRegistered = false;
+
     if (this.registerForm.invalid) {
       this.registerForm.markAsTouched();
     }
 
+    if (this.auth.emailRegistered(this.registerForm.value.email)) { // ¡Arreglar esto!
+      console.log("Ya existe");
+      return;
+    }
     const registerData = {
       name : this.registerForm.value.username,
       email : this.registerForm.value.email,
@@ -50,9 +60,11 @@ export class RegisterPage implements OnInit {
         console.log("Username: " + this.registerForm.value.username);
         console.log("no ba, jo " + error);
         this.registered = false;
+        this.usernameRegistered = true;
       }
     });
     this.registerForm.controls['password']?.reset();
+    this.registerForm.controls['password'].markAsUntouched();
     this.submited = true;
   }
 
