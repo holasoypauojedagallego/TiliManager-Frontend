@@ -5,7 +5,7 @@ import { IonContent, IonItem, IonButton, IonInput, IonIcon } from '@ionic/angula
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -19,6 +19,8 @@ export class RegisterPage implements OnInit {
   registerForm : FormGroup = new FormGroup({});
   registered : boolean = false; 
   submited : boolean = false; 
+  usernameCreated: boolean = false;
+  emailCreated: boolean = false;
 
   constructor(private router : Router, private auth : AuthService, private fb : FormBuilder) { }
 
@@ -30,7 +32,11 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  onRegister(){
+  async onRegister(){
+    this.usernameCreated = false;
+    this.emailCreated = false;
+    this.registered = false;
+    this.submited = false;
     if (this.registerForm.invalid) {
       this.registerForm.markAsTouched();
     }
@@ -40,6 +46,22 @@ export class RegisterPage implements OnInit {
       email : this.registerForm.value.email,
       password : this.registerForm.value.password
     };
+
+    const nameExists = await firstValueFrom(this.auth.nameRegistered(registerData.name));
+    if (nameExists) {
+      this.submited = true;
+      this.usernameCreated = true;
+      this.registerForm.controls['password']?.reset();
+      return;
+    }
+    
+    const emailExists = await firstValueFrom(this.auth.emailRegistered(registerData.email));
+      if (emailExists) {
+      this.submited = true;
+      this.emailCreated = true;
+      this.registerForm.controls['password']?.reset();
+      return;
+    }
 
     this.auth.register(registerData).subscribe({
       next : (response) => {

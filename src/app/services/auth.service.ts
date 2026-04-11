@@ -2,15 +2,23 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-export interface LoginRequest{
+export interface LoginRequest {
   email : string;
   password : string;
 }
 
-export interface RegisterRequest{
+export interface RegisterRequest {
   name : string;
   email : string;
   password : string;
+}
+
+export interface EmailRegisteredRequest {
+  email : string;
+}
+
+export interface NameRegisteredRequest {
+  name : string;
 }
 
 @Injectable({
@@ -29,5 +37,13 @@ export class AuthService {
 
   register(data : RegisterRequest) : Observable<any> {
     return this.http.post(`${this.apiURL}/users/register`, data);
+  }
+
+  emailRegistered(data : EmailRegisteredRequest) : Observable<any> {
+    return this.http.get(`${this.apiURL}/users/exists/email/${data}`);
+  }
+
+  nameRegistered(data : NameRegisteredRequest) : Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiURL}/users/exists/name/${data}`);
   }
 }
