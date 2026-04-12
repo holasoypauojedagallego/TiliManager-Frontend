@@ -29,7 +29,7 @@
               Ya hay una cuenta asociada a ese <strong>correo electrónico</strong>
             } @else if (usernameCreated) {
               Ya hay una cuenta asociada a ese <strong>nombre de usuario</strong>
-            } @else {
+            } @else if (!registered) {
               No es posible crear el usuario
             }
           </span>

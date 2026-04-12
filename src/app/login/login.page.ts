@@ -19,10 +19,10 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup = new FormGroup({});
 
-  error401 : boolean = false;
+  error401: boolean = false;
+  loged : boolean = false; 
+  submited : boolean = false; 
   errorDesc : boolean = false;
-  loged : boolean = false;
-  
 
   constructor(
     private auth: AuthService,
@@ -67,10 +67,11 @@ export class LoginPage implements OnInit {
           this.errorDesc = true;
         }
         console.log("Email: " + this.loginForm.value.email);
+        this.loged = false;
         this.loginForm.controls['password'].reset();
       }
     });
-
+    this.submited = true;
 
   }
 

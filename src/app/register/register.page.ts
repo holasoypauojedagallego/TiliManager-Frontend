@@ -22,6 +22,9 @@ export class RegisterPage implements OnInit {
   usernameCreated: boolean = false;
   emailCreated: boolean = false;
 
+  usernameRegistered : boolean = false;
+  emailRegistered : boolean = false;
+
   constructor(private router : Router, private auth : AuthService, private fb : FormBuilder) { }
 
   ngOnInit() {
@@ -47,18 +50,15 @@ export class RegisterPage implements OnInit {
       password : this.registerForm.value.password
     };
 
-    const nameExists = await firstValueFrom(this.auth.nameRegistered(registerData.name));
-    if (nameExists) {
+    this.usernameCreated = await firstValueFrom(this.auth.nameRegistered(registerData.name));
+    if (this.usernameCreated) {
       this.submited = true;
-      this.usernameCreated = true;
       this.registerForm.controls['password']?.reset();
       return;
     }
-    
-    const emailExists = await firstValueFrom(this.auth.emailRegistered(registerData.email));
-      if (emailExists) {
+    this.emailCreated = await firstValueFrom(this.auth.emailRegistered(registerData.email));
+      if (this.emailCreated) {
       this.submited = true;
-      this.emailCreated = true;
       this.registerForm.controls['password']?.reset();
       return;
     }
@@ -72,9 +72,11 @@ export class RegisterPage implements OnInit {
         console.log("Username: " + this.registerForm.value.username);
         console.log("no ba, jo " + error);
         this.registered = false;
+        this.usernameRegistered = true;
       }
     });
     this.registerForm.controls['password']?.reset();
+    this.registerForm.controls['password'].markAsUntouched();
     this.submited = true;
   }
 

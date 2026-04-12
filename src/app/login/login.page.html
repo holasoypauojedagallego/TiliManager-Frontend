@@ -20,11 +20,13 @@
 
     <form class="form-section mt-3" method="post" [formGroup]="loginForm" (ngSubmit)="onLogin()">
 
-      @if (error401 || loged) {
+      @if (error401 || loged || errorDesc) {
         <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
           <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-cyan-400 scale-133 shrink-0"/>
           <span class="text-[#ffffff] font-semibold">
-            @if (error401) {
+            @if (errorDesc) {
+              Ha habido un problema al iniciar sesión
+            } @else if (error401) {
               La contraseña o el correo son incorrectos
             } @else if (loged) {
               ¡Se ha iniciado sesión correctamente!
@@ -36,9 +38,7 @@
         <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
           <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0"/>
           <span class="text-[#d84e57] font-semibold">
-            @if (error401) {
-              La contraseña o el correo son incorrectos
-            } @else if (loginForm.get('email')?.hasError('required')) {
+            @if (loginForm.get('email')?.hasError('required')) {
               El correo electrónico es obligatorio.
             } @else if (loginForm.get('email')?.hasError('email')) {
               Ingresa un correo válido (ejemplo@email.com).
