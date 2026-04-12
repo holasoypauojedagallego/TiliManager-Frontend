@@ -50,7 +50,7 @@
             } @else if (registerForm.get('email')?.hasError('email') || registerForm.get('email')?.hasError('required')) {
               Ingresa un correo válido (ejemplo@email.com).
             } @else if (registerForm.get('password')?.hasError('minlength') || registerForm.get('password')?.hasError('required')) {
-              La contraseña es obligatoria.
+              La contraseña, como mínimo, ha de tener 6 caracteres.
             }
           </span>
         </div>
