@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonItem, IonButton, IonInput, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonButton, IonInput, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
 
 import { AuthService } from '../services/auth.service';
 import { CommonModule } from '@angular/common';
@@ -12,7 +12,7 @@ import { firstValueFrom } from 'rxjs';
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
   standalone: true,
-  imports: [IonContent, IonItem, IonIcon, IonButton, IonInput, CommonModule, ReactiveFormsModule]
+  imports: [IonContent, IonItem, IonIcon, IonButton, IonInput, CommonModule, ReactiveFormsModule, IonInputPasswordToggle]
 })
 export class RegisterPage implements OnInit {
 

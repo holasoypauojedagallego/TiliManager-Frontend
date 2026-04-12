@@ -51,13 +51,16 @@
       
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email"
-                  placeholder="ejemplo@email.com" class="min-h-15" formControlName="email" name="email" required>
+                  placeholder="ejemplo@email.com" class="min-h-15 h-17" formControlName="email" name="email" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Contraseña" label-placement="floating" type="password"
-                  placeholder="********" class="min-h-15" formControlName="password" name="password" required>
+                  placeholder="********" class="min-h-15 h-17" formControlName="password" name="password" required>
+                  @if (loginForm.get('password')?.dirty) {
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                  }
         </ion-input>
       </ion-item>
 

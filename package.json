@@ -26,7 +26,7 @@
     "@capacitor/haptics": "8.0.2",
     "@capacitor/keyboard": "8.0.2",
     "@capacitor/status-bar": "8.0.2",
-    "@ionic/angular": "^8.0.0",
+    "@ionic/angular": "^8.8.3",
     "@tailwindcss/postcss": "^4.2.2",
     "ionicons": "^7.0.0",
     "postcss": "^8.5.8",
@@ -63,5 +63,5 @@
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.9.0"
   },
-  "description": "An Ionic project"
+  "description": "TiliManager Frontend"
 }

@@ -31,7 +31,7 @@
               Ya hay una cuenta asociada a ese <strong>nombre de usuario</strong>
             } @else if (!registered) {
               No es posible crear el usuario
-            }
+            } @else {Ha habido un error}
           </span>
         </div>
       }
@@ -58,19 +58,22 @@
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Nombre de usuario" label-placement="floating" type="text" placeholder="User1234..."
-                   class="min-h-15" formControlName="username" name="username" id="username" required>
+                   class="min-h-15 h-17" formControlName="username" name="username" id="username" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Correo Electrónico" label-placement="floating" type="email" placeholder="ejemplo@email.com"
-                   class="min-h-15" formControlName="email" name="email" id="email" required>
+                   class="min-h-15 h-17" formControlName="email" name="email" id="email" required>
         </ion-input>
       </ion-item>
 
       <ion-item fill="outline" mode="md" class="mb-6">
         <ion-input label="Contraseña" label-placement="floating" type="password" placeholder="********"
-                   class="min-h-15" formControlName="password" name="password" id="password" required>
+                   class="min-h-15 h-17" formControlName="password" name="password" id="password" required>
+                   @if (registerForm.get('password')?.dirty) {
+                    <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+                  }
         </ion-input>
       </ion-item>
 

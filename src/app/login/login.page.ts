@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent, IonItem, IonInput, IonButton, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
 import { AuthService } from '../services/auth.service';
@@ -13,7 +13,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   styleUrls: ['./login.page.scss'],
   standalone: true,
   imports: [IonIcon, IonContent, IonItem, IonInput, IonButton, RouterLink,
-    CommonModule, ReactiveFormsModule]
+    CommonModule, ReactiveFormsModule, IonInputPasswordToggle]
 })
 export class LoginPage implements OnInit {
 
