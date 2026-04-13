@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
 
-import { PartidosService } from '../services/partidos.service';
+import { PartidosService } from '../../services/partidos.service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
@@ -45,10 +45,10 @@ export class PartidoPage implements OnInit {
     this.enEjecucion = true;
     this.errorCode = false;
     this.tiempo = 0;
+    this.emulacion = [];
 
     try {
       const response = await firstValueFrom(this.partidos.simularPartido());
-
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
       }

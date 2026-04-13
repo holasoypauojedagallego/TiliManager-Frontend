@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
