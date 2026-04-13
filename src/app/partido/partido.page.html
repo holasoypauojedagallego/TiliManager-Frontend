@@ -1,0 +1,21 @@
+<ion-content [fullscreen]="true" class="flex max-w-[95%] ion-padding self-center justify-center">
+  <div class="w-full h-full flex flex-col items-center">
+    <div class="text-5xl mb-5">{{tiempo}}</div>
+    <div class="text-amber-50 grid justify-items-center">
+      @for (e of emulacion; track e.minuto) {
+        @if (tiempo >= e.minuto) {
+          <div class="text-amber-50"></div>
+          Minuto: {{e.minuto}}
+          Gol: {{e.sucede}}
+          <div class="text-amber-50"></div>
+        }
+      } @empty {
+        No hay elementos disponibles.
+      }
+      <div class="self-center">
+        <ion-button (click)="codigo()">Simular Partido</ion-button>
+        <!-- <ion-button (click)="reload()" color="danger">Acabar Simulación</ion-button> De momento, no usar, a este ritmo, no usar a secas -->
+      </div>
+    </div>
+  </div>
+</ion-content>

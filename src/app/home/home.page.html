@@ -10,7 +10,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="ion-padding">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Juegos de Fútbol</ion-title>
@@ -22,24 +22,24 @@
     <p>Elige tu simulador favorito y empieza a jugar.</p>
   </div>
 
-  <ion-grid>
-    <ion-row>
-      <ion-col size="12" size-md="6">
-        <ion-card>
-          <img alt="Simulador de Penaltis" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+  <ion-grid class="p-2">
+    <ion-row class="gap-3">
+      <ion-col size="12" size-md="5.935">
+        <ion-card routerLink="/partido">
+          <img alt="Prueba Partido" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>
-            <ion-card-title>Penalties Pro 2026</ion-card-title>
-            <ion-card-subtitle>Simulador Realista</ion-card-subtitle>
+            <ion-card-title>Prueba Partido</ion-card-title>
+            <ion-card-subtitle>Prueba Partido</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            Domina el arte de los once metros con gráficos de última generación.
+            Es una prueba de un partido.
           </ion-card-content>
-          <ion-button fill="clear" routerLink="/juego/penaltis">Jugar ahora</ion-button>
+          <ion-button fill="clear">Jugar ahora</ion-button>
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="6">
-        <ion-card>
+      <ion-col size="12" size-md="5.935">
+        <ion-card routerLink="/partido">
           <img alt="Liga de Estrategia" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>
             <ion-card-title>Football Manager Lite</ion-card-title>
@@ -48,7 +48,7 @@
           <ion-card-content>
             Gestiona tu propio equipo y llévalo a la gloria en la Champions.
           </ion-card-content>
-          <ion-button fill="clear" color="secondary" routerLink="/juego/manager">Gestionar equipo</ion-button>
+          <ion-button fill="clear" color="secondary">Gestionar equipo</ion-button>
         </ion-card>
       </ion-col>
     </ion-row>
