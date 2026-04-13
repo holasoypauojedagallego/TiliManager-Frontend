@@ -46,6 +46,12 @@ a:hover{
       transform: translateY(-5px); 
     }
   }
+
+    .animate-saltos-hover {
+    display: inline-block;
+    animation: saltitos 0.8s ease-in-out infinite;
+    animation-play-state: paused;
+  }
   
   .animate-saltitos-hover {
     display: inline-block;
@@ -60,7 +66,8 @@ a:hover{
   }
 
   .animate-saltitos-hover:hover, 
-  .animate-mini-saltitos-hover:hover {
+  .animate-mini-saltitos-hover:hover,
+  .animate-saltos-hover:hover {
     animation-play-state: running;
   }
 }
