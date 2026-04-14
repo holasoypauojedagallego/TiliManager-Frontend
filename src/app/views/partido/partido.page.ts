@@ -8,7 +8,8 @@ import { firstValueFrom } from 'rxjs';
 
 export interface partidoEmulado {
   minuto: number;
-  sucede: string;
+  equipo: string;
+  sucede: number;
 }
 
 @Component({
@@ -24,6 +25,8 @@ export class PartidoPage implements OnInit {
   tiempo : number = 0;
   enEjecucion : boolean = false;
   errorCode : boolean = false;
+  golesLocal : number = 0;
+  golesVisitante : number = 0;
 
   constructor(private partidos : PartidosService, private router : Router) { }
 
@@ -45,13 +48,21 @@ export class PartidoPage implements OnInit {
     this.enEjecucion = true;
     this.errorCode = false;
     this.tiempo = 0;
+    this.golesLocal = 0;
+    this.golesVisitante = 0;
     this.emulacion = [];
 
     try {
       const response = await firstValueFrom(this.partidos.simularPartido());
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
+        if (this.emulacion[i].equipo.match("Local")) {
+          this.golesLocal = this.emulacion[i].sucede;
+        } else {
+          this.golesVisitante = this.emulacion[i].sucede;
+        }
       }
+      console.log(response);
 
       await this.correrTiempo();
 
