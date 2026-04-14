@@ -35,7 +35,16 @@ export class PartidoPage implements OnInit {
 
   async correrTiempo() {
     for (let i = 1; i < 91; i++) {
-      await new Promise(resolve => setTimeout(resolve, 333))
+      await new Promise(resolve => setTimeout(resolve, 333));
+      this.emulacion.forEach(e => {
+        if (e.minuto == i) {
+          if (e.equipo.match("Local")) {
+            this.golesLocal = e.sucede;
+          } else {
+            this.golesVisitante = e.sucede;
+          }
+        }
+      });
       this.tiempo = i;
     }
   }
@@ -56,14 +65,7 @@ export class PartidoPage implements OnInit {
       const response = await firstValueFrom(this.partidos.simularPartido());
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
-        if (this.emulacion[i].equipo.match("Local")) {
-          this.golesLocal = this.emulacion[i].sucede;
-        } else {
-          this.golesVisitante = this.emulacion[i].sucede;
-        }
       }
-      console.log(response);
-
       await this.correrTiempo();
 
     } catch (error) {
@@ -72,7 +74,7 @@ export class PartidoPage implements OnInit {
 
   }
 
-    goToHome(){
+  goToHome(){
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();
     }
