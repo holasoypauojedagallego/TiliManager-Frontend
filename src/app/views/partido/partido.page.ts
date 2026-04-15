@@ -48,6 +48,7 @@ export class PartidoPage implements OnInit {
         if (e.minuto == i) {
           if (e.equipo.name.match(this.nombreLocal)) {
             this.golesLocal = e.sucede;
+
           } else {
             this.golesVisitante = e.sucede;
           }
@@ -85,6 +86,7 @@ export class PartidoPage implements OnInit {
           visitor = true;
         }
       }
+      console.log(this.emulacion);  
       await this.correrTiempo();
 
     } catch (error) {
