@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonButton } from '@ionic/angular/standalone';
 
-import { PartidosService } from '../../services/partidos.service';
+import { Jugador, PartidosService, Team } from '../../services/partidos.service';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 export interface partidoEmulado {
   minuto: number;
-  equipo: string;
+  equipo: Team;
+  jugador: Jugador;
+  local: boolean;
   sucede: number;
 }
 
@@ -21,10 +23,16 @@ export interface partidoEmulado {
 })
 export class PartidoPage implements OnInit {
 
-  emulacion : partidoEmulado[] = [];
-  tiempo : number = 0;
   enEjecucion : boolean = false;
   errorCode : boolean = false;
+
+  emulacion : partidoEmulado[] = [];
+  tiempo : number = 0;
+
+  ownerLocal : string = '';
+  ownerVisitante : string = '';
+  nombreLocal : string = '';
+  nombreVisitante : string = '';
   golesLocal : number = 0;
   golesVisitante : number = 0;
 
@@ -38,7 +46,7 @@ export class PartidoPage implements OnInit {
       await new Promise(resolve => setTimeout(resolve, 333));
       this.emulacion.forEach(e => {
         if (e.minuto == i) {
-          if (e.equipo.match("Local")) {
+          if (e.equipo.name.match(this.nombreLocal)) {
             this.golesLocal = e.sucede;
           } else {
             this.golesVisitante = e.sucede;
@@ -62,9 +70,20 @@ export class PartidoPage implements OnInit {
     this.emulacion = [];
 
     try {
+      let local :boolean = false;
+      let visitor :boolean = false;
       const response = await firstValueFrom(this.partidos.simularPartido());
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
+        if(this.emulacion[i].local && !local){
+          this.nombreLocal = this.emulacion[i].equipo.name;
+          this.ownerLocal = this.emulacion[i].equipo.owner;
+          local = true;
+        } else if (!this.emulacion[i].local && !visitor) {
+          this.nombreVisitante = this.emulacion[i].equipo.name;
+          this.ownerVisitante = this.emulacion[i].equipo.owner;
+          visitor = true;
+        }
       }
       await this.correrTiempo();
 

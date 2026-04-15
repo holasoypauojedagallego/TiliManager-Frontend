@@ -1,17 +1,17 @@
 <ion-content [fullscreen]="true" class="flex max-w-[97%] ion-padding self-center justify-center">
-  <div class="absolute text-6xl md:text-7xl text-[#08c0d9] cursor-pointer hover:scale-105 active:scale-67 duration-150" (click)="goToHome()"><-</div>
+  <div class="absolute text-7xl md:text-8xl text-[#08c0d9] -top-6.5 cursor-pointer hover:scale-105 active:scale-67 duration-150" (click)="goToHome()"><-</div>
   <div class="w-full h-full flex flex-col items-center">
     <div class="h-[90%] max-h[90%] w-full md:w-[67%] justify-items-center mt-5 p-3 rounded-2xl text-amber-50 bg-[#0c3f42] overflow-y-auto">
       <div class="flex w-full justify-around items-end md:mb-10 mb-5 md:text-2xl">
-        <div class="grid justify-items-center">
-          <div>Local</div>
+        <div class="grid justify-items-center min-w-20 w-[20%]">
+          <div>{{nombreLocal}}:<span class="md:text-lg text-center"> {{ownerLocal}}</span></div>
             <div>
               {{golesLocal}}
             </div>
         </div>
-        <div class="text-5xl">{{tiempo}}</div>
-        <div class="grid justify-items-center">
-          <div>Visitante</div>
+        <div class="grid justify-center text-5xl min-w-20 w-[20%]">{{tiempo}}</div>
+        <div class="grid justify-items-center min-w-20 w-[20%]">
+          <div>{{nombreVisitante}}:<span class="md:text-lg"> {{ownerVisitante}}</span></div>
             <div>
               {{golesVisitante}}
             </div>
@@ -29,7 +29,7 @@
           @if (tiempo >= e.minuto) {
             <div class="flex text-amber-50 justify-center">
             Minuto: {{e.minuto}} ---
-            {{e.equipo}}: {{e.sucede}}
+            {{e.equipo.name}}: {{e.jugador.name}} {{e.sucede}}
             </div>
           }
         } @empty {
