@@ -44,10 +44,12 @@
 
 *{
     font-family: "Playfair Display", serif;
+    --ion-background-color: #1e1e1e;
+    --ion-item-backgroud: #1e1e1e;
 }
 
 :root{
-    --ion-background-color: #121212;
+    --ion-background-color: #1e1e1e;
     --ion-text-color: #ffffff;
     --ion-font-family: "Playfair Display", serif;
     --ion-default-font: "Playfair Display", serif;
@@ -60,7 +62,7 @@
 
 	--ion-color-primary: #08c0d9;
 	--ion-color-primary-rgb: 8,192,217;
-	--ion-color-primary-contrast: #000000;
+	--ion-color-primary-contrast: #1e1e1e;
 	--ion-color-primary-contrast-rgb: 0,0,0;
 	--ion-color-primary-shade: #07a9bf;
 	--ion-color-primary-tint: #21c6dd;

@@ -1,17 +1,16 @@
-@keyframes lightning {
-  0% { text-shadow: 0 0 2px #ffcc00; }
-  100% { text-shadow: 0 0 8px #ff9900, 0 0 12px #ff5500; }
-}
-
-.inazuma-card {
-  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.inazuma-card:hover {
-  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.5), 0 0 0 2px #facc15, 0 0 0 5px #1e3a8a;
-}
-
-/* Patrón de césped (sutil) */
-.bg-grid-soccer {
-  background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 8px);
+h2 {
+  font-weight: 800;
+  text-shadow: 
+    -1px -1px 0 #000,  
+     1px -1px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+  @media (max-width: 692px) {
+    font-size: 20px;
+  }
+    @media (max-width: 362px) {
+    font-size: 18px;
+    text-overflow: ellipsis;
+    height: 1px;
+  }
 }
