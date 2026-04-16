@@ -1,0 +1,22 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>equipo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">equipo</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-grid>
+    <ion-row>
+    @for (jugador of jugadoresSinEquipo; track jugador.id) {
+      <ion-col size="12" sizeSm="6" sizeLg="3"><app-jugador-card [jugador]="jugador"></app-jugador-card></ion-col> 
+    }
+      
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -48,7 +48,6 @@ export class PartidoPage implements OnInit {
         if (e.minuto == i) {
           if (e.equipo.name.match(this.nombreLocal)) {
             this.golesLocal = e.sucede;
-
           } else {
             this.golesVisitante = e.sucede;
           }
@@ -78,15 +77,14 @@ export class PartidoPage implements OnInit {
         this.emulacion[i] = response[i];
         if(this.emulacion[i].local && !local){
           this.nombreLocal = this.emulacion[i].equipo.name;
-          this.ownerLocal = this.emulacion[i].equipo.owner;
+          this.ownerLocal = this.emulacion[i].equipo.owner.name;
           local = true;
         } else if (!this.emulacion[i].local && !visitor) {
           this.nombreVisitante = this.emulacion[i].equipo.name;
-          this.ownerVisitante = this.emulacion[i].equipo.owner;
+          this.ownerVisitante = this.emulacion[i].equipo.owner.name;
           visitor = true;
         }
       }
-      console.log(this.emulacion);  
       await this.correrTiempo();
 
     } catch (error) {

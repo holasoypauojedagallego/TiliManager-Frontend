@@ -22,7 +22,10 @@ export const routes: Routes = [
     path: 'partido',
     loadComponent: () => import('./views/partido/partido.page').then( m => m.PartidoPage)
   },
-
+  {
+    path: 'equipo',
+    loadComponent: () => import('./views/equipo/equipo.page').then( m => m.EquipoPage)
+  },
 
   
 

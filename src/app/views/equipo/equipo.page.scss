@@ -1,0 +1,27 @@
+
+ion-row{
+  overflow: hidden;
+}
+
+ion-col {
+  max-height: 100%;
+  --ion-grid-column-padding:10px;
+}
+
+.box {
+  background: #1E1E1E;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  border-radius:5px;
+  display: flex;
+  justify-content: center;
+  align-items: start;
+}
+
+@media (min-width: 992px) {  
+  ion-grid{height: 100%;}
+  .ion-row-1{height: 23.67%; max-height: 23.67%;}
+  .ion-row-2{height: 41.33%; max-height: 41.33%;}
+  .ion-row-3{height: 35%; max-height: 35%;}
+}
