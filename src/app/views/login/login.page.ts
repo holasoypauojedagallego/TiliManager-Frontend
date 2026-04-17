@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
 import { Router, RouterLink } from '@angular/router';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService, SecretUser } from '../../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -52,11 +52,12 @@ export class LoginPage implements OnInit {
     };
 
     this.auth.login(loginData).subscribe({
-      next: (response) => {
-        console.log('Login correcto', response);
+      next: (response: SecretUser) => {
+        this.auth.removeSesion();
+        this.auth.setSesion(response);
+        console.log(this.auth.getSesion());
         this.loged = true;
-        this.loginForm.controls['password'].reset();
-        this.router.navigate(['/home']);
+        this.router.navigate(['/crearequipo']);
       },
 
       error: (err) => {
@@ -68,9 +69,9 @@ export class LoginPage implements OnInit {
         }
         console.log("Email: " + this.loginForm.value.email);
         this.loged = false;
-        this.loginForm.controls['password'].reset();
       }
     });
+    this.loginForm.controls['password'].reset();
     this.submited = true;
 
   }

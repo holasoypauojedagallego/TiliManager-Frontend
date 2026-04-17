@@ -1,21 +1,24 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonInput, IonButton, IonAlert, IonIcon } from '@ionic/angular/standalone';
 import { Jugador, JugadoresService } from '../../services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
-import { PruebaComponent } from "src/app/components/jugador-card/jugador-card.component";
+import { JugadorCard } from "src/app/components/jugador-card/jugador-card.component";
 
 @Component({
-  selector: 'app-equipo',
-  templateUrl: './equipo.page.html',
-  styleUrls: ['./equipo.page.scss'],
+  selector: 'app-crear-equipo',
+  templateUrl: './crearEquipo.page.html',
+  styleUrls: ['./crearEquipo.page.scss'],
   standalone: true,
-  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, PruebaComponent, IonItem, IonInput, IonButton]
+  imports: [IonContent, IonHeader, IonTitle, IonToolbar, CommonModule, FormsModule, JugadorCard, IonItem, IonInput, IonButton, IonAlert, IonIcon]
 })
-export class EquipoPage implements OnInit {
+export class CrearEquipoPage implements OnInit {
 
   jugadoresSinEquipo: Jugador[] = [];
+
+  alerta: boolean = true;
+  alertButtons = ['Aceptar'];
 
   constructor(private jugadores : JugadoresService) { }
 
@@ -30,7 +33,10 @@ export class EquipoPage implements OnInit {
     } catch (error) {
       console.error("Ha ocurrido un error")
     }
-    
+  }
+
+  acabarAlerta(){
+    this.alerta = false;
   }
 
 }

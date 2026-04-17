@@ -1,8 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
+import { Preferences } from '@capacitor/preferences'
 
 export interface User {
+  name: string;
+  email: string;
+}
+
+export interface Jugador {
+  id: number;
+  name: string;
+  rating: number;
+  attack: number;
+  defense: number;
+  teamId: number | null;
+  price: number;
+}
+
+export interface Team {
+  id: number;
+  name: string;
+  owner: User;
+  playerss: Jugador[];
+}
+
+export interface SecretUser {
   id: number;
   name: string;
   email: string;
@@ -53,4 +76,28 @@ export class AuthService {
   nameRegistered(data : NameRegisteredRequest) : Observable<boolean> {
     return this.http.get<boolean>(`${this.apiURL}/users/exists/name/${data}`);
   }
+
+  getTeam(data : SecretUser) : Observable<Team> {
+    return this.http.post<Team>(`${this.apiURL}/equipos/owner`, data);
+  }
+
+  async setSesion(user: SecretUser) {
+    await Preferences.set({
+      key: "usuario",
+      value: JSON.stringify(user)
+    });
+  }
+
+  async getSesion() : Promise<SecretUser | null> {
+    const {value} = await Preferences.get({key: "usuario"});
+    if (value) {
+      return JSON.parse(value);
+    }
+    return null;
+  }
+
+  async removeSesion(){
+    await Preferences.remove({key: "usuario"});
+  }
+
 }

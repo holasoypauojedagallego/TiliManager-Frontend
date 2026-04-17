@@ -23,8 +23,8 @@ export const routes: Routes = [
     loadComponent: () => import('./views/partido/partido.page').then( m => m.PartidoPage)
   },
   {
-    path: 'equipo',
-    loadComponent: () => import('./views/equipo/equipo.page').then( m => m.EquipoPage)
+    path: 'crearequipo',
+    loadComponent: () => import('./views/crearEquipo/crearEquipo.page').then( m => m.CrearEquipoPage)
   },
 
   

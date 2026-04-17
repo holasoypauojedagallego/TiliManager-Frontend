@@ -77,7 +77,8 @@
         </ion-input>
       </ion-item>
 
-      <ion-button type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="registerForm.invalid">REGISTRAR</ion-button>
+      <ion-button id="submit" type="submit" expand="block" shape="round" class="h-10.5 mx-5 mt-8" [disabled]="registerForm.invalid">REGISTRAR</ion-button>
+      <ion-loading trigger="submit" message="Intentando registrarse..." [duration]="1400"></ion-loading>
       
     </form>
 

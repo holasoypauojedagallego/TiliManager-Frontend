@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>Crear Equipo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+
+  <div class="max-w-[1580px] mx-auto w-full flex flex-col justify-center items-center">
+
+    <ion-icon src="assets/icon/svg/icono-pregunta.svg" class="absolute w-12 h-12 mb-2 top-15 md:right-5 right-3 cursor-pointer" (click)="alerta=true"></ion-icon>
+
+    <div>
+      <ion-alert
+        [isOpen]="alerta"
+        header="¡Bienvenido, Entrenador!"
+        subHeader="Instrucciones de equipo"
+        [message]="'¡Enhorabuena! Ahora que ya ha iniciado sesión, comience creando el equipo. Póngale un nombre y elija a 7 jugadores, pero, ¡Recuerde que todo vale dinero!'"
+        [buttons]="alertButtons"
+        (didDismiss)="alerta = false">
+      </ion-alert>
+    </div>
+
+      <div class="flex flex-col md:items-center justify-between gap-4">
+        <h1 class="text-3xl">Crear Equipo</h1>
+
+        <ion-item fill="outline" mode="md" class="mt-3 mb-6 text-2xl">
+          <ion-input label="Nombre del Equipo:" label-placement="floating" type="text"
+                  placeholder="Raimon, Royal Academy..." class="min-h-15 w-180" name="teamName" required>
+          </ion-input>
+        </ion-item>
+      </div>
+
+    <div class="px-2 mb-4">
+      <h3 class="text-3xl font-black italic tracking-wider text-white">
+        JUGADORES DISPONIBLES
+      </h3>
+      <p class="text-gray-600 font-medium">Selecciona los jugadores para tu plantilla</p>
+    </div>
+
+    @if (jugadoresSinEquipo.length <= 0) {
+      <div class="flex flex-col items-center justify-center p-10 mb-5 bg-white/50 rounded-2xl border-2 border-dashed border-gray-300">
+        <span class="text-2xl text-gray-500 font-bold text-center">
+          Oh vaya, parece que no hay jugadores disponibles
+        </span>
+      </div>
+    } @else {
+
+    <div class="lg:w-[90%] w-full items-center justify-center md:p-7 p-2.5 bg-[#333] rounded-2xl border-2 border-gray-300 mb-3">
+      <div class="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+
+        @for (jugador of jugadoresSinEquipo; track jugador.id) {
+          <div class="relative group cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl rounded-xl">
+            <app-jugador-card [jugador]="jugador" class="block w-full h-full"></app-jugador-card>
+          </div>
+        }
+
+      </div>
+    </div>
+    }
+
+    <ion-button shape="round" class="h-14 px-4 m-auto font-bold tracking-wide">
+      ¡FORMAR EQUIPO!
+    </ion-button>
+
+  </div>
+</ion-content>

@@ -8,9 +8,22 @@ h2 {
   @media (max-width: 692px) {
     font-size: 20px;
   }
-    @media (max-width: 362px) {
-    font-size: 18px;
-    text-overflow: ellipsis;
-    height: 1px;
-  }
+}
+
+h1{
+  font-size: 30px;
+}
+
+.porfuera{
+    text-shadow: 
+    -1px 0px 0 #000,  
+     1px 0px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.burro{
+  font: 1.2em sans-serif;
+  font-style: italic;
+  font-weight: 600;
 }
