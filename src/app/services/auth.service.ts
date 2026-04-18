@@ -22,7 +22,7 @@ export interface Team {
   id: number;
   name: string;
   owner: User;
-  playerss: Jugador[];
+  players: Jugador[];
 }
 
 export interface SecretUser {
@@ -86,6 +86,11 @@ export class AuthService {
       key: "usuario",
       value: JSON.stringify(user)
     });
+    const team:Team = await firstValueFrom(this.getTeam(user));
+    await Preferences.set({
+      key: "equipo",
+      value: JSON.stringify(team)
+    });
   }
 
   async getSesion() : Promise<SecretUser | null> {
@@ -96,8 +101,17 @@ export class AuthService {
     return null;
   }
 
+    async getTeamSesion() : Promise<Team | null> {
+    const {value} = await Preferences.get({key: "equipo"});
+    if (value) {
+      return JSON.parse(value);
+    }
+    return null;
+  }
+
   async removeSesion(){
     await Preferences.remove({key: "usuario"});
+    await Preferences.remove({key: "equipo"});
   }
 
 }

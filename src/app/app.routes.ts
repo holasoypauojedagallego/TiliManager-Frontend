@@ -1,4 +1,7 @@
 import { Routes } from '@angular/router';
+import { CanActivateAuthGuard } from './guards/canActivateAuthGuard';
+import { RequireTeamGuard } from './guards/requireTeamGuard';
+import { RequireNoTeamGuard } from './guards/requiredNoTeamGuard';
 
 export const routes: Routes = [
   {
@@ -23,7 +26,13 @@ export const routes: Routes = [
     loadComponent: () => import('./views/partido/partido.page').then( m => m.PartidoPage)
   },
   {
+    path: 'equipo',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    loadComponent: () => import('./views/equipo/equipo.page').then( m => m.EquipoPage)
+  },
+  {
     path: 'crearequipo',
+    canActivate: [CanActivateAuthGuard, RequireNoTeamGuard],
     loadComponent: () => import('./views/crearEquipo/crearEquipo.page').then( m => m.CrearEquipoPage)
   },
 

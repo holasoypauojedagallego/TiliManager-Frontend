@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 
-import { AuthService, SecretUser } from '../../services/auth.service';
+import { AuthService, SecretUser, Team } from '../../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
   standalone: true,
-  imports: [IonIcon, IonContent, IonItem, IonInput, IonButton, RouterLink,
+  imports: [IonIcon, IonContent, IonItem, IonInput, IonButton,
     CommonModule, ReactiveFormsModule, IonInputPasswordToggle]
 })
 export class LoginPage implements OnInit {
@@ -44,6 +44,7 @@ export class LoginPage implements OnInit {
     this.loged = false;
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched();
+      return;
     }
 
     const loginData = {
@@ -52,12 +53,17 @@ export class LoginPage implements OnInit {
     };
 
     this.auth.login(loginData).subscribe({
-      next: (response: SecretUser) => {
-        this.auth.removeSesion();
-        this.auth.setSesion(response);
+      next: async (response: SecretUser) => {
+        await this.auth.removeSesion();
+        await this.auth.setSesion(response);
         console.log(this.auth.getSesion());
+        console.log(this.auth.getTeamSesion());
         this.loged = true;
-        this.router.navigate(['/crearequipo']);
+        this.loginForm.controls['password'].reset();
+        const currentUser : Team | null = await this.auth.getTeamSesion();
+        if(currentUser && currentUser?.players.length == 0){
+            this.router.navigate(['/crearequipo']);
+        } else {this.router.navigate(['/home']);}
       },
 
       error: (err) => {
@@ -74,6 +80,10 @@ export class LoginPage implements OnInit {
     this.loginForm.controls['password'].reset();
     this.submited = true;
 
+  }
+
+  async onCerrarSesion() {
+    await this.auth.removeSesion();
   }
 
   ionViewWillLeave() {
