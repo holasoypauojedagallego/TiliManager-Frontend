@@ -18,6 +18,7 @@ export interface Team {
   name: string;
   owner: User;
   players: Jugador[];
+  money: number;
 }
 
 @Injectable({

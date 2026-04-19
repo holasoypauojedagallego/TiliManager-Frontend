@@ -1,0 +1,64 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController } from "@ionic/angular/standalone";
+import { AuthService, Team } from 'src/app/services/auth.service';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.scss'],
+  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover]
+})
+export class HeaderComponent  implements OnInit {
+  @Input() title: string = 'TiliManager';
+  username: string = '';
+  team!: Team;
+
+  constructor(private auth: AuthService, private navCtrl: NavController, private popOver: PopoverController) { }
+
+  async ngOnInit() {
+    await this.cargarNombre();
+  }
+
+  async onCerrarSesion() {
+    await this.auth.removeSesion();
+    await this.cargarNombre();
+    console.log(this.auth.getSesion());
+    this.popOver.dismiss();
+    if (document.activeElement instanceof HTMLElement){
+      document.activeElement.blur();
+    }
+    this.navCtrl.navigateRoot('/login', { animated: true });
+  }
+
+  async cargarNombre() {
+    this.username = await this.auth.getSesionUsername();
+    this.team = await this.auth.getSesionTeamCargado();
+  }
+
+  async goToLogin() {
+    this.popOver.dismiss();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    await this.navCtrl.navigateRoot('/login', { animated: true });
+  }
+
+    smallerPrice(i: number) : String {
+      if (!i || i == 0){
+        return '0';
+      }
+      let comprobar:string = i.toString();
+      const arrayComprobar:string[] = comprobar.split('000');
+      comprobar = arrayComprobar.join('');
+      if (arrayComprobar.length === 4){
+        return comprobar + 'MM';
+      } else if (arrayComprobar.length === 3) {
+        return comprobar + 'M'
+      } else if (arrayComprobar.length === 2) {
+        return comprobar + 'K'
+      } else {
+        return comprobar;
+      }
+    }
+
+}

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle, NavController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
 import { AuthService, SecretUser, Team } from '../../services/auth.service';
@@ -27,7 +27,8 @@ export class LoginPage implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private fb : FormBuilder
+    private fb: FormBuilder,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {

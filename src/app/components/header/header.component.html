@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" class="px-3 flex justify-items-center">
+    <ion-title>
+      {{title.toUpperCase()}}
+    </ion-title>
+    <ion-buttons slot="end">
+      @if (username == '') {
+      <ion-button id="{{title}}a" class="h-auto">
+        <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
+          <span class="text-xl text-cyan-400"><strong>?</strong></span>
+        </div>
+      </ion-button>
+        <ion-popover trigger="{{title}}a" side="bottom" alignment="center">
+          <ng-template>
+            <span class="p-2 italic text-lg">No tiene cuenta</span>
+            <ion-button color="primary" size="small" class="p-2" (click)="goToLogin()">Iniciar Sesión</ion-button>
+          </ng-template>
+        </ion-popover>
+      } @else {
+      <div>{{smallerPrice(team.money)}}</div>
+      <ion-button id="{{title}}b" class="h-auto">
+        <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
+          <span class="text-xl text-cyan-400"><strong>{{username.charAt(0).toUpperCase()}}</strong></span>
+        </div>
+      </ion-button>
+        <ion-popover trigger="{{title}}b" side="bottom" alignment="center">
+          <ng-template>
+            <span class="p-2 pl-3 italic text-lg">Usuario: <span class="not-italic">{{username}}</span></span>
+            <ion-button color="danger" size="small" class="p-2" (click)="onCerrarSesion()">Cerrar Sesión</ion-button>
+          </ng-template>
+        </ion-popover>
+      }
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

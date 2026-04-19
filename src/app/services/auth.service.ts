@@ -23,6 +23,7 @@ export interface Team {
   name: string;
   owner: User;
   players: Jugador[];
+  money: number;
 }
 
 export interface SecretUser {
@@ -56,7 +57,7 @@ export interface NameRegisteredRequest {
 
 export class AuthService {
 
-  private apiURL = "http://127.0.0.1:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://192.168.1.137:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1 - http://192.168.3.23:8080/jpa/api/v1
 
   constructor(private http: HttpClient) {}
@@ -101,7 +102,12 @@ export class AuthService {
     return null;
   }
 
-    async getTeamSesion() : Promise<Team | null> {
+  async getSesionUsername() {
+    const username = await this.getSesion();
+    return username?.name || '';
+  }
+
+  async getTeamSesion() : Promise<Team | null> {
     const {value} = await Preferences.get({key: "equipo"});
     if (value) {
       return JSON.parse(value);
@@ -109,9 +115,22 @@ export class AuthService {
     return null;
   }
 
+  async getSesionTeamCargado() {
+    const team = await this.getTeamSesion();
+    let teamFinal!: Team;
+    if (team && team != null) {
+      teamFinal = team;
+    }
+    return teamFinal;
+  }
+
   async removeSesion(){
     await Preferences.remove({key: "usuario"});
     await Preferences.remove({key: "equipo"});
+  }
+
+  async clear() {
+    await Preferences.clear();
   }
 
 }
