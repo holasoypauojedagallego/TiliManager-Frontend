@@ -26,6 +26,14 @@ export interface Team {
   money: number;
 }
 
+export interface SecretTeam {
+  id: number;
+  name: string;
+  owner: SecretUser;
+  players: Jugador[];
+  money: number;
+}
+
 export interface SecretUser {
   id: number;
   name: string;
@@ -57,7 +65,7 @@ export interface NameRegisteredRequest {
 
 export class AuthService {
 
-  private apiURL = "http://192.168.1.137:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://192.168.3.142:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1 - http://192.168.3.23:8080/jpa/api/v1
 
   constructor(private http: HttpClient) {}
@@ -82,11 +90,43 @@ export class AuthService {
     return this.http.post<Team>(`${this.apiURL}/equipos/owner`, data);
   }
 
+  async updateTeam(name: string, players : Jugador[], money: number) : Promise<Observable<any> | undefined> {
+    const team: Team | null = await this.getTeamSesion();
+    let user: SecretUser | null = await this.getSesion();
+    if (team == null || user == null) {
+      console.warn("No hay usuario o equipo");
+      return;
+    }
+    const teamFinal: SecretTeam = {
+      id: team.id = team.id,
+      name: name = name,
+      owner: user = user,
+      players: players = players,
+      money: team.money = team.money - money
+    }
+
+    const t = this.http.put<SecretTeam>(`${this.apiURL}/equipos`, teamFinal);
+    this.setSesionTeam();
+    return t;
+  }
+
   async setSesion(user: SecretUser) {
     await Preferences.set({
       key: "usuario",
       value: JSON.stringify(user)
     });
+    const team:Team = await firstValueFrom(this.getTeam(user));
+    await Preferences.set({
+      key: "equipo",
+      value: JSON.stringify(team)
+    });
+  }
+
+  async setSesionTeam() {
+    const user: SecretUser | null = await this.getSesion();
+    if (user == null) {
+      return;
+    }
     const team:Team = await firstValueFrom(this.getTeam(user));
     await Preferences.set({
       key: "equipo",

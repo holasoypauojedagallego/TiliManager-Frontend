@@ -10,6 +10,7 @@ import { AuthService, Team } from 'src/app/services/auth.service';
 })
 export class HeaderComponent  implements OnInit {
   @Input() title: string = 'TiliManager';
+  @Input() dineroGastado: number = 0;
   username: string = '';
   team!: Team;
 

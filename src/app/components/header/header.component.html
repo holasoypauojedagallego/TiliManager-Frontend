@@ -17,7 +17,13 @@
           </ng-template>
         </ion-popover>
       } @else {
-      <div>{{smallerPrice(team.money)}}</div>
+        @if (dineroGastado > team.money) {
+          <div class="w-[10vw]"><span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> > {{smallerPrice(team.money)}}</div>
+        } @else if (dineroGastado > 0) {
+          <div class="w-[10vw]"><span class="text-red-700 ">-{{smallerPrice(dineroGastado)}}</span> <span class="text-[#08c0d9]"> _ </span> {{smallerPrice(team.money)}}</div>
+        } @else {
+          <div class="w-[10vw]">{{smallerPrice(team.money)}}</div>
+        }
       <ion-button id="{{title}}b" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
           <span class="text-xl text-cyan-400"><strong>{{username.charAt(0).toUpperCase()}}</strong></span>
@@ -25,7 +31,11 @@
       </ion-button>
         <ion-popover trigger="{{title}}b" side="bottom" alignment="center">
           <ng-template>
-            <span class="p-2 pl-3 italic text-lg">Usuario: <span class="not-italic">{{username}}</span></span>
+            <div class="p-2 pl-3 italic text-lg">
+            <p>Usuario: <span class="not-italic">{{username}}</span></p>
+            <p>Equipo: <span class="not-italic">{{team.name}}</span></p>
+            <p>Dinero: <span class="not-italic">{{smallerPrice(team.money)}}</span></p>
+            </div>
             <ion-button color="danger" size="small" class="p-2" (click)="onCerrarSesion()">Cerrar Sesión</ion-button>
           </ng-template>
         </ion-popover>

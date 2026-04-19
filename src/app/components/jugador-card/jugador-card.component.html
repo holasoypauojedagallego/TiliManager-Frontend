@@ -1,9 +1,11 @@
-<ion-card class="bg-[#e5d570] max-w-92 h-45  border-blue-900 rounded-2xl px-2 pt-1 transition-transform duration-200 hover:scale-101">
+<ion-card
+  class="bg-[#e5d570] max-w-92 h-45  border-blue-900 rounded-2xl px-2 pt-1 transition-transform duration-200 hover:scale-101">
   <div class="absolute -left-1 bottom-0 bg-blue-900 w-3.5 h-full overflow-hidden"></div>
   <div class="absolute -right-1 bottom-0 bg-blue-900 w-3.5 h-full overflow-hidden"></div>
-  
+
   <div class="flex items-center justify-between">
-    <img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png" class="w-15 rounded-md text-[11px] z-10 shrink-0" alt="Image: {{jugador.name.split(' ')[0]}}">
+    <img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png"
+      class="w-15 rounded-md text-[11px] z-10 shrink-0" alt="Image: {{jugador.name.split(' ')[0]}}">
 
     <h2 class="text-xl text-white truncate min-w-0">
       {{ jugador.name }}
@@ -22,9 +24,7 @@
         <span>{{ jugador.attack }}</span>
       </div>
       <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-        <div 
-          class="h-full bg-orange-500 rounded-3"
-          [style.width.%]="jugador.attack">
+        <div class="h-full bg-orange-500 rounded-3" [style.width.%]="jugador.attack">
         </div>
       </div>
     </div>
@@ -35,9 +35,7 @@
         <span>{{ jugador.defense }}</span>
       </div>
       <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
-        <div 
-          class="h-full bg-blue-500 rounded-full"
-          [style.width.%]="jugador.defense">
+        <div class="h-full bg-blue-500 rounded-full" [style.width.%]="jugador.defense">
         </div>
       </div>
     </div>
@@ -45,14 +43,26 @@
   </div>
 
   <div class="flex mt-2 text-sm justify-around items-center">
-    
+
     @if (jugador.teamId) {
-      <span class="text-gray-700">Equipo ID: {{ jugador.teamId }}</span>
+    <span class="text-gray-700">Equipo ID: {{ jugador.teamId }}</span>
     } @else {
-      <span class="text-gray-600 font-semibold">Sin equipo</span>
-      <ion-button class="" shape="round" size="small">Fichar</ion-button>
+
+    @if (fichable){
+    <span class="text-gray-600 font-semibold">Sin equipo</span>
+    <ion-button (click)="onClick()" shape="round" size="small">Fichar</ion-button>
+
+    <ion-alert [isOpen]="alerta" header="¡Entrenador!" subHeader="Instrucciones de equipo"
+      [message]="'Recuerde que solo se permiten 5 jugadores como mínimo, y 7 como máximo'" [buttons]="alertButtons" (didDismiss)="alerta = false">
+    </ion-alert>
+
+    } @else {
+    <span class="text-gray-600 font-semibold">Sin equipo</span>
+    <ion-button (click)="onClick()" color="danger" shape="round" size="small">Quitar</ion-button>
     }
-    <span class=" burro text-white porfuera italic text-[17px] min-w-12">{{smallerPrice(jugador.price)}}€</span>
+
+    }
+    <span class="burro text-white porfuera italic text-[17px] min-w-12">{{smallerPrice(jugador.price)}}€</span>
   </div>
 
 </ion-card>
