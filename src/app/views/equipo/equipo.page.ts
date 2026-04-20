@@ -4,8 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonList, IonReorderGroup, IonReorder, IonItem, ReorderEndCustomEvent, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { JugadorMiniCardComponent } from "src/app/components/jugador-mini-card/jugador-mini-card.component";
-import { AuthService, Jugador, Team } from 'src/app/services/auth.service';
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { AuthService, Team } from 'src/app/services/auth.service';
+import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';   
 
 @Component({
@@ -18,6 +18,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 export class EquipoPage implements OnInit {
 
   equipo: Team = {id : 0, name: '', players: [], owner: {name: '', email: ''}, money: 0};
+  list: number = 5;
 
   constructor(private auth: AuthService) { }
 
@@ -29,7 +30,18 @@ export class EquipoPage implements OnInit {
     this.equipo = await this.auth.getSesionTeamCargado();
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.equipo.players, event.previousIndex, event.currentIndex);
+  drop(event: CdkDragDrop<any>) {
+    const previousIndex = event.previousContainer.data;
+    const currentIndex = event.container.data;
+    if (previousIndex != currentIndex) {
+      const jugadorMovido = this.equipo.players[previousIndex];
+
+      this.equipo.players[previousIndex] = this.equipo.players[currentIndex];
+      this.equipo.players[currentIndex] = jugadorMovido;
+    }
+  }
+
+  evenPredicate(item: CdkDrag<number>) {
+    return item.data % 2 === 0;
   }
 }

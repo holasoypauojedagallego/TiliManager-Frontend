@@ -1,12 +1,17 @@
 <app-header title="Equipo" />
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div class="example-list" cdkDropList cdkDropListOrientation="mixed" (cdkDropListDropped)="drop($event)">
-      @for (player of equipo.players; track player.id) {
-          <div class="w-26.5 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
-            <app-jugador-mini-card [jugador]="player"  />
-          </div>
+  <div class="example-list" cdkDropListGroup>
+    
+    @for (player of equipo.players; track player.id; let i = $index) {
+      <div cdkDropList [cdkDropListData]="i" (cdkDropListDropped)="drop($event)" class="drop-slot">
+        <div class="w-26.5 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
+          <div *cdkDragPlaceholder class="cdk-drag-placeholder"></div>
+          <app-jugador-mini-card [jugador]="player" />
+        </div>
 
-      }
-    </div>
+      </div>
+    }
+
+  </div>
 </ion-content>

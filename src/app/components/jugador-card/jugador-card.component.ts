@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Jugador } from 'src/app/services/jugadores.service';
-import { IonCard, IonButton, IonAlert } from "@ionic/angular/standalone";
+import { IonCard, IonButton, IonAlert, IonImg } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-jugador-card',
   templateUrl: './jugador-card.component.html',
   styleUrl: './jugador-card.component.scss',
-  imports: [IonCard, IonButton, IonAlert]
+  imports: [IonCard, IonButton, IonAlert, IonImg]
 })
 export class JugadorCard {
     @Input() jugador!: Jugador;
