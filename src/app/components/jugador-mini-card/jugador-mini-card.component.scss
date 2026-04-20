@@ -1,0 +1,25 @@
+.imagen{
+    background-image: url(../../../assets/icon/svg/jugador-mini-card.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+.porfuera{
+    text-shadow: 
+    -1px 0px 0 #000,  
+     1px 0px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.burro{
+  font: 1.3em sans-serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.miniburro{
+  font: 1.1em sans-serif;
+  font-style: italic;
+  font-weight: 600;
+}

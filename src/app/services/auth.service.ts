@@ -65,7 +65,7 @@ export interface NameRegisteredRequest {
 
 export class AuthService {
 
-  private apiURL = "http://192.168.3.142:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://192.168.1.137:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1 - http://192.168.3.23:8080/jpa/api/v1
 
   constructor(private http: HttpClient) {}
@@ -105,12 +105,14 @@ export class AuthService {
       money: team.money = team.money - money
     }
 
-    const t = this.http.put<SecretTeam>(`${this.apiURL}/equipos`, teamFinal);
+    const t = await this.http.put<SecretTeam>(`${this.apiURL}/equipos`, teamFinal);
+    await this.removeTeamSesion();
     this.setSesionTeam();
     return t;
   }
 
   async setSesion(user: SecretUser) {
+    await this.removeSesion();
     await Preferences.set({
       key: "usuario",
       value: JSON.stringify(user)
@@ -123,11 +125,11 @@ export class AuthService {
   }
 
   async setSesionTeam() {
-    const user: SecretUser | null = await this.getSesion();
-    if (user == null) {
+    const secretUser: SecretUser | null = await this.getSesion();
+    if (secretUser == null) {
       return;
     }
-    const team:Team = await firstValueFrom(this.getTeam(user));
+    const team:Team = await firstValueFrom(this.getTeam(secretUser));
     await Preferences.set({
       key: "equipo",
       value: JSON.stringify(team)
@@ -166,6 +168,11 @@ export class AuthService {
 
   async removeSesion(){
     await Preferences.remove({key: "usuario"});
+    await Preferences.remove({key: "equipo"});
+  }
+
+
+  async removeTeamSesion(){
     await Preferences.remove({key: "equipo"});
   }
 

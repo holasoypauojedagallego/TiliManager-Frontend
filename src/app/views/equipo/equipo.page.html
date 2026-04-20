@@ -1,9 +1,18 @@
-<app-header title="Equipo"/>
+<app-header title="Equipo" />
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">equipo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-list>
+    <ion-reorder-group [disabled]="false" (ionReorderEnd)="handleReorderEnd($any($event))" >
+      @for (player of equipo.players; track player.id) {
+      <ion-reorder class="w-44">
+        <ion-item>
+          <div class="w-26.5">
+            <app-jugador-mini-card [jugador]="player" />
+          </div>
+        </ion-item>
+      </ion-reorder>
+
+      }
+    </ion-reorder-group>
+  </ion-list>
 </ion-content>

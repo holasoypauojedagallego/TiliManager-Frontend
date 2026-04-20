@@ -9,7 +9,7 @@ export class RequireNoTeamGuard implements CanActivate {
 
   constructor(private router: Router, private auth: AuthService) { }
 
-    async canActivate(): Promise<boolean> {
+  async canActivate(): Promise<boolean> {
 
     const currentUser : Team | null = await this.auth.getTeamSesion();
 

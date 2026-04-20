@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonItem, IonInput, IonButton, IonAlert, IonIcon } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonAlert, IonIcon, NavController } from '@ionic/angular/standalone';
 import { Jugador, JugadoresService } from '../../services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
 import { JugadorCard } from "src/app/components/jugador-card/jugador-card.component";
@@ -28,7 +28,7 @@ export class CrearEquipoPage implements OnInit {
   alerta: boolean = true;
   alertButtons = ['Aceptar'];
 
-  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService) { }
+  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController) { }
 
   async ngOnInit() {
     this.teamForm = this.fb.group({
@@ -71,9 +71,12 @@ export class CrearEquipoPage implements OnInit {
     }
 
     response.subscribe({
-      next: (correct) => {
+      next: async (correct) => {
         console.log("SISISI vaaa!!!", correct);
+        await this.auth.removeTeamSesion();
+        await this.auth.setSesionTeam();
         console.log("Team: ", this.auth.getTeamSesion());
+        await this.navCtrl.navigateRoot('/', { animated: true });
       },
       error: (err) => {
         console.log("no va jopetitas", err);
