@@ -1,17 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonReorderGroup, IonReorder, IonItem, ReorderEndCustomEvent } from '@ionic/angular/standalone';
+import { IonContent, IonList, IonReorderGroup, IonReorder, IonItem, ReorderEndCustomEvent, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { JugadorMiniCardComponent } from "src/app/components/jugador-mini-card/jugador-mini-card.component";
-import { AuthService, Team } from 'src/app/services/auth.service';
+import { AuthService, Jugador, Team } from 'src/app/services/auth.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DragDropModule } from '@angular/cdk/drag-drop';   
 
 @Component({
   selector: 'app-equipo',
   templateUrl: './equipo.page.html',
   styleUrls: ['./equipo.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, JugadorMiniCardComponent, IonList, IonReorderGroup, IonReorder, IonItem]
+  imports: [IonLabel, IonItemDivider, IonContent, CommonModule, FormsModule, HeaderComponent, JugadorMiniCardComponent, IonList, IonReorderGroup, IonReorder, DragDropModule, IonItem]
 })
 export class EquipoPage implements OnInit {
 
@@ -27,15 +29,7 @@ export class EquipoPage implements OnInit {
     this.equipo = await this.auth.getSesionTeamCargado();
   }
 
-  handleReorderEnd(event: ReorderEndCustomEvent) {
-    // The `from` and `to` properties contain the index of the item
-    // when the drag started and ended, respectively
-    console.log('Dragged from index', event.detail.from, 'to', event.detail.to);
-
-    // Finish the reorder and position the item in the DOM based on
-    // where the gesture ended. This method can also be called directly
-    // by the reorder group.
-    event.detail.complete();
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.equipo.players, event.previousIndex, event.currentIndex);
   }
-
 }
