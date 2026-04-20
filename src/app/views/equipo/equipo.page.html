@@ -5,7 +5,7 @@
     
     @for (player of equipo.players; track player.id; let i = $index) {
       <div cdkDropList [cdkDropListData]="i" (cdkDropListDropped)="drop($event)" class="drop-slot">
-        <div class="w-26.5 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
+        <div class="w-25 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
           <div *cdkDragPlaceholder class="cdk-drag-placeholder"></div>
           <app-jugador-mini-card [jugador]="player" />
         </div>
