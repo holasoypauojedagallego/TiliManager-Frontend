@@ -4,12 +4,10 @@
   
   <ion-card routerLink="/partido">
     <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-200">
-
-      <div class="absolute top-4 left-4">
-        <span class="text-red-700 text-[10px] font-bold uppercase tracking-widest">*</span>
-      </div>
-      <div class="absolute top-4 right-4">
-        <span class="text-red-700 text-[10px] font-bold uppercase tracking-widest">*</span>
+      <div class="flex justify-between items-center w-[90%] max-w-200 md:text-lg">
+        <div class="w-16 flex justify-center">Local</div>
+        <div class="w-16 flex justify-center">VS</div>
+        <div class="w-16 flex justify-center">Visitante</div>
       </div>
     </div>
 
@@ -37,9 +35,9 @@
 
 </div>
 
-    <ion-grid class="p-2">
+    <ion-grid class="py-2.5">
     <ion-row class="gap-3">
-      <ion-col size="12" size-md="3.935">
+      <ion-col size="12" size-md="3.87">
         <ion-card routerLink="/partido" class="animate-saltos-hover active:scale-90 duration-75">
           <img alt="Prueba Partido" src="https://ionicframework.com/docs/img/demos/card-media.png" class="overflow-hidden "/>
           <ion-card-header>
@@ -53,7 +51,7 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="3.935">
+      <ion-col size="12" size-md="3.87">
         <ion-card routerLink="/equipo">
           <img alt="Liga de Estrategia" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>
@@ -67,7 +65,7 @@
         </ion-card>
       </ion-col>
 
-            <ion-col size="12" size-md="3.935">
+      <ion-col size="12" size-md="3.87">
         <ion-card routerLink="/equipo">
           <img alt="Liga de Estrategia" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>

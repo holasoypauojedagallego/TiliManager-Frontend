@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonContent, IonButton, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonListHeader, IonLabel, IonItem, IonRouterLinkWithHref } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonListHeader, IonLabel, IonItem } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 import { HeaderComponent } from "src/app/components/header/header.component";
 
@@ -10,7 +10,7 @@ import { HeaderComponent } from "src/app/components/header/header.component";
   imports: [ IonContent,
     IonButton, IonGrid, IonRow, IonCol, IonCard, IonCardHeader,
     IonCardTitle, IonCardSubtitle, IonCardContent, IonList,
-    IonListHeader, IonLabel, IonItem, IonRouterLinkWithHref, RouterLink, HeaderComponent],
+    IonListHeader, IonLabel, IonItem, RouterLink, HeaderComponent],
 })
 export class HomePage {
   constructor() {}
