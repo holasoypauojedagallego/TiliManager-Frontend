@@ -8,17 +8,11 @@
   <div class="text-[12px] sm:text-sm  font-extrabold flex w-full justify-around"><span>DEF: </span><span class="">{{jugador.defense}}</span></div>
 </div>
 
-<ion-modal 
-  [isOpen]="alerta" 
-  (didDismiss)="alerta = false"
-  class="modal-custom-alert"
->
+<ion-modal [isOpen]="alerta" (didDismiss)="alerta = false">
   <ng-template>
     <div class="flex flex-col h-full items-center justify-center p-2 bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl">
-      
       <app-jugador-card [jugador]="jugador" class="w-full max-w-92"></app-jugador-card>
       <ion-button (click)="alerta=false" shape="round" class="mt-20 mb-12">Aceptar</ion-button>
-      
     </div>
   </ng-template>
 </ion-modal>
