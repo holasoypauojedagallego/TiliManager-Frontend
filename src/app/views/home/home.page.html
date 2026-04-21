@@ -1,15 +1,47 @@
 <app-header/>
 <ion-content [fullscreen]="true" class="ion-padding">
-  <div class="ion-padding">
-    <h2>Próximos Partidos</h2>
-    <p>Elige tu simulador favorito y empieza a jugar.</p>
-  </div>
+ <div class="w-full mx-auto">
+  
+  <ion-card routerLink="/partido">
+    <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-200">
 
-  <ion-grid class="p-2">
+      <div class="absolute top-4 left-4">
+        <span class="text-red-700 text-[10px] font-bold uppercase tracking-widest">*</span>
+      </div>
+      <div class="absolute top-4 right-4">
+        <span class="text-red-700 text-[10px] font-bold uppercase tracking-widest">*</span>
+      </div>
+    </div>
+
+    <ion-card-header class="py-2 pl-4">
+      <div class="flex justify-between items-start">
+        <div>
+          <ion-card-title class="text-2xl font-bold tracking-tight">
+            Próximo encuentro
+          </ion-card-title>
+          <ion-card-subtitle class="mt-0.5 font-semibold uppercase text-xs tracking-tighter">
+            Encuentro contra:
+          </ion-card-subtitle>
+        </div>
+        
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      Disfruta de tu próxima encuentro ¡Buena suerte y a por todas, recuerda que esto es futbol al rojo vivo!
+    </ion-card-content>
+
+    <ion-button fill="clear" color="secondary">¡Jugar Ahora!</ion-button>
+
+  </ion-card>
+
+</div>
+
+    <ion-grid class="p-2">
     <ion-row class="gap-3">
-      <ion-col size="12" size-md="5.935">
+      <ion-col size="12" size-md="3.935">
         <ion-card routerLink="/partido" class="animate-saltos-hover active:scale-90 duration-75">
-          <img alt="Prueba Partido" src="https://ionicframework.com/docs/img/demos/card-media.png" class="overflow-hidden"/>
+          <img alt="Prueba Partido" src="https://ionicframework.com/docs/img/demos/card-media.png" class="overflow-hidden "/>
           <ion-card-header>
             <ion-card-title>Prueba Partido</ion-card-title>
             <ion-card-subtitle>Prueba Partido</ion-card-subtitle>
@@ -21,7 +53,21 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="5.935">
+      <ion-col size="12" size-md="3.935">
+        <ion-card routerLink="/equipo">
+          <img alt="Liga de Estrategia" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+          <ion-card-header>
+            <ion-card-title>Gestionar Equipo</ion-card-title>
+            <ion-card-subtitle>Equipo</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            Gestiona tu propio equipo y llévalo a la gloria en la Champions.
+          </ion-card-content>
+          <ion-button fill="clear" color="secondary">Gestionar equipo</ion-button>
+        </ion-card>
+      </ion-col>
+
+            <ion-col size="12" size-md="3.935">
         <ion-card routerLink="/equipo">
           <img alt="Liga de Estrategia" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>
@@ -44,7 +90,6 @@
     <ion-item button>
       <ion-label>Torneos Online</ion-label>
     </ion-item>
-    <a routerLink="/login" class="p-1">Login</a>
   </ion-list>
 
 </ion-content>
