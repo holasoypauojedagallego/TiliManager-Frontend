@@ -32,8 +32,8 @@
       </div>
     } @else {
 
-    <div class="lg:w-[90%] w-full items-center justify-center md:p-7 p-2.5 bg-[#333] rounded-2xl border-2 border-gray-300 mb-3">
-      <div class="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5">
+    <div class="lg:w-[90%] w-full items-center justify-center md:p-3.5 p-2.5 bg-[#333] rounded-2xl border-2 border-gray-300 mb-3">
+      <div class="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 max-h-[70vh] overflow-y-auto overflow-x-clip custom-scroll">
 
         @for (jugador of jugadoresSinEquipo; track jugador.id) {
           <div class="relative group cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl rounded-xl">
@@ -46,7 +46,7 @@
     }
 
       <div class="flex md:items-center justify-center my-10 w-full max-w-125 md:max-w-200 md:w-125">
-        <form class="w-full mt-3" method="post" [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
+        <form class="w-full mt-3 flex flex-col" method="post" [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
           @if (teamForm.get('name')?.invalid && teamForm.get('name')?.touched) {
           <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
             <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0"/>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonList, IonReorderGroup, IonReorder, IonItem, ReorderEndCustomEvent, IonItemDivider, IonLabel } from '@ionic/angular/standalone';
+import { IonContent, IonAlert } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { JugadorMiniCardComponent } from "src/app/components/jugador-mini-card/jugador-mini-card.component";
 import { AuthService, Team } from 'src/app/services/auth.service';
@@ -13,7 +13,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
   templateUrl: './equipo.page.html',
   styleUrls: ['./equipo.page.scss'],
   standalone: true,
-  imports: [IonLabel, IonItemDivider, IonContent, CommonModule, FormsModule, HeaderComponent, JugadorMiniCardComponent, IonList, IonReorderGroup, IonReorder, DragDropModule, IonItem]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, JugadorMiniCardComponent, DragDropModule, IonAlert]
 })
 export class EquipoPage implements OnInit {
 

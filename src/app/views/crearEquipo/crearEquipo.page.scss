@@ -25,3 +25,11 @@ ion-col {
   .ion-row-2{height: 41.33%; max-height: 41.33%;}
   .ion-row-3{height: 35%; max-height: 35%;}
 }
+
+.custom-scroll {
+  @media (min-width: 1280px) {  
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #666 #333;
+  }
+}

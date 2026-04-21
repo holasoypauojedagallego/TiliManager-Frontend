@@ -1,9 +1,24 @@
-<div class="imagen w-25 h-44 relative flex flex-col items-center p-1">
+<div class="imagen w-23 sm:w-25 h-41 sm:h-44 relative flex flex-col items-center p-1" (click)="alerta=true">
   <span class="absolute text-xl font-bold porfuera burro top-1.75 z-1">
     {{jugador.rating}}
   </span>
-  <ion-img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png" class="mt-5 w-19.75"/>
-  <div class="truncate font-semibold max-w-26 px-0.75">{{jugador.name}}</div>
-  <div class="text-sm font-extrabold flex w-full justify-around"><span>ATK: </span><span class="">{{jugador.attack}}</span></div>
-  <div class="text-sm font-extrabold flex w-full justify-around"><span>DEF: </span><span class="">{{jugador.defense}}</span></div>
+  <ion-img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png" class="sm:mt-5 mt-6 sm:w-19.75"/>
+  <div class="truncate font-semibold max-w-23 sm:max-w-25 px-0.75 sm:mt-0 mt-0.5">{{jugador.name}}</div>
+  <div class="text-[12px] sm:text-sm font-extrabold flex w-full justify-around"><span>ATK: </span><span class="">{{jugador.attack}}</span></div>
+  <div class="text-[12px] sm:text-sm  font-extrabold flex w-full justify-around"><span>DEF: </span><span class="">{{jugador.defense}}</span></div>
 </div>
+
+<ion-modal 
+  [isOpen]="alerta" 
+  (didDismiss)="alerta = false"
+  class="modal-custom-alert"
+>
+  <ng-template>
+    <div class="flex flex-col h-full items-center justify-center p-2 bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl">
+      
+      <app-jugador-card [jugador]="jugador" class="w-full max-w-92"></app-jugador-card>
+      <ion-button (click)="alerta=false" shape="round" class="mt-20 mb-12">Aceptar</ion-button>
+      
+    </div>
+  </ng-template>
+</ion-modal>

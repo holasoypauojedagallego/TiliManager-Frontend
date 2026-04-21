@@ -1,5 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary" class="px-3 flex justify-items-center">
+    @if (returnBack) {
+        <ion-buttons slot="start">
+          <div (click)="goToHome()" class="cursor-pointer text-3xl mr-5"><span><-</span></div>
+        </ion-buttons>
+    }
     <ion-title>
       {{title.toUpperCase()}}
     </ion-title>

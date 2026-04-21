@@ -11,6 +11,7 @@ import { AuthService, Team } from 'src/app/services/auth.service';
 export class HeaderComponent  implements OnInit {
   @Input() title: string = 'TiliManager';
   @Input() dineroGastado: number = 0;
+  @Input() returnBack: boolean = false;
   username: string = '';
   team!: Team;
 
@@ -44,7 +45,7 @@ export class HeaderComponent  implements OnInit {
     await this.navCtrl.navigateRoot('/login', { animated: true });
   }
 
-    smallerPrice(i: number) : String {
+  smallerPrice(i: number) : String {
       if (!i || i == 0){
         return '0';
       }
@@ -60,6 +61,13 @@ export class HeaderComponent  implements OnInit {
       } else {
         return comprobar;
       }
+  }
+
+  goToHome(){
+    if (document.activeElement instanceof HTMLElement){
+      document.activeElement.blur();
     }
+    this.navCtrl.navigateRoot('/', { animated: true });
+  }
 
 }
