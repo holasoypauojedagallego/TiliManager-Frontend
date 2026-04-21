@@ -67,6 +67,7 @@ export class RegisterPage implements OnInit {
       next : (response) => {
         console.log("YUJUUUUUU : ", response);
         this.registered = true;
+        this.router.navigate(["/login"]);
       },
       error : (error) => {
         console.log("Username: " + this.registerForm.value.username);

@@ -63,8 +63,8 @@ export class LoginPage implements OnInit {
         this.loginForm.controls['password'].reset();
         const currentUser : Team | null = await this.auth.getTeamSesion();
         if(currentUser && currentUser?.players.length == 0){
-            this.router.navigate(['/crearequipo']);
-        } else {this.router.navigate(['/home']);}
+            this.navCtrl.navigateRoot('/crearequipo', { animated: true });
+        } else {this.navCtrl.navigateRoot('/', { animated: true });}
       },
 
       error: (err) => {
@@ -81,10 +81,6 @@ export class LoginPage implements OnInit {
     this.loginForm.controls['password'].reset();
     this.submited = true;
 
-  }
-
-  async onCerrarSesion() {
-    await this.auth.removeSesion();
   }
 
   ionViewWillLeave() {

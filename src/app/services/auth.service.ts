@@ -65,7 +65,7 @@ export interface NameRegisteredRequest {
 
 export class AuthService {
 
-  private apiURL = "http://192.168.1.137:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://127.0.0.1:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1 - http://192.168.3.23:8080/jpa/api/v1
 
   constructor(private http: HttpClient) {}
@@ -88,6 +88,10 @@ export class AuthService {
 
   getTeam(data : SecretUser) : Observable<Team> {
     return this.http.post<Team>(`${this.apiURL}/equipos/owner`, data);
+  }
+
+  teamNameRegistered(data : string) : Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiURL}/equipos/exists/name/${data}`);
   }
 
   async updateTeam(name: string, players : Jugador[], money: number) : Promise<Observable<any> | undefined> {
@@ -164,6 +168,11 @@ export class AuthService {
       teamFinal = team;
     }
     return teamFinal;
+  }
+
+  async getMoney() : Promise<number> {
+    const team: Team = await this.getSesionTeamCargado();
+    return team.money;
   }
 
   async removeSesion(){

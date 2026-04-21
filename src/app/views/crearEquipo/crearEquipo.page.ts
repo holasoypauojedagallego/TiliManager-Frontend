@@ -26,6 +26,9 @@ export class CrearEquipoPage implements OnInit {
   teamUpdated: boolean = false;
 
   alerta: boolean = true;
+  alertaJugador: boolean = false;
+  nameCreated: boolean = false;
+  alertaName: boolean = false;
   alertButtons = ['Aceptar'];
 
   constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController) { }
@@ -62,6 +65,18 @@ export class CrearEquipoPage implements OnInit {
   async onCreateTeam() {
     const nameData = {
       name: this.teamForm.value.name
+    }
+
+    this.nameCreated = await firstValueFrom(this.auth.teamNameRegistered(nameData.name));
+    if (this.nameCreated) {
+      this.teamForm.controls['name'].reset();
+      this.alertaName = true;
+      return;
+    }
+    const dineroTeam:number = await this.auth.getMoney();
+    if (this.jugadoresParaFichar.length < 5 || this.jugadoresParaFichar.length > 7 || this.dineroTotalJugadores > dineroTeam) {
+      this.alertaJugador = true;
+      return;
     }
 
     const response = await this.auth.updateTeam(nameData.name, this.jugadoresParaFichar, this.dineroTotalJugadores);
