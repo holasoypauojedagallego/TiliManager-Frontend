@@ -23,6 +23,7 @@ export const routes: Routes = [
   },
   {
     path: 'partido',
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/partido/partido.page').then( m => m.PartidoPage)
   },
   {
@@ -39,6 +40,10 @@ export const routes: Routes = [
     path: 'partidoonline',
     canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/partidoonline/partidoonline.page').then( m => m.PartidoonlinePage)
+  },
+  {
+    path: 'historial',
+    loadComponent: () => import('./views/historial/historial.page').then( m => m.HistorialPage)
   },
   
 

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, NavController, IonButton } from '@ionic/angular/standalone';
+import { IonContent, NavController, IonButton, IonImg, IonIcon } from '@ionic/angular/standalone';
 import { PartidoEmulado, PartidosService } from 'src/app/services/partidos.service';
 import { firstValueFrom } from 'rxjs';
+import { HeaderComponent } from "src/app/components/header/header.component";
 
 @Component({
   selector: 'app-partidoonline',
   templateUrl: './partidoonline.page.html',
   styleUrls: ['./partidoonline.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, IonButton]
+  imports: [IonContent, CommonModule, IonButton, IonImg, IonIcon, HeaderComponent]
 })
 export class PartidoonlinePage implements OnInit {
 
