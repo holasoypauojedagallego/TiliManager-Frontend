@@ -35,11 +35,15 @@ export const routes: Routes = [
     canActivate: [CanActivateAuthGuard, RequireNoTeamGuard],
     loadComponent: () => import('./views/crearEquipo/crearEquipo.page').then( m => m.CrearEquipoPage)
   },
-
+  {
+    path: 'partidoonline',
+    canActivate: [CanActivateAuthGuard],
+    loadComponent: () => import('./views/partidoonline/partidoonline.page').then( m => m.PartidoonlinePage)
+  },
   
 
   {
     path: '**',
     loadComponent: () => import('./views/error404/error404.page').then( m => m.Error404Page)
-  },
+  }
 ];

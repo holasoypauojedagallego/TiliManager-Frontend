@@ -1,19 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
-
-import { PartidoEmulado, PartidosService, } from '../../services/partidos.service';
-import { Router } from '@angular/router';
+import { IonContent, NavController, IonButton } from '@ionic/angular/standalone';
+import { PartidoEmulado, PartidosService } from 'src/app/services/partidos.service';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
-  selector: 'app-partido',
-  templateUrl: './partido.page.html',
-  styleUrls: ['./partido.page.scss'],
+  selector: 'app-partidoonline',
+  templateUrl: './partidoonline.page.html',
+  styleUrls: ['./partidoonline.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonContent, IonButton]
+  imports: [IonContent, CommonModule, IonButton]
 })
-export class PartidoPage implements OnInit {
+export class PartidoonlinePage implements OnInit {
 
   enEjecucion : boolean = false;
   errorCode : boolean = false;
@@ -28,12 +26,11 @@ export class PartidoPage implements OnInit {
   golesLocal : number = 0;
   golesVisitante : number = 0;
 
-  constructor(private partidos : PartidosService, private router : Router) { }
+  constructor(private partidos : PartidosService, private navCtrl : NavController) { }
 
   ngOnInit() {
   }
-
-  async correrTiempo() {
+async correrTiempo() {
     for (let i = 1; i < 91; i++) {
       await new Promise(resolve => setTimeout(resolve, 333));
       this.emulacion.forEach(e => {
@@ -64,7 +61,7 @@ export class PartidoPage implements OnInit {
     try {
       let local :boolean = false;
       let visitor :boolean = false;
-      const response = await firstValueFrom(this.partidos.simularPartido());
+      const response = await firstValueFrom(await this.partidos.simularPartidoTorneo1());
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
         if(this.emulacion[i].local && !local){
@@ -89,6 +86,6 @@ export class PartidoPage implements OnInit {
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();
     }
-    this.router.navigate(['/']);
+    this.navCtrl.navigateRoot('/', {animated : true});
   }
 }
