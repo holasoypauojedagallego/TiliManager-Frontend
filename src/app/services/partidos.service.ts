@@ -29,7 +29,7 @@ export interface Match {
 
 export class PartidosService {
 
-  private apiURL = "http://192.168.1.137:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://192.168.251.136:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1
   private varhistorialPartidos: Match[] = [];
   
@@ -41,6 +41,10 @@ export class PartidosService {
 
   historialPartidos() : Observable<Match[]> {
     return this.http.get<Match[]>(`${this.apiURL}/partidos/history`);
+  }
+
+  historialPartidoById(id: number) : Observable<Match> {
+    return this.http.get<Match>(`${this.apiURL}/partidos/history/${id}`);
   }
 
   async simularPartidoTorneo1() : Promise<Observable<any>> {
@@ -59,12 +63,12 @@ export class PartidosService {
     return this.http.post(`${this.apiURL}/partidos/t1`, equipo);
   }
 
-    async onCargar() {
-      this.varhistorialPartidos = (await firstValueFrom(this.historialPartidos())).reverse();
-    }
+  async onCargar() {
+    this.varhistorialPartidos = (await firstValueFrom(this.historialPartidos())).reverse();
+  }
 
-    getHistorialPartido(): Match[] {
-      return this.varhistorialPartidos;
-    }
+  getHistorialPartido(): Match[] {
+    return this.varhistorialPartidos;
+  }
 
 }

@@ -17,7 +17,7 @@
                 <ion-label>Fecha: <span class="tracking-widest">{{match.date | date:'HH:mm:ss - dd/MM/yyyy'}}</span></ion-label>
               </div>
               <div class="m-auto pb-3 pt-0.5 sm:m-0">
-                <ion-button size="default" shape="round">Revivir Encuentro</ion-button>
+                <ion-button size="default" shape="round" (click)="simularEncuentro(match.id)">Revivir Encuentro</ion-button>
               </div>
             </div>
           </ion-item>

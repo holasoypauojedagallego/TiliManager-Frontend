@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController, IonRouterOutlet } from "@ionic/angular/standalone";
 import { AuthService, Team } from 'src/app/services/auth.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class HeaderComponent  implements OnInit {
   username: string = '';
   team!: Team;
 
-  constructor(private auth: AuthService, private navCtrl: NavController, private popOver: PopoverController) { }
+  constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) { }
 
   async ngOnInit() {
     await this.cargarNombre();
@@ -67,7 +67,11 @@ export class HeaderComponent  implements OnInit {
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();
     }
-    this.navCtrl.navigateRoot('/', { animated: true });
+    if (this.routerCtrl?.canGoBack()) {
+      this.navCtrl.back();
+    } else {
+      this.navCtrl.navigateRoot('/', { animated: true , animationDirection: 'back'});  
+    }
   }
 
 }

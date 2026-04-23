@@ -1,17 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonIcon, IonImg } from '@ionic/angular/standalone';
 
-import { PartidoEmulado, PartidosService, } from '../../services/partidos.service';
-import { Router } from '@angular/router';
+import { Match, PartidoEmulado, PartidosService, } from '../../services/partidos.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { HeaderComponent } from "src/app/components/header/header.component";
 
 @Component({
   selector: 'app-partido',
   templateUrl: './partido.page.html',
   styleUrls: ['./partido.page.scss'],
   standalone: true,
-  imports: [CommonModule, IonContent, IonButton]
+  imports: [CommonModule, IonContent, IonButton, IonIcon, HeaderComponent, IonImg]
 })
 export class PartidoPage implements OnInit {
 
@@ -21,6 +22,8 @@ export class PartidoPage implements OnInit {
   emulacion : PartidoEmulado[] = [];
   tiempo : number = 0;
 
+  id: number = 0;
+
   ownerLocal : string = '';
   ownerVisitante : string = '';
   nombreLocal : string = '';
@@ -28,9 +31,10 @@ export class PartidoPage implements OnInit {
   golesLocal : number = 0;
   golesVisitante : number = 0;
 
-  constructor(private partidos : PartidosService, private router : Router) { }
+  constructor(private partidos : PartidosService, private router : Router, private activeRouter: ActivatedRoute) {}
 
   ngOnInit() {
+    this.id = Number(this.activeRouter.snapshot.paramMap.get("id"));
   }
 
   async correrTiempo() {
@@ -62,21 +66,15 @@ export class PartidoPage implements OnInit {
     this.emulacion = [];
 
     try {
-      let local :boolean = false;
-      let visitor :boolean = false;
-      const response = await firstValueFrom(this.partidos.simularPartido());
-      for (let i = 0; i < response.length; i++) {
-        this.emulacion[i] = response[i];
-        if(this.emulacion[i].local && !local){
-          this.nombreLocal = this.emulacion[i].equipo.name;
-          this.ownerLocal = this.emulacion[i].equipo.owner.name;
-          local = true;
-        } else if (!this.emulacion[i].local && !visitor) {
-          this.nombreVisitante = this.emulacion[i].equipo.name;
-          this.ownerVisitante = this.emulacion[i].equipo.owner.name;
-          visitor = true;
-        }
+      const response: Match = await firstValueFrom(this.partidos.historialPartidoById(this.id));
+      console.log(response);
+      for (let i = 0; i < response.partidoEncapsulado.length; i++) {
+        this.emulacion[i] = response.partidoEncapsulado[i];
       }
+      this.nombreLocal = response.localTeam.name;
+      this.ownerLocal = response.localTeam.owner.name;
+      this.nombreVisitante = response.visitorTeam.name;
+      this.ownerVisitante = response.visitorTeam.owner.name;
       await this.correrTiempo();
 
     } catch (error) {

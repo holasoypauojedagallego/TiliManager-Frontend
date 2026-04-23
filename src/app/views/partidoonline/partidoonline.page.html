@@ -45,11 +45,11 @@
         @for (e of emulacion; track e.minuto) {
           @if (tiempo >= e.minuto) {
             <div [class]="e.local ? 'flex-row' : 'flex-row-reverse'" 
-                 class="flex items-center gap-4 p-2.75 rounded-2xl cursor-default"
+                 class="flex items-center gap-4 p-2 rounded-xl cursor-default"
                  [style.background-color]="e.local ? '#0c4ca1' : '#167956'">
-              
+              3
               <div [class]="e.local ? 'bg-[#ccb838]' : 'bg-[#9c6e44]'"
-                   class="text-[#0c3f42] font-bold px-1 py-0.75 rounded-lg text-xs md:text-sm min-w-12 text-center">
+                   class="text-[#0c3f42] font-bold px-1 py-0.75 rounded-lg text-xs md:text-sm min-w-10 text-center">
                 {{e.minuto}}'
               </div>
 
