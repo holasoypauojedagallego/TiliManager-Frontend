@@ -1,46 +1,75 @@
-<app-header/>
+<app-header />
 <ion-content [fullscreen]="true" class="ion-padding">
- <div class="w-full mx-auto">
-  
-  <ion-card routerLink="/partidoonline">
-    <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-200">
-      <div class="flex justify-between items-center w-[90%] max-w-200 md:text-lg">
-        <div class="w-16 flex justify-center">Local</div>
-        <div class="w-16 flex justify-center">VS</div>
-        <div class="w-16 flex justify-center">Visitante</div>
-      </div>
-    </div>
 
-    <ion-card-header class="py-2 pl-4">
-      <div class="flex justify-between items-start">
-        <div>
-          <ion-card-title class="text-2xl font-bold tracking-tight">
-            Próximo encuentro
-          </ion-card-title>
-          <ion-card-subtitle class="mt-0.5 font-semibold uppercase text-xs tracking-tighter">
-            Encuentro contra:
-          </ion-card-subtitle>
-        </div>
-        
-      </div>
-    </ion-card-header>
 
-    <ion-card-content>
-      Disfruta de tu próxima encuentro ¡Buena suerte y a por todas, recuerda que esto es futbol al rojo vivo!
-    </ion-card-content>
+  <ion-grid class="py-0.5">
+    <ion-row class="pb-2.5 justify-between">
+      <ion-col size="12" sizeMd="7.9">
+        <ion-card routerLink="/partidoonline">
+          <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-200">
+            <div class="flex justify-between items-center w-[90%] max-w-200 md:text-lg">
+              <div class="w-16 flex justify-center">Local</div>
+              <div class="w-16 flex justify-center">VS</div>
+              <div class="w-16 flex justify-center">Visitante</div>
+            </div>
+          </div>
 
-    <ion-button fill="clear" color="secondary">¡Jugar Ahora!</ion-button>
+          <ion-card-header class="py-2 pl-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <ion-card-title class="text-2xl font-bold tracking-tight">
+                  Próximo encuentro
+                </ion-card-title>
+                <ion-card-subtitle class="mt-0.5 uppercase">
+                  Encuentro contra:
+                </ion-card-subtitle>
+              </div>
 
-  </ion-card>
+            </div>
+          </ion-card-header>
 
-</div>
+          <ion-card-content>
+            Disfruta de tu próxima encuentro ¡Buena suerte y a por todas, recuerda que esto es futbol al rojo vivo!
+          </ion-card-content>
 
-    <ion-grid class="py-2.5 ">
-    <ion-row class="gap-3">
-      <ion-col size="12" size-md="3.87">
+          <ion-button fill="clear" color="secondary">¡Jugar Ahora!</ion-button>
+
+        </ion-card>
+      </ion-col>
+            <ion-col size="12" sizeMd="4">
+        <ion-card routerLink="/partidoonline">
+          <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-900">
+          </div>
+
+          <ion-card-header class="py-2 pl-4">
+            <div class="flex justify-between items-start">
+              <div>
+                <ion-card-title class="text-2xl font-bold tracking-tight">
+                  Mercado
+                </ion-card-title>
+                <ion-card-subtitle>
+                  Mercado de fichajes:
+                </ion-card-subtitle>
+              </div>
+
+            </div>
+          </ion-card-header>
+
+          <ion-card-content>
+            Disfruta de tu próxima encuentro
+          </ion-card-content>
+
+          <ion-button fill="clear" color="secondary">¡Jugar Ahora!</ion-button>
+
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="justify-between">
+      <ion-col size="12" size-md="3.92">
         <ion-card routerLink="/partidoonline" class="animate-saltos-hover active:scale-90 duration-75">
-          <img alt="Prueba Partido" src="assets/img/jugar.webp" class="md:h-[18vw]"/>
-          <ion-card-header class="p-1">
+          <img alt="Prueba Partido" src="assets/img/jugar.webp" class="md:h-[18vw]" />
+          <ion-card-header class="p-2">
             <ion-card-title>Torneo</ion-card-title>
             <ion-card-subtitle>Torneo de 3 partidos</ion-card-subtitle>
           </ion-card-header>
@@ -51,24 +80,24 @@
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="3.87  ">
+      <ion-col size="12" size-md="3.92">
         <ion-card routerLink="/historial">
-          <img alt="Liga de Estrategia" src="assets/img/historial.webp" class="md:h-[18vw]"/>
-          <ion-card-header class="p-1">
+          <img alt="Menu Historial" src="assets/img/historial.webp" class="md:h-[18vw]" />
+          <ion-card-header class="p-2">
             <ion-card-title>Historial</ion-card-title>
             <ion-card-subtitle>Historial de partidos</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            Mira los últimos encuentros.
+            Mira el historial de los últimos encuentros, y revive esos momentos épicos.
           </ion-card-content>
           <ion-button fill="clear" color="secondary">Mirar Historial</ion-button>
         </ion-card>
       </ion-col>
 
-      <ion-col size="12" size-md="3.87">
+      <ion-col size="12" size-md="3.9">
         <ion-card routerLink="/equipo">
-          <img alt="Liga de Estrategia" src="assets/img/equipo.webp" class="md:h-[18vw]"/>
-          <ion-card-header class="p-1">
+          <img alt="Menu Equipo" src="assets/img/equipo.webp" class="md:h-[18vw]" />
+          <ion-card-header class="p-2">
             <ion-card-title>Gestionar Equipo</ion-card-title>
             <ion-card-subtitle>Equipo</ion-card-subtitle>
           </ion-card-header>

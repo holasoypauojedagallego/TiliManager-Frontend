@@ -1,40 +1,29 @@
-<app-header title="Crear Equipo" [dineroGastado]="dineroTotalJugadores" />
+<app-header [returnBack]="true" title="Crear Equipo" [dineroGastado]="dineroTotalJugadores" />
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <div class="max-w-395 mx-auto w-full flex flex-col justify-center items-center">
 
-    <ion-icon src="assets/icon/svg/icono-pregunta.svg" class="absolute w-12 h-12 mb-2 top-15 md:right-5 right-3 cursor-pointer" (click)="alerta=true"></ion-icon>
+    <ion-icon src="assets/icon/svg/icono-pregunta.svg"
+      class="absolute w-12 h-12 mb-2 top-15 md:right-5 right-3 cursor-pointer" (click)="alerta=true"></ion-icon>
 
     <div>
-      <ion-alert
-        [isOpen]="alerta"
-        header="¡Bienvenido, Entrenador!"
-        subHeader="Instrucciones de equipo"
+      <ion-alert [isOpen]="alerta" header="¡Bienvenido, Entrenador!" subHeader="Instrucciones de equipo"
         [message]="'¡Enhorabuena! Ahora que ya ha iniciado sesión, comience creando el equipo. Póngale un nombre y elija a 7 jugadores, pero ¡Recuerde que todo vale dinero!'"
-        [buttons]="alertButtons"
-        (didDismiss)="alerta = false">
+        [buttons]="alertButtons" (didDismiss)="alerta = false">
       </ion-alert>
     </div>
 
     <div>
-      <ion-alert
-        [isOpen]="alertaJugador"
-        header="¡Entrenador!"
-        subHeader="Instrucciones de equipo"
+      <ion-alert [isOpen]="alertaJugador" header="¡Entrenador!" subHeader="Instrucciones de equipo"
         [message]="'Recuerde que solo se permiten 5 jugadores como mínimo, y 7 como máximo, y obviamente no se puede quedar con el dinero en negativo.'"
-        [buttons]="alertButtons"
-        (didDismiss)="alertaJugador = false">
+        [buttons]="alertButtons" (didDismiss)="alertaJugador = false">
       </ion-alert>
     </div>
 
-        <div>
-      <ion-alert
-        [isOpen]="alertaName"
-        header="¡Entrenador!"
-        subHeader="Instrucciones de equipo"
-        [message]="'Ese nombre ya está escogido, ¡Escriba otro!.'"
-        [buttons]="alertButtons"
+    <div>
+      <ion-alert [isOpen]="alertaName" header="¡Entrenador!" subHeader="Instrucciones de equipo"
+        [message]="'Ese nombre ya está escogido, ¡Escriba otro!.'" [buttons]="alertButtons"
         (didDismiss)="alertaName = false">
       </ion-alert>
     </div>
@@ -46,58 +35,64 @@
       <p class="text-gray-600 font-medium">Selecciona los jugadores para tu plantilla</p>
     </div>
 
-    @if (jugadoresSinEquipo.length <= 0) {
-      <div class="flex flex-col items-center justify-center p-10 mb-5 bg-white/50 rounded-2xl border-2 border-dashed border-gray-300">
-        <span class="text-2xl text-gray-500 font-bold text-center">
-          Oh vaya, parece que no hay jugadores disponibles
+    @if (jugadoresSinEquipo.length <= 0) { <div
+      class="flex flex-col items-center justify-center p-10 mb-5 bg-white/50 rounded-2xl border-2 border-dashed border-gray-300">
+      <span class="text-2xl text-gray-500 font-bold text-center">
+        Oh vaya, parece que no hay jugadores disponibles
+      </span>
+  </div>
+  } @else {
+
+  <div
+    class="lg:w-[90%] w-full sm:max-w-full max-w-97 items-center justify-center md:p-3.5 p-2.5 bg-[#333] rounded-2xl border-2 border-gray-300 mb-3">
+    <div
+      class="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 max-h-[70vh] overflow-y-auto overflow-x-clip custom-scroll">
+
+      @for (jugador of jugadoresSinEquipo; track jugador.id) {
+      <div
+        class="relative group cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl rounded-xl">
+        <app-jugador-card [jugador]="jugador" [totalJugadores]="jugadoresParaFichar.length"
+          (onFichar)="ficharJugador($event)" class="block w-full h-full"></app-jugador-card>
+      </div>
+      }
+
+    </div>
+  </div>
+  }
+
+  <div class="flex md:items-center justify-center my-10 w-full max-w-125 md:max-w-200 md:w-125">
+    <form class="w-full mt-3 flex flex-col" method="post" [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
+      @if (teamForm.get('name')?.invalid && teamForm.get('name')?.touched) {
+      <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
+        <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0" />
+        <span class="text-[#d84e57] font-semibold">
+          @if (nameCreated) {
+          Ese nombre para el equipo ya ha sido escogido.
+          } @else if (teamForm.get('name')?.hasError('pattern') || teamForm.get('name')?.hasError('required')) {
+          Ingresa un nombre de usuario válido (Caracteres: [a-zA-Z0-9._+-]).
+          }@else if (teamForm.get('name')?.hasError('minlength')) {
+          El nombre de usuario ha de tener 3 caracteres como mínimo.
+          } @else if (teamForm.get('name')?.hasError('maxlength')) {
+          El nombre de usuario ha de tener 20 caracteres como máximo.
+          }
         </span>
       </div>
-    } @else {
+      }
 
-    <div class="lg:w-[90%] w-full sm:max-w-full max-w-97 items-center justify-center md:p-3.5 p-2.5 bg-[#333] rounded-2xl border-2 border-gray-300 mb-3">
-      <div class="grid grid-flow-row xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 max-h-[70vh] overflow-y-auto overflow-x-clip custom-scroll">
+      <ion-item fill="outline" mode="md" class="text-lg md:w-125 w-full">
+        <ion-input label="Nombre del Equipo:" label-placement="floating" type="text" name="name" id="name"
+          placeholder="Raimon, Royal Academy..." class="min-h-15 w-180 text-lg" formControlName="name" name="name"
+          required>
+        </ion-input>
+      </ion-item>
 
-        @for (jugador of jugadoresSinEquipo; track jugador.id) {
-          <div class="relative group cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl rounded-xl">
-            <app-jugador-card [jugador]="jugador" [totalJugadores]="jugadoresParaFichar.length" (onFichar)="ficharJugador($event)" class="block w-full h-full"></app-jugador-card>
-          </div>
-        }
+      <ion-button type="input" shape="round" [disabled]="teamForm.invalid"
+        class="h-14 mt-4 px-4 m-auto font-bold tracking-wide">
+        ¡FORMAR EQUIPO!
+      </ion-button>
 
-      </div>
-    </div>
-    }
-
-      <div class="flex md:items-center justify-center my-10 w-full max-w-125 md:max-w-200 md:w-125">
-        <form class="w-full mt-3 flex flex-col" method="post" [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
-          @if (teamForm.get('name')?.invalid && teamForm.get('name')?.touched) {
-          <div class="flex items-center gap-3 w-fit p-3 my-1.5 bg-black/40 border-l-3 border-cyan-400 rounded-r-xl">
-            <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0"/>
-            <span class="text-[#d84e57] font-semibold">
-              @if (nameCreated) {
-                Ese nombre para el equipo ya ha sido escogido.
-              } @else if (teamForm.get('name')?.hasError('pattern') || teamForm.get('name')?.hasError('required')) {
-                Ingresa un nombre de usuario válido (Caracteres: [a-zA-Z0-9._+-]).
-              }@else if (teamForm.get('name')?.hasError('minlength')) {
-                El nombre de usuario ha de tener 3 caracteres como mínimo.
-              } @else if (teamForm.get('name')?.hasError('maxlength')) {
-                El nombre de usuario ha de tener 20 caracteres como máximo.
-              } 
-            </span>
-          </div>
-        }
-
-          <ion-item fill="outline" mode="md" class="text-lg md:w-125 w-full">
-            <ion-input label="Nombre del Equipo:" label-placement="floating" type="text" name="name" id="name"
-                    placeholder="Raimon, Royal Academy..." class="min-h-15 w-180 text-lg"  formControlName="name" name="name" required>
-            </ion-input>
-          </ion-item>
-
-          <ion-button type="input" shape="round" [disabled]="teamForm.invalid" class="h-14 mt-4 px-4 m-auto font-bold tracking-wide">
-            ¡FORMAR EQUIPO!
-          </ion-button>
-
-        </form>
-      </div>
+    </form>
+  </div>
 
 
 

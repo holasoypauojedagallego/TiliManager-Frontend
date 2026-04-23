@@ -42,7 +42,7 @@ export const routes: Routes = [
   },
   {
     path: 'partidoonline',
-    canActivate: [CanActivateAuthGuard],
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/partidoonline/partidoonline.page').then( m => m.PartidoonlinePage)
   },
   
