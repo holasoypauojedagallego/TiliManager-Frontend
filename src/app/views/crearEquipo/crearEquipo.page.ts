@@ -38,14 +38,9 @@ export class CrearEquipoPage implements OnInit {
      name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9._+-]([a-zA-Z0-9._+ -]*[a-zA-Z0-9._+-])?$')]],
     });
     try {
-      const response : Jugador[] = await firstValueFrom(this.jugadores.getJugadores());
-      for (let i = 0 ; i < response.length; i++) {  
-        if (response[i].teamId === null) {
-          this.jugadoresSinEquipo.push(response[i]);
-        }
-      }
+      this.jugadoresSinEquipo = await firstValueFrom(this.jugadores.getJugadoresTeamIdNull());
     } catch (error) {
-      console.error("Ha ocurrido un error")
+      console.error("Ha ocurrido un error al busar los jugadores")
     }
   }
 

@@ -41,21 +41,21 @@
             </div>
             }
 
-        <div class="flex-1 overflow-y-auto p-4 space-y-3">
+        <div class="flex-1 overflow-y-auto p-4 space-y-2.5">
         @for (e of emulacion; track e.minuto) {
           @if (tiempo >= e.minuto) {
             <div [class]="e.local ? 'flex-row' : 'flex-row-reverse'" 
-                 class="flex items-center gap-4 p-3 rounded-2xl cursor-default"
+                 class="flex items-center gap-4 p-2.75 rounded-2xl cursor-default"
                  [style.background-color]="e.local ? '#0c4ca1' : '#167956'">
               
               <div [class]="e.local ? 'bg-[#ccb838]' : 'bg-[#9c6e44]'"
-                   class="text-[#0c3f42] font-bold px-2 py-1.5 rounded-lg text-xs md:text-sm min-w-12 text-center">
+                   class="text-[#0c3f42] font-bold px-1 py-0.75 rounded-lg text-xs md:text-sm min-w-12 text-center">
                 {{e.minuto}}'
               </div>
 
               <div class="text-amber-50 flex-1 flex flex-wrap items-baseline gap-1" [class.flex-row-reverse]="!e.local">
                 <span class="font-bold tracking-wide">{{e.equipo.name}}</span>
-                <span class="opacity-80 text-sm md:text-base">&middot;</span>
+                <span class="opacity-80 text-sm md:text-base"> : </span>
                 <span> {{e.jugador.name}}</span>
                 <span> - </span>
                 <span class="font-bold text-white">{{e.sucede}}</span>
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="w-[80%] max-w-120 pb-2">
+        <div class="w-[85%] max-w-120 pb-2">
             <ion-button 
             expand="block" 
             shape="round" 

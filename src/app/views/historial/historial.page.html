@@ -8,7 +8,7 @@
       @for (match of historialPartidos; track match.id) {
         <ion-accordion [value]="match.id" class="mb-2">
           <ion-item slot="header">
-            <ion-label>{{match.localTeam.name}} vs {{match.visitorTeam.name}}: {{match.date | date:'dd/MM/yyyy'}}</ion-label>
+            <ion-label>{{match.localTeam.name}} {{match.localTeamGoals}} vs {{match.visitorTeam.name}} {{match.visitorTeamGoals}}: {{match.date | date:'dd/MM/yyyy'}}</ion-label>
           </ion-item>
           <ion-item slot="content" class="px-1 text-white/67">
             <div class="w-full flex flex-col sm:flex-row gap-5 sm:items-center sm:justify-between">

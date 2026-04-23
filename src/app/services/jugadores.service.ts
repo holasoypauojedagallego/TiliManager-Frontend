@@ -26,4 +26,8 @@ export class JugadoresService {
     return this.http.get(`${this.apiURL}/jugadores`);
   }
 
+  getJugadoresTeamIdNull() : Observable<any> {
+    return this.http.get(`${this.apiURL}/jugadores/teamid`);
+  }
+
 }
