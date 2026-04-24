@@ -12,13 +12,18 @@ export interface Jugador {
   price: number;
 }
 
+export interface Mercado {
+  players: Jugador[],
+  fichable: boolean;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 
 export class JugadoresService {
 
-  private apiURL = "http://192.168.251.136:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
+  private apiURL = "http://127.0.0.1:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1
   constructor(private http: HttpClient) {}
 
@@ -28,6 +33,10 @@ export class JugadoresService {
 
   getJugadoresTeamIdNull() : Observable<any> {
     return this.http.get(`${this.apiURL}/jugadores/teamid`);
+  }
+
+  getMercadoJugadores() : Observable<Mercado> {
+    return this.http.get<Mercado>(`${this.apiURL}/mercado`);
   }
 
 }
