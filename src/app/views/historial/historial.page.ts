@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonRefresher, IonRefresherContent, RefresherCustomEvent, IonItem, IonLabel, IonAccordion, IonAccordionGroup, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonRefresher, IonRefresherContent, RefresherCustomEvent, IonItem, IonLabel, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar } from '@ionic/angular/standalone';
 import { Match, PartidoEmulado, PartidosService } from 'src/app/services/partidos.service';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { Router } from '@angular/router';
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   templateUrl: './historial.page.html',
   styleUrls: ['./historial.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, IonRefresher, IonRefresherContent, IonItem, IonLabel, HeaderComponent, IonAccordion, IonAccordionGroup, IonButton]
+  imports: [IonContent, CommonModule, FormsModule, IonRefresher, IonRefresherContent, IonItem, IonLabel, HeaderComponent, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar]
 })
 export class HistorialPage implements OnInit {
 

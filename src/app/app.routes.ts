@@ -50,7 +50,11 @@ export const routes: Routes = [
     canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/mercado/mercado.page').then( m => m.MercadoPage)
   },
-  
+  {
+    path: 'torneo',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    loadComponent: () => import('./views/torneo/torneo.page').then( m => m.TorneoPage)
+  },
 
   {
     path: '**',

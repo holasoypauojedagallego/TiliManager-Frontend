@@ -40,7 +40,7 @@ export class CrearEquipoPage implements OnInit {
     try {
       this.jugadoresSinEquipo = await firstValueFrom(this.jugadores.getJugadoresTeamIdNull());
     } catch (error) {
-      console.error("Ha ocurrido un error al busar los jugadores")
+      console.error("Ha ocurrido un error al buscar los jugadores")
     }
   }
 

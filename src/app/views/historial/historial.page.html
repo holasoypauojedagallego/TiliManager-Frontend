@@ -1,8 +1,11 @@
 <app-header [returnBack]="true" title="Historial" />
-<ion-content [fullscreen]="true" class="ion-padding">
+<ion-content>
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+  <div class="p-2 bg-[#222] rounded-b-xl mb-6 sticky top-0 z-67">
+    <ion-searchbar mode="ios" placeholder="Buscar Partido..."></ion-searchbar>
+  </div>
   <div>
     <ion-accordion-group [multiple]="true">
       @for (match of historialPartidos; track match.id) {

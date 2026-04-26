@@ -1,33 +1,27 @@
-<app-header [returnBack]="true" title="Mercado"/>
+<app-header [returnBack]="true" [dineroGastado]="dineroTotalJugadores" title="Mercado"/>
 
-<ion-content class="bg-gray-50">
-    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="p-4 bg-[#222] rounded-xl mb-6 sticky top-0 z-10">
-    <ion-searchbar 
-      mode="ios" 
-      placeholder="Buscar jugador..." 
-      class="p-0 mb-3 custom-searchbar">
-    </ion-searchbar>
-    
+  <div class="p-2 bg-[#222] rounded-b-xl mb-6 sticky top-0 z-67">
+    <ion-searchbar mode="ios" placeholder="Buscar jugador..." class="my-2"></ion-searchbar>
   </div>
 
   <div class="px-4 pb-8">
     <div class="flex justify-between items-end mb-4">
-      <h2 class="text-xl font-bold text-gray-400">Disponibles</h2>
+      <h2 class="text-xl font-bold text-gray-200">Disponibles</h2>
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
       
       @for (jugador of jugadoresDisponibles; track jugador.id) {
-        
-        <app-jugador-card [jugador]="jugador"></app-jugador-card>
+        <app-jugador-card [jugador]="jugador" (onFichar)="ficharJugador($event)" [totalJugadores]="numeroParaFichar()"/>
         
       } @empty {
         
-        <div class="col-span-full flex flex-col items-center justify-center py-16 bg-white rounded-xl border border-dashed border-gray-300">
-          <h3 class="text-lg font-bold text-gray-600">No hay jugadores</h3>
+        <div class="col-span-full flex flex-col items-center justify-center py-16 ">
+          <h3 class="text-lg font-bold text-gray-300">No hay jugadores</h3>
           <p class="text-gray-400 text-sm mt-1">El mercado se actualizará pronto.</p>
         </div>
         
