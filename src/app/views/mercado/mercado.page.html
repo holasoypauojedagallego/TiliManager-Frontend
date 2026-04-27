@@ -8,24 +8,43 @@
     <ion-searchbar mode="ios" placeholder="Buscar jugador..." class="my-2"></ion-searchbar>
   </div>
 
-  <div class="px-4 pb-8">
-    <div class="flex justify-between items-end mb-4">
-      <h2 class="text-xl font-bold text-gray-200">Disponibles</h2>
-    </div>
+@if (!fichable) {
+  <div class="fixed top-30 z-69 m-2 p-3 border bg-[#1d1d1d]/90 border-amber-900 rounded-lg flex text-justify 2xl:left-[24vw]">
+    <span class="text-gray-200 md:text-[16px] text-sm">
+      ¡Ey, espera! Todavía no es la hora para poder fichar. Puedes contemplar el mercado, no obstante no podrás fichar jugadores.
+    </span>
+  </div>
+}
+<div class="px-4 pb-8" 
+     [class.opacity-85]="!fichable" 
+     [class.pointer-events-none]="!fichable"
+     [class.select-none]="!fichable">
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
-      
-      @for (jugador of jugadoresDisponibles; track jugador.id) {
-        <app-jugador-card [jugador]="jugador" (onFichar)="ficharJugador($event)" [totalJugadores]="numeroParaFichar()"/>
-        
-      } @empty {
-        
-        <div class="col-span-full flex flex-col items-center justify-center py-16 ">
-          <h3 class="text-lg font-bold text-gray-300">No hay jugadores</h3>
-          <p class="text-gray-400 text-sm mt-1">El mercado se actualizará pronto.</p>
-        </div>
-        
+  <div class="flex justify-between items-end mb-4">
+    <h2 class="text-xl font-bold text-gray-200">
+      Disponibles 
+      @if (!fichable) { 
+        <span class="text-sm ml-2.5">(Mercado Cerrado)</span> 
       }
+    </h2>
+  </div>
+
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-center justify-items-center">
+  
+  @for (jugador of jugadoresDisponibles; track jugador.id) {
+    <app-jugador-card 
+      class="w-full max-w-[380px] pb-2.5"
+      [jugador]="jugador" 
+      (onFichar)="ficharJugador($event)" 
+      [totalJugadores]="numeroParaFichar()"
+      [isFichable]="!fichable"/>
+    
+  } @empty {
+    <div class="col-span-full flex flex-col items-center justify-center py-16">
+      <h3 class="text-lg font-bold text-gray-300">No hay jugadores</h3>
+      <p class="text-gray-400 text-sm mt-1">El mercado se actualizará pronto.</p>
     </div>
+  }
+</div>
   </div>
 </ion-content>
