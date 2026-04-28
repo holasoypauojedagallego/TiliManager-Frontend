@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, NavController, IonButton, IonImg, IonIcon } from '@ionic/angular/standalone';
 import { PartidoEmulado, PartidosService } from 'src/app/services/partidos.service';
@@ -27,11 +27,14 @@ export class PartidoonlinePage implements OnInit {
   golesLocal : number = 0;
   golesVisitante : number = 0;
 
+  @ViewChild('scroll') scroll!: ElementRef; 
+
   constructor(private partidos : PartidosService, private navCtrl : NavController) { }
 
   ngOnInit() {
   }
-async correrTiempo() {
+
+  async correrTiempo() {
     for (let i = 1; i < 91; i++) {
       await new Promise(resolve => setTimeout(resolve, 333));
       this.emulacion.forEach(e => {
@@ -81,6 +84,18 @@ async correrTiempo() {
       this.errorCode = true;
     } finally {this.enEjecucion = false;}
 
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    try {
+      this.scroll.nativeElement.scrollTop = this.scroll.nativeElement.scrollHeight;
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   goToHome(){

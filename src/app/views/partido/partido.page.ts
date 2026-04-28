@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonButton, IonIcon, IonImg } from '@ionic/angular/standalone';
 
@@ -30,6 +30,8 @@ export class PartidoPage implements OnInit {
   nombreVisitante : string = '';
   golesLocal : number = 0;
   golesVisitante : number = 0;
+
+  @ViewChild('scroll') scroll!: ElementRef;
 
   constructor(private partidos : PartidosService, private router : Router, private activeRouter: ActivatedRoute) {}
 
@@ -67,10 +69,7 @@ export class PartidoPage implements OnInit {
 
     try {
       const response: Match = await firstValueFrom(this.partidos.historialPartidoById(this.id));
-      console.log(response);
-      for (let i = 0; i < response.partidoEncapsulado.length; i++) {
-        this.emulacion = response.partidoEncapsulado.sort((a, b) => a.minuto - b.minuto);
-      }
+      this.emulacion = response.partidoEncapsulado.sort((a, b) => a.minuto - b.minuto);
       this.nombreLocal = response.localTeam.name;
       this.ownerLocal = response.localTeam.owner.name;
       this.nombreVisitante = response.visitorTeam.name;
@@ -81,6 +80,18 @@ export class PartidoPage implements OnInit {
       this.errorCode = true;
     } finally {this.enEjecucion = false;}
 
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+
+  scrollToBottom() {
+    try {
+      this.scroll.nativeElement.scrollTop = this.scroll.nativeElement.scrollHeight;
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   goToHome(){

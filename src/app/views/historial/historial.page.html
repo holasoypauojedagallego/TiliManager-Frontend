@@ -1,5 +1,5 @@
 <app-header [returnBack]="true" title="Historial" />
-<ion-content>
+<ion-content class="image">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
@@ -9,7 +9,7 @@
   <div>
     <ion-accordion-group [multiple]="true">
       @for (match of historialPartidos; track match.id) {
-      <ion-accordion [value]="match.id" class="mb-2">
+      <ion-accordion [value]="match.id" class="pb-2">
         <ion-item slot="header">
           <ion-label>{{match.localTeam.name}} {{match.localTeamGoals}} vs {{match.visitorTeam.name}}
             {{match.visitorTeamGoals}}: {{match.date | date:'dd/MM/yyyy'}}</ion-label>

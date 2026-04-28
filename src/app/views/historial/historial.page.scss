@@ -1,0 +1,21 @@
+.image{
+  background-image: url("/assets/img/vestuario.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+ion-content{
+  --background: linear-gradient(rgba(0, 0, 0, 0.86), rgba(0, 0, 0, 0.97));
+}
+
+ion-accordion-group, 
+ion-accordion {
+  background: transparent !important;
+}
+
+/* 2. Quitamos el fondo de los ítems (cabecera y contenido) */
+ion-item {
+  --background: transparent !important;
+  --border-color: rgba(255, 255, 255, 0.2); 
+}

@@ -41,7 +41,7 @@
             </div>
             }
 
-        <div class="flex-1 overflow-y-auto p-4 space-y-2.5">
+        <div #scroll class="flex-1 overflow-y-auto p-4 space-y-2.5">
         @for (e of emulacion; track e.minuto) {
           @if (tiempo >= e.minuto) {
             <div [class]="e.local ? 'flex-row' : 'flex-row-reverse'" 
