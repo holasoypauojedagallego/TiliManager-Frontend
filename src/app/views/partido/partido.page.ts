@@ -69,7 +69,7 @@ export class PartidoPage implements OnInit {
       const response: Match = await firstValueFrom(this.partidos.historialPartidoById(this.id));
       console.log(response);
       for (let i = 0; i < response.partidoEncapsulado.length; i++) {
-        this.emulacion[i] = response.partidoEncapsulado[i];
+        this.emulacion = response.partidoEncapsulado.sort((a, b) => a.minuto - b.minuto);
       }
       this.nombreLocal = response.localTeam.name;
       this.ownerLocal = response.localTeam.owner.name;

@@ -50,7 +50,7 @@
 
     @if (fichable){
     <span class="text-gray-600 font-semibold">Sin equipo</span>
-    <ion-button (click)="onClick()" shape="round" size="small">Fichar</ion-button>
+    <ion-button (click)="onClick()" [disabled]="isFichable" shape="round" size="small">Fichar</ion-button>
 
     <ion-alert [isOpen]="alerta" header="¡Entrenador!" subHeader="Instrucciones de equipo"
       [message]="'Recuerde que solo se permiten 5 jugadores como mínimo, y 7 como máximo'" [buttons]="alertButtons" (didDismiss)="alerta = false">
