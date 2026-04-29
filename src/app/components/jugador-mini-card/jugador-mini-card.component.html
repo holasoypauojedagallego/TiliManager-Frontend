@@ -12,7 +12,19 @@
   <ng-template>
     <div class="flex flex-col h-full items-center justify-center p-2 bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl">
       <app-jugador-card [jugador]="jugador" class="w-full max-w-92"></app-jugador-card>
-      <ion-button (click)="alerta=false" shape="round" class="mt-20 mb-12">Aceptar</ion-button>
+      <div class="flex gap-10">
+        <ion-button (click)="onSell()" color="danger" shape="round" class="mt-20 mb-12">Vender</ion-button>
+        <ion-button (click)="alerta=false" shape="round" class="mt-20 mb-12">Salir</ion-button>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>
+
+<ion-modal [isOpen]="alerta2" (didDismiss)="alerta2 = false">
+  <ng-template>
+    <div class="flex flex-col h-full text-justify justify-center p-10 bg-[#1e1e1e] rounded-2xl border">
+      Solo puedes tener un mínimo de 5 jugadores, y un máximo de 7. <span class="italic font-bold text-2xl text-center mt-3">¡Recuerdalo jopetas!</span>
+      <ion-button (click)="alerta2=false" shape="round" class="mt-20 mb-4 w-50 m-auto">Entendido</ion-button>
     </div>
   </ng-template>
 </ion-modal>

@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Preferences } from '@capacitor/preferences'
 
@@ -34,6 +34,11 @@ export interface SecretTeam {
   money: number;
 }
 
+export interface SellTeam {
+  teamUpdateDTO: SecretTeam;
+  player: Jugador;
+}
+
 export interface SecretUser {
   id: number;
   name: string;
@@ -65,10 +70,31 @@ export interface NameRegisteredRequest {
 
 export class AuthService {
 
+  private pereza_teamVacio: Team = {
+  id: 0,
+  name: '',
+  owner: { name: '', email: '' },
+  players: [],
+  money: 0
+};
+
   private apiURL = "http://192.168.3.142:8080/jpa/api/v1"; // Esta va en casa, hay que cambiar esto obviamente a ver que hago para que vaya desde cualquier sitio mecachis
   // http://192.168.3.142:8080/jpa/api/v1 - http://192.168.1.137:8080/jpa/api/v1 - http://127.0.0.1:8080/jpa/api/v1 - http://192.168.3.23:8080/jpa/api/v1
 
-  constructor(private http: HttpClient) {}
+  private teamSignal = signal<Team>(this.pereza_teamVacio);
+  public team = this.teamSignal.asReadonly();
+
+  constructor(private http: HttpClient) {
+    this.initTeamFromStorage();
+  }
+
+  private async initTeamFromStorage() {
+    const team = await this.getTeamSesion();
+    if (team == null) {
+      return;
+    }
+    this.teamSignal.set(team);
+  }
 
   login(data : LoginRequest) : Observable<any> {
     return this.http.post(`${this.apiURL}/users/login`, data);
@@ -88,6 +114,30 @@ export class AuthService {
 
   getTeam(data : SecretUser) : Observable<Team> {
     return this.http.post<Team>(`${this.apiURL}/equipos/owner`, data);
+  }  
+  
+  async sellPlayer(player: Jugador): Promise<Observable<Team>> {
+    const team = await this.getTeamSesion();
+    const user = await this.getSesion();
+
+    if (!team || !user) {
+      throw new Error("No se encontró el equipo o el usuario en la sesión para realizar la venta.");
+    }
+
+    const teamUpdateDTO: SecretTeam = {
+      id: team.id,
+      name: team.name,
+      owner: user, 
+      players: team.players,
+      money: team.money
+    };
+
+    const data: SellTeam = {
+      teamUpdateDTO: teamUpdateDTO,
+      player: player
+    };
+
+    return this.http.put<Team>(`${this.apiURL}/equipos/vender`, data);
   }
 
   teamNameRegistered(data : string) : Observable<boolean> {
@@ -126,6 +176,7 @@ export class AuthService {
       key: "equipo",
       value: JSON.stringify(team)
     });
+    this.teamSignal.set(team);
   }
 
   async setSesionTeam() {
@@ -138,6 +189,7 @@ export class AuthService {
       key: "equipo",
       value: JSON.stringify(team)
     });
+    this.teamSignal.set(team);
   }
 
   async getSesion() : Promise<SecretUser | null> {
@@ -178,15 +230,17 @@ export class AuthService {
   async removeSesion(){
     await Preferences.remove({key: "usuario"});
     await Preferences.remove({key: "equipo"});
+    this.teamSignal.set(this.pereza_teamVacio);
   }
-
 
   async removeTeamSesion(){
     await Preferences.remove({key: "equipo"});
+    this.teamSignal.set(this.pereza_teamVacio);
   }
 
   async clear() {
     await Preferences.clear();
+    this.teamSignal.set(this.pereza_teamVacio);
   }
 
 }

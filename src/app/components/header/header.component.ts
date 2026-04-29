@@ -12,29 +12,21 @@ export class HeaderComponent  implements OnInit {
   @Input() title: string = 'TiliManager';
   @Input() dineroGastado: number = 0;
   @Input() returnBack: boolean = false;
-  username: string = '';
-  team!: Team;
+  equipo = this.auth.team;
+  username: string = this.equipo().owner.name;
 
   constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) { }
 
-  async ngOnInit() {
-    await this.cargarNombre();
-  }
+  ngOnInit() {}
 
   async onCerrarSesion() {
     await this.auth.removeSesion();
-    await this.cargarNombre();
     console.log(this.auth.getSesion());
     this.popOver.dismiss();
     if (document.activeElement instanceof HTMLElement){
       document.activeElement.blur();
     }
     this.navCtrl.navigateRoot('/login', { animated: true });
-  }
-
-  async cargarNombre() {
-    this.username = await this.auth.getSesionUsername();
-    this.team = await this.auth.getSesionTeamCargado();
   }
 
   async goToLogin() {

@@ -4,7 +4,7 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="p-2 bg-[#222] rounded-b-xl mb-6 sticky top-0 z-67">
+  <div class="p-2 bg-[#222] rounded-b-xl sticky top-0 z-67">
     <ion-searchbar mode="ios" placeholder="Buscar jugador..." class="my-2"></ion-searchbar>
   </div>
 
@@ -33,7 +33,7 @@
   
   @for (jugador of jugadoresDisponibles; track jugador.id) {
     <app-jugador-card 
-      class="w-full max-w-[380px] pb-2.5"
+      class="w-full max-w-92 pb-2.5"
       [jugador]="jugador" 
       (onFichar)="ficharJugador($event)" 
       [totalJugadores]="numeroParaFichar()"
