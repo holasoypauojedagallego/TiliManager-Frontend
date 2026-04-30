@@ -65,5 +65,4 @@ export class MercadoPage implements OnInit {
       console.warn("Ha ocurrido un error al intentar vender al jugador", error);
     }
   }
-
 }
