@@ -140,6 +140,30 @@ export class AuthService {
     return this.http.put<Team>(`${this.apiURL}/equipos/vender`, data);
   }
 
+    async buyPlayer(player: Jugador): Promise<Observable<Team>> {
+    const team = await this.getTeamSesion();
+    const user = await this.getSesion();
+
+    if (!team || !user) {
+      throw new Error("No se encontró el equipo o el usuario en la sesión para realizar la venta.");
+    }
+
+    const teamUpdateDTO: SecretTeam = {
+      id: team.id,
+      name: team.name,
+      owner: user, 
+      players: team.players,
+      money: team.money
+    };
+
+    const data: SellTeam = {
+      teamUpdateDTO: teamUpdateDTO,
+      player: player
+    };
+
+    return this.http.put<Team>(`${this.apiURL}/equipos/comprar`, data);
+  }
+
   teamNameRegistered(data : string) : Observable<boolean> {
     return this.http.get<boolean>(`${this.apiURL}/equipos/exists/name/${data}`);
   }

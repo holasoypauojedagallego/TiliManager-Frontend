@@ -8,7 +8,7 @@ import { IonCard, IonButton, IonAlert, IonImg, IonModal } from "@ionic/angular/s
   styleUrl: './jugador-card-comprar.component.scss',
   imports: [IonCard, IonButton, IonAlert, IonImg, IonModal] // <-- Añadido IonModal
 })
-export class JugadorCardComprar {
+export class JugadorCardComprarComponent {
     @Input() jugador!: Jugador;
     @Output() onFichar: EventEmitter<Jugador> = new EventEmitter<Jugador>();
     @Input() totalJugadores: number = 0;

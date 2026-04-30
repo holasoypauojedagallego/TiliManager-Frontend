@@ -3,18 +3,17 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonSearchbar, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { JugadorCard } from "src/app/components/jugador-card/jugador-card.component";
 import { Jugador, JugadoresService, Mercado } from 'src/app/services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
-import { AuthService, Team } from 'src/app/services/auth.service';
-import { JugadorCardComprar } from "src/app/components/jugador-card-comprar/jugador-card-comprar.component";
+import { AuthService } from 'src/app/services/auth.service';
+import { JugadorCardComprarComponent } from "src/app/components/jugador-card-comprar/jugador-card-comprar.component";
 
 @Component({
   selector: 'app-mercado',
   templateUrl: './mercado.page.html',
   styleUrls: ['./mercado.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonSearchbar, JugadorCard, IonRefresher, IonRefresherContent, JugadorCardComprar]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonSearchbar, IonRefresher, IonRefresherContent, JugadorCardComprarComponent]
 })
 export class MercadoPage implements OnInit {
 
@@ -47,20 +46,24 @@ export class MercadoPage implements OnInit {
     }, 1000);
   }
 
-  ficharJugador(jugador: Jugador){
+  async ficharJugador(jugador: Jugador){
     if (this.equipo().players.length > 6) {
       this.alerta = true;
       console.log("equipo.size > 6 alerta true")
       return;
     }
-    if (jugador.id == this.jugadorAFichar.id){ //falla
-      this.jugadorAFichar = {id : 0, name : '', attack: 0, defense: 0, rating: 0, price : 0, teamId: 0};
-      this.numeroParaFichar.set(6);
-      this.dineroTotalJugadores = this.dineroTotalJugadores - jugador.price;
+    try {
+      const response = await this.auth.buyPlayer(jugador);
+      response.subscribe({
+        next: (chachi) => {
+          console.log("HIP HIP HURRAAA: ", chachi);
+          this.auth.setSesionTeam();
+        },
+        error: (err) => console.error('Error en la venta', err)
+      });
+    } catch (error) {
+      console.warn("Ha ocurrido un error al intentar vender al jugador", error);
     }
-    this.numeroParaFichar.set(7);
-    this.jugadorAFichar = jugador;
-    this.dineroTotalJugadores = this.dineroTotalJugadores + jugador.price;
   }
 
 }

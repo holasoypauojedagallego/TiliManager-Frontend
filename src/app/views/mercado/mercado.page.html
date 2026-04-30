@@ -32,7 +32,7 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 justify-center justify-items-center">
   
   @for (jugador of jugadoresDisponibles; track jugador.id) {
-    <app-jugador-card-comprar 
+    <app-jugador-card-comprar
       class="w-full max-w-92 pb-2.5"
       [jugador]="jugador" 
       (onFichar)="ficharJugador($event)" 
