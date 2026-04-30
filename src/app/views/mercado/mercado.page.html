@@ -36,9 +36,8 @@
       class="w-full max-w-92 pb-2.5"
       [jugador]="jugador" 
       (onFichar)="ficharJugador($event)" 
-      [totalJugadores]="numeroParaFichar()"
-      [dineroEquipo]="equipo().money"
-      [isFichable]="!fichable"/>
+      [totalJugadores]="equipo().players.length"
+      [dineroEquipo]="equipo().money"/>
     
   } @empty {
     <div class="col-span-full flex flex-col items-center justify-center py-16">

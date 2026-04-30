@@ -15,13 +15,10 @@ export class JugadorCardComprarComponent {
     @Input() dineroEquipo: number = 0;
     alerta44: boolean = false
     
-    // Si viene del padre y es true, el mercado está cerrado
-    @Input() isFichable: boolean = false; 
 
     alerta: boolean = false;
     alertButtons = ['Aceptar'];
     
-    // Nuevas variables para el flujo del modal
     isModalOpen: boolean = false;
     fichajeEnviado: boolean = false;
 
@@ -44,12 +41,10 @@ export class JugadorCardComprarComponent {
     }
 
     abrirModal() {
-      // 1. Validamos antes de abrir el modal
       if (this.totalJugadores >= 7) {
         this.alerta = true;
         return;
       }
-      // 2. Abrimos el modal
       this.isModalOpen = true;
     }
 
@@ -58,16 +53,12 @@ export class JugadorCardComprarComponent {
     }
 
     confirmarFichaje() {
-      if (this.jugador.price >this.dineroEquipo) {
+      if (this.jugador.price > this.dineroEquipo) {
         this.alerta44 = true;
         return;
-        // Activar alerta o algo
       }
-      // 1. Emitimos al padre
       this.onFichar.emit(this.jugador);
-      // 2. Cambiamos el estado visual
       this.fichajeEnviado = true; 
-      // 3. Cerramos el modal
       this.isModalOpen = false;
     }
 }

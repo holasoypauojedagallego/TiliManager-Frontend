@@ -44,7 +44,7 @@
     } @else {
     <span class="text-gray-600 font-semibold">Sin equipo</span>
 
-    <ion-button (click)="abrirModal()" [disabled]="isFichable || fichajeEnviado" shape="round" size="small"
+    <ion-button (click)="abrirModal()" [disabled]="fichajeEnviado" shape="round" size="small"
       [color]="fichajeEnviado ? 'medium' : 'primary'">
       {{ fichajeEnviado ? 'Fichado' : 'Fichar' }}
     </ion-button>
@@ -81,6 +81,6 @@
 </ion-modal>
 
 <ion-alert [isOpen]="alerta44" header="¡Entrenador!" subHeader="Tema de presupuestos"
-  [message]="'Pero que no tiene suficiente presupuesto entrenador ¿Está usted loco?'" [buttons]="alertButtons"
+  [message]="'Pero que no tiene suficiente presupuesto entrenador ¿¡Está usted loco!?'" [buttons]="alertButtons"
   (didDismiss)="alerta44 = false">
 </ion-alert>
