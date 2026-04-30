@@ -1,0 +1,86 @@
+<ion-card
+  class="bg-[#e5d570] max-w-92 h-45 border-blue-900 rounded-2xl px-2 pt-1 transition-transform duration-200 hover:scale-101">
+  <div class="absolute -left-1 bottom-0 bg-blue-900 w-3.5 h-full overflow-hidden z-67"></div>
+  <div class="absolute -right-1 bottom-0 bg-blue-900 w-3.5 h-full overflow-hidden"></div>
+
+  <div class="flex items-center justify-between">
+    <ion-img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png"
+      class="w-15 rounded-md text-[11px] z-10 shrink-0" alt="Image: {{jugador.name.split(' ')[0]}}" />
+
+    <h2 class="text-xl text-white truncate min-w-0">
+      {{ jugador.name }}
+    </h2>
+
+    <span class="bg-cyan-400 text-black font-bold px-1 py-1 mr-0.5 rounded-full text-sm shrink-0 z-3">
+      ⭐ {{ jugador.rating }}
+    </span>
+  </div>
+
+  <div class="m-auto justify-center w-[95%] mt-1.5 space-y-3">
+    <div>
+      <div class="flex justify-between text-sm font-semibold text-gray-900">
+        <span>Ataque</span>
+        <span>{{ jugador.attack }}</span>
+      </div>
+      <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-orange-500 rounded-3" [style.width.%]="jugador.attack"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="flex justify-between text-sm font-semibold text-gray-900 mb-0.5">
+        <span>Defensa</span>
+        <span>{{ jugador.defense }}</span>
+      </div>
+      <div class="w-full h-2 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-blue-500 rounded-full" [style.width.%]="jugador.defense"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex mt-2 text-sm justify-around items-center">
+    @if (jugador.teamId) {
+    <span class="text-gray-700">Equipo ID: {{ jugador.teamId }}</span>
+    } @else {
+    <span class="text-gray-600 font-semibold">Sin equipo</span>
+
+    <ion-button (click)="abrirModal()" [disabled]="isFichable || fichajeEnviado" shape="round" size="small"
+      [color]="fichajeEnviado ? 'medium' : 'primary'">
+      {{ fichajeEnviado ? 'Fichado' : 'Fichar' }}
+    </ion-button>
+
+    <ion-alert [isOpen]="alerta" header="¡Entrenador!" subHeader="Instrucciones de equipo"
+      [message]="'Recuerde que solo se permiten 5 jugadores como mínimo, y 7 como máximo'" [buttons]="alertButtons"
+      (didDismiss)="alerta = false">
+    </ion-alert>
+    }
+    <span class="burro text-white porfuera italic text-[17px] min-w-12">{{smallerPrice(jugador.price)}}€</span>
+  </div>
+</ion-card>
+
+<ion-modal [isOpen]="isModalOpen" (didDismiss)="cerrarModal()" initialBreakpoint="0.5" class="md:h-full">
+  <ng-template>
+    <div class="flex flex-col h-full items-center justify-start pt-14 px-4 bg-[#1e1e1e] rounded-2xl border-white/10">
+
+      <ion-img src="../../../assets/img-Players/{{jugador.name.split(' ')[0]}}.png" class="w-20 rounded-md mb-4">
+      </ion-img>
+
+      <h2 class="text-xl text-white font-bold mb-1">Confirmar Fichaje</h2>
+      <p class="text-gray-300 text-center mb-6 px-4">
+        ¿Estás seguro de que quieres fichar a <span class="burro porfuera">{{ jugador.name }}</span> por <span
+          class="font-bold">{{ smallerPrice(jugador.price) }}€</span>?
+      </p>
+
+      <div class="flex gap-4 w-full justify-center">
+        <ion-button (click)="cerrarModal()" color="danger" fill="outline" shape="round" class="w-32">Cancelar</ion-button>
+        <ion-button (click)="confirmarFichaje()" shape="round" class="w-32">Comprar</ion-button>
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>
+
+<ion-alert [isOpen]="alerta44" header="¡Entrenador!" subHeader="Tema de presupuestos"
+  [message]="'Pero que no tiene suficiente presupuesto entrenador ¿Está usted loco?'" [buttons]="alertButtons"
+  (didDismiss)="alerta44 = false">
+</ion-alert>

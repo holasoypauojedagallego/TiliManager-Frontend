@@ -29,4 +29,22 @@ export class JugadorMiniCardComponent  implements OnInit {
     this.alerta = false;
   }
 
+  smallerPrice(i: number) : String {
+      if (!i || i == 0){
+        return '0';
+      }
+      let comprobar:string = i.toString();
+      const arrayComprobar:string[] = comprobar.split('000');
+      comprobar = arrayComprobar.join('');
+      if (arrayComprobar.length === 4){
+        return comprobar + 'MM';
+      } else if (arrayComprobar.length === 3) {
+        return comprobar + 'M'
+      } else if (arrayComprobar.length === 2) {
+        return comprobar + 'K'
+      } else {
+        return comprobar;
+      }
+    }
+
 }

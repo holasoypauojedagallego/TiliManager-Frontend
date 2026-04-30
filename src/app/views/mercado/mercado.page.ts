@@ -7,13 +7,14 @@ import { JugadorCard } from "src/app/components/jugador-card/jugador-card.compon
 import { Jugador, JugadoresService, Mercado } from 'src/app/services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
 import { AuthService, Team } from 'src/app/services/auth.service';
+import { JugadorCardComprar } from "src/app/components/jugador-card-comprar/jugador-card-comprar.component";
 
 @Component({
   selector: 'app-mercado',
   templateUrl: './mercado.page.html',
   styleUrls: ['./mercado.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonSearchbar, JugadorCard, IonRefresher, IonRefresherContent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonSearchbar, JugadorCard, IonRefresher, IonRefresherContent, JugadorCardComprar]
 })
 export class MercadoPage implements OnInit {
 
@@ -21,7 +22,7 @@ export class MercadoPage implements OnInit {
   fichable: boolean = false;
 
   jugadorAFichar: Jugador = {id : 0, name : '', attack: 0, defense: 0, rating: 0, price : 0, teamId: 0};
-  equipo: Team = {id : 0, name: '', players: [], owner: {name: '', email: ''}, money: 0};
+  equipo = this.auth.team;
   numeroParaFichar: WritableSignal<number> = signal(7);
   dineroTotalJugadores: number = 0;
   alerta: boolean = false;
@@ -34,8 +35,7 @@ export class MercadoPage implements OnInit {
 
   async onCargar() {
     const c:Mercado = await firstValueFrom(this.mercadoJugadores.getMercadoJugadores());
-    this.equipo = await this.auth.getSesionTeamCargado();
-    this.numeroParaFichar.set(this.equipo.players.length);
+    this.numeroParaFichar.set(this.equipo().players.length);
     this.jugadoresDisponibles = c.players;
     this.fichable = c.fichable;
   }
@@ -48,7 +48,7 @@ export class MercadoPage implements OnInit {
   }
 
   ficharJugador(jugador: Jugador){
-    if (this.equipo.players.length > 6) {
+    if (this.equipo().players.length > 6) {
       this.alerta = true;
       console.log("equipo.size > 6 alerta true")
       return;
