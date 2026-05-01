@@ -6,7 +6,7 @@ import { IonCard, IonButton, IonAlert, IonImg, IonModal } from "@ionic/angular/s
   selector: 'app-jugador-card-comprar',
   templateUrl: './jugador-card-comprar.component.html',
   styleUrl: './jugador-card-comprar.component.scss',
-  imports: [IonCard, IonButton, IonAlert, IonImg, IonModal] // <-- Añadido IonModal
+  imports: [IonCard, IonButton, IonAlert, IonImg, IonModal]
 })
 export class JugadorCardComprarComponent {
     @Input() jugador!: Jugador;
