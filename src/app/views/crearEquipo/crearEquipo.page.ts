@@ -39,6 +39,7 @@ export class CrearEquipoPage implements OnInit {
     });
     try {
       this.jugadoresSinEquipo = await firstValueFrom(this.jugadores.getJugadoresTeamIdNull());
+      this.jugadoresSinEquipo.sort((a, b) => a.price - b.price);
     } catch (error) {
       console.error("Ha ocurrido un error al buscar los jugadores")
     }

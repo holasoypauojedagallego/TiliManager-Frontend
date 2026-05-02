@@ -1,13 +1,89 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>torneo</ion-title>
-  </ion-toolbar>
-</ion-header>
-
+<app-header title="Torneo" [returnBack]="true" />
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">torneo</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <div class="h-full w-full flex flex-col items-center max-w-400 mx-auto px-4 py-7">
+
+        <div
+            class="flex-1 w-full bg-[#dbcb65] rounded-2xl border border-[#07a9bf] flex flex-col mb-6 overflow-y-hidden">
+
+            <div class="bg-[#093c7f] p-2 pt-3 md:pb-3 md:p-4 flex justify-center rounded-t-2xl">
+
+                <div class="flex flex-col items-center w-1/3 h-full">
+                    <span
+                        class="text-lg sm:text-xl md:text-3xl font-bold text-white text-center truncate uppercase max-w-full">{{nombreLocal}}</span>
+                    <span
+                        class="text-xs md:text-sm text-[#08c0d9] mt-1 text-center truncate max-w-full">{{ownerLocal}}</span>
+                    <span class="text-4xl md:text-5xl font-black text-white porfuera burro2">{{golesLocal}}</span>
+                </div>
+
+                <div class="flex flex-col items-center justify-center w-1/3 px-2 h-full">
+                    <div
+                        class="text-3xl sm:text-4xl md:text-5xl grid justify-center min-w-14 sm:min-w-20 md:min-w-24 font-bold text-[#08c0d9] px-4 pb-2.5 rounded-xl border">
+                        {{tiempo}}
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center w-1/3 h-full">
+                    <span
+                        class="text-lg sm:text-xl md:text-3xl font-bold text-white text-center truncate uppercase max-w-full">{{nombreVisitante}}</span>
+                    <span
+                        class="text-xs lg:text-sm md:text-sm text-[#08c0d9] mt-1 text-center truncate max-w-full">{{ownerVisitante}}</span>
+                    <span class="text-4xl md:text-5xl font-black text-white porfuera burro2">{{golesVisitante}}</span>
+                </div>
+            </div>
+
+            @if (errorCode) {
+            <div
+                class="flex items-center gap-3 mt-4 w-fit p-3 my-1.5 bg-black/85 border-l-3 border-cyan-400 rounded-r-xl">
+                <ion-icon src="assets/icon/svg/alert-circle-outline.svg" class="text-[#f24c58] scale-133 shrink-0" />
+                <span class="text-[#d84e57] font-semibold">
+                    Ha ocurrido en error.
+                </span>
+            </div>
+            }
+
+        <div #scroll class="flex-1 overflow-y-auto p-4 space-y-2.5">
+        @for (e of emulacion; track e.minuto) {
+          @if (tiempo >= e.minuto) {
+            <div [class]="e.local ? 'flex-row' : 'flex-row-reverse'" 
+                 class="flex items-center gap-4 p-2 rounded-xl cursor-default"
+                 [style.background-color]="e.local ? '#0c4ca1' : '#167956'">
+
+              <div [class]="e.local ? 'bg-[#ccb838]' : 'bg-[#9c6e44]'"
+                   class="text-[#0c3f42] font-bold px-1 py-0.75 rounded-lg text-xs md:text-sm min-w-10 text-center">
+                {{e.minuto}}'
+              </div>
+
+              <div class="text-amber-50 flex-1 flex flex-wrap items-baseline gap-1" [class.flex-row-reverse]="!e.local">
+                <span class="font-bold tracking-wide">{{e.equipo.name}}</span>
+                <span class="opacity-80 text-sm md:text-base"> : </span>
+                <span> {{e.jugador.name}}</span>
+                <span> - </span>
+                <span class="font-bold text-white">{{e.sucede}}</span>
+              </div>
+            </div>
+            }
+            } @empty {
+            <div class="h-full w-[90%] m-auto flex flex-col items-center pb-33 justify-center text-justify">
+                <ion-img src="assets/img-Players/Chester-Jr.png"
+                    class="md:scale-175 sm:scale-125 md:mb-8 mb-3"></ion-img>
+                <p class="porfuera burro tracking-wide">Y de la narración del partido, se encargara este viejo conocido, ¡Yo Chester Horse Jr, presidente
+                    del club de ajedrez!</p>
+            </div>
+            }
+            </div>
+        </div>
+
+        <div class="w-[85%] max-w-120 pb-2">
+            <ion-button 
+            expand="block" 
+            shape="round" 
+            size="large"
+            class="font-bold"
+            (click)="codigo()" 
+            [disabled]="enEjecucion">
+            {{ enEjecucion ? 'Jugando...' : 'Jugar Partido' }}
+            </ion-button>
+        </div>
+
+    </div>
 </ion-content>

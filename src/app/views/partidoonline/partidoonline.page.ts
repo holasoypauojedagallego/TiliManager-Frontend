@@ -65,7 +65,7 @@ export class PartidoonlinePage implements OnInit {
     try {
       let local :boolean = false;
       let visitor :boolean = false;
-      const response = await firstValueFrom(await this.partidos.simularPartidoTorneo1());
+      const response = await firstValueFrom(await this.partidos.simularPartidoOnline());
       for (let i = 0; i < response.length; i++) {
         this.emulacion[i] = response[i];
         if(this.emulacion[i].local && !local){

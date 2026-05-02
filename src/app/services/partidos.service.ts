@@ -64,6 +64,22 @@ export class PartidosService {
     return this.http.post(`${this.apiURL}/partidos/t1`, equipo);
   }
 
+  async simularPartidoOnline() : Promise<Observable<any>> {
+    const dataTeam = await this.auth.getTeamSesion();
+    const dataUser = await this.auth.getSesion();
+    if (dataTeam == null || dataUser == null) {
+      return new Observable<any>;
+    }
+    const equipo:SecretTeam = {
+      id: dataTeam.id,
+      name: dataTeam.name,
+      owner: dataUser,
+      players: dataTeam.players,
+      money: dataTeam.money
+    }
+    return this.http.post(`${this.apiURL}/partidos`, equipo);
+  }
+
   async onCargar() {
     this.varhistorialPartidos = (await firstValueFrom(this.historialPartidos())).reverse();
   }
