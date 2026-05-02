@@ -9,7 +9,7 @@
       {{title.toUpperCase()}}
     </ion-title>
     <ion-buttons slot="end">
-      @if (username == '') {
+      @if (equipo().owner.name == '') {
       <ion-button id="{{title}}a" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
           <span class="text-xl text-cyan-400"><strong>?</strong></span>

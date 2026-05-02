@@ -13,7 +13,6 @@ export class HeaderComponent  implements OnInit {
   @Input() dineroGastado: number = 0;
   @Input() returnBack: boolean = false;
   equipo = this.auth.team;
-  username: string = this.equipo().owner.name;
 
   constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) {}
 
