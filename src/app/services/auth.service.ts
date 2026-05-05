@@ -41,7 +41,7 @@ export interface SellTeam {
 }
 
 export interface SecretUser {
-  id: number;
+  id: string;
   name: string;
   email: string;
 }

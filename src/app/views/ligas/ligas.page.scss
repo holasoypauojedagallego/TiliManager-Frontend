@@ -1,0 +1,18 @@
+.porfuera{
+    text-shadow: 
+    -1px 0px 0 #000,  
+     1px 0px 0 #000,
+    -1px  1px 0 #000,
+     1px  1px 0 #000;
+}
+
+.burro{
+  font: 22px sans-serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+ion-card {
+  --background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.84)), 
+                url('../../../assets/img/ligas.webp') no-repeat bottom / cover;
+}

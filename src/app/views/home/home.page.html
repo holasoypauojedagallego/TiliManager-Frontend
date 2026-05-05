@@ -79,14 +79,14 @@
       </ion-col>
 
       <ion-col size="12" size-md="3.92">
-        <ion-card routerLink="/historial">
-          <img alt="Menu Historial" src="assets/img/historial.webp" class="md:h-[18vw]" />
+        <ion-card routerLink="/ligas">
+          <img alt="Menu Historial" src="assets/img/ligas.webp" class="md:h-[18vw] w-full" />
           <ion-card-header class="p-2">
-            <ion-card-title>Historial</ion-card-title>
-            <ion-card-subtitle>Historial de partidos</ion-card-subtitle>
+            <ion-card-title>Ligas</ion-card-title>
+            <ion-card-subtitle>Unirse a Ligas</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            Mira el historial de los últimos encuentros, y revive esos momentos épicos.
+            Unase a ligas, juegue encuentros y mire como sube su posición.
           </ion-card-content>
           <ion-button fill="clear" color="secondary">Ver Historial</ion-button>
         </ion-card>
@@ -110,10 +110,13 @@
 
   <ion-list lines="none" class="ion-margin-top">
     <ion-list-header>
-      <ion-label>Categorías Populares</ion-label>
+      <ion-label>Otras Categorías</ion-label>
     </ion-list-header>
     <ion-item button>
-      <ion-label>Torneos Online</ion-label>
+      <ion-label routerLink="/historial">Historial</ion-label>
+    </ion-item>
+        <ion-item button>
+      <ion-label routerLink="/partidoonline">Amistosos</ion-label>
     </ion-item>
   </ion-list>
 
