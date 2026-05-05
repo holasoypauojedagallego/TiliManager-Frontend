@@ -40,18 +40,19 @@ export class HeaderComponent  implements OnInit {
       if (!i || i == 0){
         return '0';
       }
-      let comprobar:string = i.toString();
-      const arrayComprobar:string[] = comprobar.split('000');
-      comprobar = arrayComprobar.join('');
-      if (arrayComprobar.length === 4){
-        return comprobar + 'MM';
-      } else if (arrayComprobar.length === 3) {
-        return comprobar + 'M'
-      } else if (arrayComprobar.length === 2) {
-        return comprobar + 'K'
-      } else {
-        return comprobar;
+      if (i > 1000000000) {
+        return ((i / 1000000000).toFixed(1).replace('.0', '').toString()) + "MM";
       }
+      else if (i > 1000000) {
+        return ((i / 1000000).toFixed(1).replace('.0', '').toString()) + "M";
+      } else if (i > 1000) {
+        return ((i/1000).toFixed(1).replace('.0', '').toString()) + "K";
+      }
+      return i.toString();
+  }
+
+  Price(i: number) : String {
+    return i.toLocaleString('es-ES');
   }
 
   goToHome(){

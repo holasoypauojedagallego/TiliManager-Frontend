@@ -10,17 +10,34 @@
     </ion-title>
     <ion-buttons slot="end">
       @if (equipo().owner.name == '') {
-      <ion-button id="{{title}}a" class="h-auto">
+      <ion-button id="{{title}}: Iniciar Sesión" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
           <span class="text-xl text-cyan-400"><strong>?</strong></span>
         </div>
       </ion-button>
-        <ion-popover trigger="{{title}}a" side="bottom" alignment="center">
-          <ng-template>
-            <span class="p-2 italic text-lg">No tiene cuenta</span>
-            <ion-button color="primary" size="small" class="p-2" (click)="goToLogin()">Iniciar Sesión</ion-button>
-          </ng-template>
-        </ion-popover>
+      <ion-popover trigger="{{title}}: Iniciar Sesión" side="bottom" alignment="center">
+        <ng-template>
+          <div class="flex flex-col overflow-hidden">
+            
+            <div class="p-3 flex flex-col items-center border-b-2 border-slate-600">
+              <p>Usuario:</p>
+              <p class="m-0 text-lg font-bold tracking-tight text-slate-200 uppercase italic">?</p>
+            </div>
+
+            <div class="p-4">
+              <div class="mb-3">
+                <div class="flex items-center">
+                  <span class="font-semibold text-amber-50">No tiene cuenta</span>
+                </div>
+              </div>
+
+              <ion-button expand="block" fill="solid" class="font-bold uppercase text-sm mt-3" (click)="goToLogin()">
+                Iniciar Sesión
+              </ion-button>
+            </div>
+          </div>
+        </ng-template>
+      </ion-popover>
       } @else {
         @if (dineroGastado > equipo().money) {
           <div class="w-[10vw]"><span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> > {{smallerPrice(equipo().money)}}</div>
@@ -29,21 +46,44 @@
         } @else {
           <div class="w-[10vw]">{{smallerPrice(equipo().money)}}</div>
         }
-      <ion-button id="{{title}}b" class="h-auto">
+      <ion-button id="{{title}}: Sesión" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
           <span class="text-xl text-cyan-400"><strong>{{equipo().owner.name.charAt(0).toUpperCase()}}</strong></span>
         </div>
       </ion-button>
-        <ion-popover trigger="{{title}}b" side="bottom" alignment="center">
-          <ng-template>
-            <div class="p-2 pl-3 italic text-lg">
-            <p>Usuario: <span class="not-italic">{{equipo().owner.name}}</span></p>
-            <p>Equipo: <span class="not-italic">{{equipo().name}}</span></p>
-            <p>Dinero: <span class="not-italic">{{smallerPrice(equipo().money)}}</span></p>
+      <ion-popover trigger="{{title}}: Sesión" side="bottom" alignment="center">
+        <ng-template>
+          <div class="flex flex-col overflow-hidden">
+            
+            <div class="p-4 flex flex-col items-center border-b-2 border-slate-600">
+              <p>Usuario:</p>
+              <p class="m-0 text-lg font-bold tracking-tight text-slate-200 uppercase italic">
+                {{ equipo().owner.name }}
+              </p>
             </div>
-            <ion-button color="danger" size="small" class="p-2" (click)="onCerrarSesion()">Cerrar Sesión</ion-button>
-          </ng-template>
-        </ion-popover>
+
+            <div class="p-4">
+              <div class="mb-3">
+                <p class="text-[12px] uppercase font-bold text-gray-300 mb-1">Club:</p>
+                <div class="flex items-center">
+                  <span class="text-sm font-semibold text-amber-50">{{ equipo().name }}</span>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <p class="text-[12px] uppercase font-bold text-gray-300 mb-0.5">Dinero:</p>
+                <div class="flex items-center">
+                  <span class="text-lg font-semibold text-amber-50">{{ Price(equipo().money) }}€</span>
+                </div>
+              </div>
+
+              <ion-button expand="block" color="danger" fill="solid" class="font-bold uppercase text-sm mt-2" (click)="onCerrarSesion()">
+                Cerrar Sesión
+              </ion-button>
+            </div>
+          </div>
+        </ng-template>
+      </ion-popover>
       }
     </ion-buttons>
   </ion-toolbar>
