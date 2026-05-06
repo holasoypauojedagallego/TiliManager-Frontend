@@ -27,6 +27,7 @@ export class HistorialPage implements OnInit {
   async onCargar() {
     await this.partidos.onCargar();
     this.historialPartidos = this.partidos.getHistorialPartido();
+    console.log(this.historialPartidos);
   }
 
   handleRefresh(event: RefresherCustomEvent) {

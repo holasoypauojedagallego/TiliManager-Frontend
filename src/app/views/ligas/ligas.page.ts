@@ -70,7 +70,8 @@ export class LigasPage implements OnInit {
     console.log(name);
     this.submit = true;
     try {
-      await this.leagueService.createLeague(name, false);
+      const t:League = await this.leagueService.createLeague(name, false);
+      await this.addThisTeamToLeague(t.id);
       await this.onCargar();
       this.modalCrear = false;
     } catch (error) {

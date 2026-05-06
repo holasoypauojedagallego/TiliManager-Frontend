@@ -49,6 +49,10 @@ export class LeaguesService {
     return this.http.get<League[]>(`${this.apiURL}/ligas`);
   }
 
+  getLeague(id: number) : Observable<League> {
+    return this.http.get<League>(`${this.apiURL}/ligas/${id}`);
+  }
+
   async createLeague(name: string, privado: boolean): Promise<any> {
     const user = await this.auth.getSesion();
     if (user == null) {

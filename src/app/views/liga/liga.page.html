@@ -1,0 +1,99 @@
+<app-header [returnBack]="true" [title]="league().name" />
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <div class="max-w-6xl mx-auto mt-4">
+    
+    <!-- Header de la Liga -->
+    <div class="mb-8 flex flex-col md:flex-row justify-between items-end gap-4 border-b border-white/10 pb-6">
+      <div>
+        <h1 class="text-4xl font-black text-white uppercase italic tracking-tighter">
+          {{ league().name }}
+        </h1>
+        <p class="text-gray-400 font-medium">Panel de clasificación y estadísticas generales</p>
+      </div>
+      
+      <div class="flex gap-4">
+        <div class="bg-white/5 p-3 rounded-xl text-center min-w-24 border border-white/10">
+          <span class="block text-xs text-gray-400 uppercase font-bold">Equipos</span>
+          <span class="text-xl font-black text-[#e5d570]">{{ league().teams.length }}/20</span>
+        </div>
+        <div class="bg-white/5 p-3 rounded-xl text-center min-w-24 border border-white/10">
+          <span class="block text-xs text-gray-400 uppercase font-bold">Estado</span>
+          <span class="text-xl font-black" [class.text-green-400]="!league().closed" [class.text-pink-400]="league().closed">
+            {{ league().closed ? 'CERRADA' : 'ACTIVA' }}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabla de Clasificación -->
+    <div class="overflow-x-auto rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md">
+      <table class="w-full text-left border-collapse">
+        <thead>
+          <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest">
+            <th class="px-4 py-4 font-black">Pos</th>
+            <th class="px-4 py-4 font-black">Equipo</th>
+            <th class="px-4 py-4 text-center font-black">PJ</th>
+            <th class="px-4 py-4 text-center font-black text-green-400">G</th>
+            <th class="px-4 py-4 text-center font-black text-yellow-400">E</th>
+            <th class="px-4 py-4 text-center font-black text-red-400">P</th>
+            <th class="px-4 py-4 text-center font-black">GF</th>
+            <th class="px-4 py-4 text-center font-black">GC</th>
+            <th class="px-4 py-4 text-center font-black">DG</th>
+            <th class="px-4 py-4 text-center font-black text-white bg-white/10">PTS</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/5">
+          @for (team of sortedTeams; track team.id; let i = $index) {
+            <tr class="hover:bg-white/5 transition-colors group">
+              <td class="px-4 py-4">
+                <span [ngClass]="{
+                  'bg-yellow-500 text-black': i === 0,
+                  'bg-gray-400 text-black': i === 1,
+                  'bg-orange-600 text-white': i === 2,
+                  'text-gray-400': i > 2
+                }" class="w-7 h-7 flex items-center justify-center rounded-full font-black text-xs">
+                  {{ i + 1 }}
+                </span>
+              </td>
+              <td class="px-4 py-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-8 h-8 rounded-lg flex items-center justify-center border border-white/10 uppercase font-bold text-[10px]">
+                    {{ team.team.name.substring(0,2) }}
+                  </div>
+                  <span class="text-white font-bold group-hover:text-[#e5d570] transition-colors">
+                    {{ team.team.name }}
+                  </span>
+                </div>
+              </td>
+              <td class="px-4 py-4 text-center text-gray-300 font-medium">{{ team.wins + team.draws + team.losses }}</td>
+              <td class="px-4 py-4 text-center text-white font-bold">{{ team.wins }}</td>
+              <td class="px-4 py-4 text-center text-white font-bold">{{ team.draws }}</td>
+              <td class="px-4 py-4 text-center text-white font-bold">{{ team.losses }}</td>
+              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsScored }}</td>
+              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsRecieved }}</td>
+              <td class="px-4 py-4 text-center font-bold">{{ diferenciaGoles(team.goalsScored, team.goalsRecieved)}}</td>
+              <td class="px-4 py-4 text-center bg-white/5">
+                <span class="text-xl font-black text-white italic">{{ calcularPuntos(team) }}</span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="10" class="text-center py-20 text-gray-500 font-bold uppercase tracking-widest">
+                No hay equipos inscritos todavía
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Botón de Acción -->
+    <div class="mt-8 flex justify-center">
+        <ion-button fill="clear" class="text-gray-400 hover:text-white" routerLink="/ligas">
+            
+            Volver al listado
+        </ion-button>
+    </div>
+  </div>
+</ion-content>
