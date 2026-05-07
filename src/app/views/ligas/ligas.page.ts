@@ -90,6 +90,7 @@ export class LigasPage implements OnInit {
     try {
       await this.leagueService.addUserToLeague(id);
       await this.onCargar();
+      await this.auth.setSesionTeam();
       this.modalCrear = false;
     } catch (error) {
       console.warn("Ha habido un error al unir el equipo a la liga");
