@@ -49,11 +49,12 @@ export class PartidosService {
   }
 
   async simularPartidoTorneo1() : Promise<Observable<any>> {
-    const dataTeam = await this.auth.getTeamSesion();
+    const dataLeagueTeam = await this.auth.getTeamSesion();
     const dataUser = await this.auth.getSesion();
-    if (dataTeam == null || dataUser == null) {
+    if (dataLeagueTeam == null || dataUser == null) {
       return new Observable<any>;
     }
+    const dataTeam = dataLeagueTeam[676767].team; //ARREGLAR TODO
     const equipo:SecretTeam = {
       id: dataTeam.id,
       name: dataTeam.name,
@@ -65,11 +66,12 @@ export class PartidosService {
   }
 
   async simularPartidoOnline() : Promise<Observable<any>> {
-    const dataTeam = await this.auth.getTeamSesion();
+    const dataLeagueTeam = await this.auth.getTeamSesion();
     const dataUser = await this.auth.getSesion();
-    if (dataTeam == null || dataUser == null) {
+    if (dataLeagueTeam == null || dataUser == null) {
       return new Observable<any>;
     }
+     const dataTeam = dataLeagueTeam[676767].team; //ARREGLAR TODO
     const equipo:SecretTeam = {
       id: dataTeam.id,
       name: dataTeam.name,

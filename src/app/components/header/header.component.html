@@ -9,7 +9,7 @@
       {{title.toUpperCase()}}
     </ion-title>
     <ion-buttons slot="end">
-      @if (equipo().owner.name == '') {
+      @if (user().name == '') {
       <ion-button id="{{title}}: Iniciar Sesión" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
           <span class="text-xl text-cyan-400"><strong>?</strong></span>
@@ -38,27 +38,27 @@
           </div>
         </ng-template>
       </ion-popover>
-      } @else {
-        @if (dineroGastado > equipo().money) {
-          <div class="w-[10vw]"><span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> > {{smallerPrice(equipo().money)}}</div>
+      } @else if (leagueId != 0 && leagueId) {
+        @if (dineroGastado > equipo()[leagueId].team.money) {
+          <div class="w-[10vw]"><span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> > {{smallerPrice(equipo()[leagueId].team.money)}}</div>
         } @else if (dineroGastado > 0) {
-          <div class="w-[10vw]"><span class="text-red-700 ">-{{smallerPrice(dineroGastado)}}</span> <span class="text-[#08c0d9]"> _ </span> {{smallerPrice(equipo().money)}}</div>
+          <div class="w-[10vw]"><span class="text-red-700 ">-{{smallerPrice(dineroGastado)}}</span> <span class="text-[#08c0d9]"> _ </span> {{smallerPrice(equipo()[leagueId].team.money)}}</div>
         } @else {
-          <div class="w-[10vw]">{{smallerPrice(equipo().money)}}</div>
+          <div class="w-[10vw]">{{smallerPrice(equipo()[leagueId].team.money)}}</div>
         }
       <ion-button id="{{title}}: Sesión" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
-          <span class="text-xl text-cyan-400"><strong>{{equipo().owner.name.charAt(0).toUpperCase()}}</strong></span>
+          <span class="text-xl text-cyan-400"><strong>{{user().name.charAt(0).toUpperCase()}}</strong></span>
         </div>
       </ion-button>
       <ion-popover trigger="{{title}}: Sesión" side="bottom" alignment="center">
         <ng-template>
           <div class="flex flex-col overflow-hidden">
             
-            <div class="p-4 flex flex-col items-center border-b-2 border-slate-600">
+            <div class="p-4 pb-1.5 flex flex-col items-center border-b-2 border-slate-600">
               <p>Usuario:</p>
               <p class="m-0 text-lg font-bold tracking-tight text-slate-200 uppercase italic">
-                {{ equipo().owner.name }}
+                {{ user().name }}
               </p>
             </div>
 
@@ -66,14 +66,14 @@
               <div class="mb-3">
                 <p class="text-[12px] uppercase font-bold text-gray-300 mb-1">Club:</p>
                 <div class="flex items-center">
-                  <span class="text-sm font-semibold text-amber-50">{{ equipo().name }}</span>
+                  <span class="text-sm font-semibold text-amber-50">{{ equipo()[leagueId].team.name }}</span>
                 </div>
               </div>
 
               <div class="mb-3">
                 <p class="text-[12px] uppercase font-bold text-gray-300 mb-0.5">Dinero:</p>
                 <div class="flex items-center">
-                  <span class="text-lg font-semibold text-amber-50">{{ Price(equipo().money) }}€</span>
+                  <span class="text-lg font-semibold text-amber-50">{{ Price(equipo()[leagueId].team.money) }}€</span>
                 </div>
               </div>
 
@@ -84,6 +84,60 @@
           </div>
         </ng-template>
       </ion-popover>
+      } @else { 
+        <ion-button id="{{title}}: Sesión" class="h-auto">
+          <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
+            <span class="text-xl text-cyan-400"><strong>{{user().name.charAt(0).toUpperCase()}}</strong></span>
+          </div>
+        </ion-button>
+        <ion-popover trigger="{{title}}: Sesión" side="bottom" alignment="center">
+          <ng-template>
+            <div class="flex flex-col overflow-hidden">
+              
+              <div class="p-4 pb-1 flex flex-col items-center border-b-2 border-slate-600">
+                <p>Usuario:</p>
+                <p class="m-0 text-lg font-bold tracking-tight text-slate-200 uppercase italic">
+                  {{ user().name }}
+                </p>
+              </div>
+              
+              <div class="p-4">
+                <div class="max-h-55 overflow-y-scroll">
+                  @for (equipito of equipo() | keyvalue; track equipito.key) {
+                  
+                    
+                    <div class="mb-0.5">
+                      <p class="text-[12px] uppercase font-bold text-gray-300">Liga:</p>
+                      <div class="flex items-center">
+                        <span class="text-sm font-semibold text-amber-50">{{equipito.key}}- {{ equipito.value.league.name }}</span>
+                      </div>
+                    </div>
+                    <div class="w-[95%] border-b mt-1 mb-0.5 border-amber-50/67"></div>
+                    <div class="mb-0.5 ml-1.5">
+                      <p class="text-[12px] uppercase font-bold text-gray-300">Club:</p>
+                      <div class="flex items-center">
+                        <span class="text-sm font-semibold text-amber-50">{{ equipito.value.team.name }}</span>
+                      </div>
+                    </div>
+
+                    <div class="ml-1.5">
+                      <p class="text-[12px] uppercase font-bold text-gray-300">Dinero:</p>
+                      <div class="flex items-center">
+                        <span class="text-lg font-semibold text-amber-50">{{ Price(equipito.value.team.money) }}€</span>
+                      </div>
+                    </div>
+                    <div class="w-[95%] border-b mt-1 mb-3.5 border-amber-50/67"></div>
+                  
+                  }
+                </div>
+                <ion-button expand="block" color="danger" fill="solid" class="font-bold uppercase text-sm mt-2" (click)="onCerrarSesion()">
+                  Cerrar Sesión
+                </ion-button>
+              </div>
+            </div>
+          </ng-template>
+        </ion-popover>
+        
       }
     </ion-buttons>
   </ion-toolbar>

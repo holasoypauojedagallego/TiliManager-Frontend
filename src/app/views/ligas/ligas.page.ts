@@ -19,6 +19,7 @@ export class LigasPage implements OnInit {
   ligas: League[] = [];
   loading: boolean = true;
 
+  user = this.auth.user;
   equipo = this.auth.team;
 
   alerta: boolean = false;
@@ -58,7 +59,7 @@ export class LigasPage implements OnInit {
   }
 
   async createLeague() {
-    if (this.ligas.filter(c => c.owner.name === this.equipo().owner.name).length >= 5) {
+    if (this.ligas.filter(c => c.owner.name === this.user().name).length >= 3) {
       this.alerta = true;
       return;
     }
@@ -73,6 +74,7 @@ export class LigasPage implements OnInit {
       const t:League = await this.leagueService.createLeague(name, false);
       await this.addThisTeamToLeague(t.id);
       await this.onCargar();
+      await this.auth.setSesionTeam();
       this.modalCrear = false;
     } catch (error) {
       console.warn("Ha habido un error al crear la liga");
@@ -81,7 +83,7 @@ export class LigasPage implements OnInit {
 
     async addThisTeamToLeague(id: number) {
     try {
-      await this.leagueService.addTeamToLeague(id, this.equipo());
+      await this.leagueService.addUserToLeague(id);
       await this.onCargar();
       this.modalCrear = false;
     } catch (error) {
@@ -90,17 +92,18 @@ export class LigasPage implements OnInit {
   }
 
   perteneceLiga(liga: League) : boolean{
-    return liga.teams.filter(l => l.team.id === this.equipo().id).length > 0;
+    return liga.teams.filter(l => l.team.owner.name === this.user().name).length > 0;
   }
 
   async deleteLeague(liga: League) {
-    if (liga.owner.name != this.equipo().owner.name) {
+    if (liga.owner.name != this.user().name) {
       this.alerta = true;
       return;
     }
     try {
       await this.leagueService.deleteLeague(liga.id, liga.name);
       await this.onCargar();
+      await this.auth.setSesionTeam();
       this.alertaBorrar = false
     } catch (error) {
       console.warn("Ha habido un error al borrar la liga");

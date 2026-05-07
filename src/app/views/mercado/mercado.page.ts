@@ -34,7 +34,7 @@ export class MercadoPage implements OnInit {
 
   async onCargar() {
     const c:Mercado = await firstValueFrom(this.mercadoJugadores.getMercadoJugadores());
-    this.numeroParaFichar.set(this.equipo().players.length);
+    this.numeroParaFichar.set(this.equipo()[1].team.players.length); // ARREGLAR TODO
     this.jugadoresDisponibles = c.players;
     this.fichable = c.fichable;
   }
@@ -47,7 +47,7 @@ export class MercadoPage implements OnInit {
   }
 
   async ficharJugador(jugador: Jugador){
-    if (this.equipo().players.length > 6) {
+    if (this.equipo()[1].team.players.length > 6) { // ARREGLAR TODO
       this.alerta = true;
       console.log("equipo.size > 6 alerta true")
       return;

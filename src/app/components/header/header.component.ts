@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { KeyValuePipe } from '@angular/common';
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController, IonRouterOutlet } from "@ionic/angular/standalone";
 import { AuthService, Team } from 'src/app/services/auth.service';
 
@@ -6,13 +7,15 @@ import { AuthService, Team } from 'src/app/services/auth.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover]
+  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, KeyValuePipe]
 })
 export class HeaderComponent  implements OnInit {
   @Input() title: string = 'TiliManager';
   @Input() dineroGastado: number = 0;
   @Input() returnBack: boolean = false;
+  @Input() leagueId: number = 0;
   equipo = this.auth.team;
+  user = this.auth.user;
 
   constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) {}
 

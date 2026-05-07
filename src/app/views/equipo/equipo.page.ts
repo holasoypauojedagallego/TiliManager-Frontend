@@ -18,6 +18,7 @@ import { Jugador } from 'src/app/services/jugadores.service';
 })
 export class EquipoPage implements OnInit {
 
+  leagueid: number = 0;
   equipo = this.auth.team;
 
   constructor(private auth: AuthService) { }
@@ -28,10 +29,10 @@ export class EquipoPage implements OnInit {
     const previousIndex = event.previousContainer.data;
     const currentIndex = event.container.data;
     if (previousIndex != currentIndex) {
-      const jugadorMovido = this.equipo().players[previousIndex];
+      const jugadorMovido = this.equipo()[this.leagueid].team.players[previousIndex];
 
-      this.equipo().players[previousIndex] = this.equipo().players[currentIndex];
-      this.equipo().players[currentIndex] = jugadorMovido;
+      this.equipo()[this.leagueid].team.players[previousIndex] = this.equipo()[this.leagueid].team.players[currentIndex];
+      this.equipo()[this.leagueid].team.players[currentIndex] = jugadorMovido;
     }
   }
 

@@ -10,7 +10,7 @@ export class RequireTeamGuard implements CanActivate {
   async canActivate(): Promise<boolean | UrlTree> {
     const currentUser = await this.auth.getTeamSesion();
 
-    if (currentUser && currentUser.players && currentUser.players.length > 0) {
+    if (currentUser) {
         return true;
     }
 

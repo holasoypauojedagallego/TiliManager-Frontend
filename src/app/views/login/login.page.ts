@@ -61,10 +61,7 @@ export class LoginPage implements OnInit {
         console.log(this.auth.getTeamSesion());
         this.loged = true;
         this.loginForm.controls['password'].reset();
-        const currentUser : Team | null = await this.auth.getTeamSesion();
-        if(currentUser && currentUser?.players.length == 0){
-            this.navCtrl.navigateRoot('/crearequipo', { animated: true });
-        } else {this.navCtrl.navigateRoot('/', { animated: true });}
+        this.navCtrl.navigateRoot('/', { animated: true });
       },
 
       error: (err) => {

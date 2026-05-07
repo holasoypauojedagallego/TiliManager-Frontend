@@ -88,21 +88,13 @@ export class LeaguesService {
     return await lastValueFrom(this.http.delete(`${this.apiURL}/ligas`, options));
   }
 
-  async addTeamToLeague(id: number, equipo: Team): Promise<any> {
-    const user = await this.auth.getSesion();
+  async addUserToLeague(id: number): Promise<any> {
+    const user: SecretUser | null = await this.auth.getSesion();
     if (user == null) {
         throw new Error("No hay sesión de usuario");
     }
 
-    const team: SecretTeam = {
-        id: equipo.id,
-        name: equipo.name,
-        owner: user,
-        players: equipo.players,
-        money: equipo.money
-    };
-
-    return await lastValueFrom(this.http.post(`${this.apiURL}/ligas/add/${id}`, team));
+    return await lastValueFrom(this.http.post(`${this.apiURL}/ligas/add/${id}`, user));
   }
 
 
