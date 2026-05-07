@@ -23,8 +23,9 @@ export class LigasPage implements OnInit {
   equipo = this.auth.team;
 
   alerta: boolean = false;
-  alertaBorrar: boolean = false;
   modalCrear: boolean = false;
+
+  borrarLeague: League | null = null;
 
   submit: boolean = false;
 
@@ -56,6 +57,10 @@ export class LigasPage implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+
+  borrar(liga: League){
+    this.borrarLeague = liga;
   }
 
   async createLeague() {
@@ -95,7 +100,11 @@ export class LigasPage implements OnInit {
     return liga.teams.filter(l => l.team.owner.name === this.user().name).length > 0;
   }
 
-  async deleteLeague(liga: League) {
+  async deleteLeague() {
+    if (this.borrarLeague == null) {
+      return;
+    }
+    const liga = this.borrarLeague;
     if (liga.owner.name != this.user().name) {
       this.alerta = true;
       return;
@@ -104,7 +113,7 @@ export class LigasPage implements OnInit {
       await this.leagueService.deleteLeague(liga.id, liga.name);
       await this.onCargar();
       await this.auth.setSesionTeam();
-      this.alertaBorrar = false
+      this.borrarLeague = null;
     } catch (error) {
       console.warn("Ha habido un error al borrar la liga");
     }

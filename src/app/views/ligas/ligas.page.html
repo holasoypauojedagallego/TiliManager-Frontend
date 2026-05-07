@@ -41,25 +41,9 @@
             <div class="text-[15px] line-clamp-2"><span class="text-[16px] font-bold italic">Dueño: </span><span>{{ liga.owner.name }}</span></div>
             @if (user().name === liga.owner.name) {
               <div class="flex gap-2">
-                <ion-button shape="round" size="small" color="danger" fill="solid" class="h-9 hover:scale-99 transition-all duration-100 text-[12.5px] font-semibold uppercase" (click)="alertaBorrar = true">
+                <ion-button shape="round" size="small" color="danger" fill="solid" class="h-9 hover:scale-99 transition-all duration-100 text-[12.5px] font-semibold uppercase" (click)="borrar(liga)">
                   Borrar
                 </ion-button>
-
-                  <ion-modal [isOpen]="alertaBorrar" (didDismiss)="alertaBorrar = false">
-                    <ng-template>
-                      <div class="flex flex-col h-full items-center justify-center p-2 bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl">
-                        <h2 class="text-xl text-white font-bold mb-1">Borrar Liga</h2>
-                        <p class="text-gray-300 text-center mb-4 px-4">
-                          ¿Estás seguro de querer borrar la liga: <span class="italic">"{{ liga.name }}"</span>?
-                        </p>
-                        <div class="flex gap-10">
-                          <ion-button (click)="alertaBorrar=false" color="danger" shape="round" fill="outline" class="mt-6 mb-12">Cancelar</ion-button>
-                          <ion-button (click)="deleteLeague(liga)" shape="round" class="mt-6 mb-12">Borrar</ion-button>
-                        </div>
-                      </div>
-                    </ng-template>
-                  </ion-modal>
-
                 <ion-button shape="round" size="small" fill="solid" class="h-9 hover:scale-99 transition-all duration-100 text-[12.5px] font-semibold uppercase" (click)="goToLeague(liga.id)">
                   Entrar
                 </ion-button>
@@ -118,4 +102,18 @@
         [message]="'Solo se permiten un máximo de 3 ligas creadas por usuario'"
         [buttons]="['Aceptar']" (didDismiss)="alerta = false">
   </ion-alert>
+  <ion-modal [isOpen]="borrarLeague !== null" (didDismiss)="borrarLeague = null">
+    <ng-template>
+      <div class="flex flex-col h-full items-center justify-center p-2 bg-[#1e1e1e] rounded-2xl border border-white/10 shadow-2xl">
+        <h2 class="text-xl text-white font-bold mb-1">Borrar Liga</h2>
+        <p class="text-gray-300 text-center mb-4 px-4">
+          ¿Estás seguro de querer borrar la liga: <span class="italic">"{{ borrarLeague?.name }}"</span>?
+        </p>
+        <div class="flex gap-10">
+          <ion-button (click)="borrarLeague = null" color="danger" shape="round" fill="outline" class="mt-6 mb-12">Cancelar</ion-button>
+          <ion-button (click)="deleteLeague()" shape="round" class="mt-6 mb-12">Borrar</ion-button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
 </ion-content>
