@@ -54,7 +54,7 @@ export class PartidosService {
     if (dataLeagueTeam == null || dataUser == null) {
       return new Observable<any>;
     }
-    const dataTeam = dataLeagueTeam[676767].team; //ARREGLAR TODO
+    const dataTeam = dataLeagueTeam[this.auth.idget()].team;
     const equipo:SecretTeam = {
       id: dataTeam.id,
       name: dataTeam.name,
@@ -72,7 +72,7 @@ export class PartidosService {
     if (dataLeagueTeam == null || dataUser == null) {
       return new Observable<any>;
     }
-     const dataTeam = dataLeagueTeam[676767].team; //ARREGLAR TODO
+     const dataTeam = dataLeagueTeam[this.auth.idget()].team; // ¿arreglar?
     const equipo:SecretTeam = {
       id: dataTeam.id,
       name: dataTeam.name,

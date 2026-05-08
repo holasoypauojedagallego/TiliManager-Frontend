@@ -1,80 +1,85 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
 import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController, IonRouterOutlet } from "@ionic/angular/standalone";
-import { AuthService, Team } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, KeyValuePipe]
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.scss'],
+    imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, KeyValuePipe]
 })
+    
 export class HeaderComponent  implements OnInit {
-  @Input() title: string = 'TiliManager';
-  @Input() dineroGastado: number = 0;
-  @Input() returnBack: boolean = false;
-  @Input() leagueId: number = 0;
-  equipo = this.auth.team;
-  user = this.auth.user;
 
-  constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) {}
+    @Input() title: string = 'TiliManager';
+    @Input() dineroGastado: number = 0;
+    @Input() returnBack: boolean = false;
+    leagueId = this.auth.idget;
+    equipo = this.auth.team;
+    user = this.auth.user;
 
-  ngOnInit() {}
+    constructor(private auth: AuthService, private navCtrl: NavController, private routerCtrl: IonRouterOutlet, private popOver: PopoverController) {}
 
-  async onCerrarSesion() {
-    await this.auth.removeSesion();
-    console.log(this.auth.getSesion());
-    this.popOver.dismiss();
-    if (document.activeElement instanceof HTMLElement){
-      document.activeElement.blur();
+    ngOnInit() {}
+
+    async onCerrarSesion() {
+        await this.auth.removeSesion();
+        console.log(this.auth.getSesion());
+        this.popOver.dismiss();
+        if (document.activeElement instanceof HTMLElement){
+        document.activeElement.blur();
+        }
+        this.navCtrl.navigateRoot('/login', { animated: true });
     }
-    this.navCtrl.navigateRoot('/login', { animated: true });
-  }
 
-  async goToLogin() {
-    this.popOver.dismiss();
-    if (document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
+    async goToLogin() {
+        this.popOver.dismiss();
+        if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+        }
+        await this.navCtrl.navigateRoot('/login', { animated: true });
     }
-    await this.navCtrl.navigateRoot('/login', { animated: true });
-  }
 
-  smallerPrice(i: number) : String {
-      if (!i || i == 0){
-        return '0';
-      }
-      if (i > 1000000000) {
-        return ((i / 1000000000).toFixed(1).replace('.0', '').toString()) + "MM";
-      }
-      else if (i > 1000000) {
-        return ((i / 1000000).toFixed(1).replace('.0', '').toString()) + "M";
-      } else if (i > 1000) {
-        return ((i/1000).toFixed(1).replace('.0', '').toString()) + "K";
-      }
-      return i.toString();
-  }
-
-  Price(i: number) : String {
-    return i.toLocaleString('es-ES');
-  }
-
-  goToHome(){
-    if (document.activeElement instanceof HTMLElement){
-      document.activeElement.blur();
+    smallerPrice(i: number) : String {
+        if (!i || i == 0){
+            return '0';
+        }
+        if (i > 1000000000) {
+            return ((i / 1000000000).toFixed(1).replace('.0', '').toString()) + "MM";
+        }
+        else if (i > 1000000) {
+            return ((i / 1000000).toFixed(1).replace('.0', '').toString()) + "M";
+        } else if (i > 1000) {
+            return ((i/1000).toFixed(1).replace('.0', '').toString()) + "K";
+        }
+        return i.toString();
     }
-    if (this.routerCtrl?.canGoBack()) {
-      this.navCtrl.back();
-    } else {
-      this.navCtrl.navigateRoot('/', { animated: true , animationDirection: 'back'});  
-    }
-  }
 
-  goToLeague(id: string){
-    this.popOver.dismiss();
-    if (document.activeElement instanceof HTMLElement){
-      document.activeElement.blur();
+    Price(i: number) : String {
+        return i.toLocaleString('es-ES');
     }
-    this.navCtrl.navigateRoot(`/liga/${id}`, { animated: true });  
-  }
+
+    goToHome(){
+        if (document.activeElement instanceof HTMLElement){
+        document.activeElement.blur();
+        }
+        if (this.routerCtrl?.canGoBack()) {
+        this.navCtrl.back();
+        } else {
+        this.navCtrl.navigateRoot('/', { animated: true , animationDirection: 'back'});  
+        }
+    }
+
+    changeTeam(id: string){
+        this.auth.id.set(Number(id));
+        console.log(this.auth.id());
+        this.popOverDissmis();
+        this.navCtrl.navigateRoot('/', { animated: true , animationDirection: 'back'}); 
+    }
+
+    popOverDissmis() {
+        this.popOver.dismiss();
+    }
 
 }

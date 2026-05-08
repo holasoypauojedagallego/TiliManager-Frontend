@@ -33,10 +33,10 @@ export class CrearEquipoPage implements OnInit {
   alertaName: boolean = false;
   alertButtons = ['Aceptar'];
 
-  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController, private activeRouter: ActivatedRoute) { }
+  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController, private activeRoute: ActivatedRoute) { }
 
   async ngOnInit() {
-    const idparam = this.activeRouter.snapshot.paramMap.get('id');
+    const idparam = this.activeRoute.snapshot.paramMap.get('id');
     this.id = Number(idparam);
     this.auth.id.set(this.id);
     this.teamForm = this.fb.group({

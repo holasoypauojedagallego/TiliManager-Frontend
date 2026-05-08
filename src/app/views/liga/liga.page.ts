@@ -6,6 +6,7 @@ import { HeaderComponent } from "src/app/components/header/header.component";
 import { ActivatedRoute } from '@angular/router';
 import { League, LeaguesService, LeagueTeam } from 'src/app/services/leagues.service';
 import { firstValueFrom } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-liga',
@@ -21,19 +22,19 @@ export class LigaPage implements OnInit {
   id: number = 0;
   league = signal<League>(this.liga_vacia);
 
-  constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute) { }
+  constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute, private auth: AuthService) { }
 
   async ngOnInit() {
     this.id = Number(this.activeRouter.snapshot.paramMap.get("id"));
     try {
       this.league.set(await firstValueFrom(this.leagueService.getLeague(this.id)));
+      this.auth.id.set(this.id);
     } catch (error) {
       console.warn("Ha habido un error")
     }
   }
 
   diferenciaGoles(goles: number, recibidos: number): string {
-    console.log(goles, recibidos);
     return (goles - recibidos).toString();
   }
 

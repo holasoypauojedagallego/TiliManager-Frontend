@@ -31,37 +31,38 @@ export const routes: Routes = [
     loadComponent: () => import('./views/partido/partido.page').then( m => m.PartidoPage)
   },
   {
-    path: 'equipo',
+    path: 'equipo/:id',
     canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/equipo/equipo.page').then( m => m.EquipoPage)
   },
   {
     path: 'crearequipo/:id',
-    canActivate: [CanActivateAuthGuard],
+    canActivate: [CanActivateAuthGuard, RequireNoTeamGuard],
     loadComponent: () => import('./views/crearEquipo/crearEquipo.page').then( m => m.CrearEquipoPage)
   },
   {
     path: 'partidoonline',
-    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/partidoonline/partidoonline.page').then( m => m.PartidoonlinePage)
   },
   {
     path: 'mercado',
-    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/mercado/mercado.page').then( m => m.MercadoPage)
   },
   {
     path: 'torneo',
-    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/torneo/torneo.page').then( m => m.TorneoPage)
   },
   {
     path: 'ligas',
-    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/ligas/ligas.page').then( m => m.LigasPage)
   },
   {
     path: 'liga/:id',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/liga/liga.page').then( m => m.LigaPage)
   },
 

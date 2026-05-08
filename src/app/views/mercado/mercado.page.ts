@@ -5,7 +5,7 @@ import { IonContent, IonSearchbar, IonRefresher, IonRefresherContent, RefresherC
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { Jugador, JugadoresService, Mercado } from 'src/app/services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, JugadorLeague } from 'src/app/services/auth.service';
 import { JugadorCardComprarComponent } from "src/app/components/jugador-card-comprar/jugador-card-comprar.component";
 
 @Component({
@@ -52,8 +52,18 @@ export class MercadoPage implements OnInit {
       console.log("equipo.size > 6 alerta true")
       return;
     }
+    let jugadorFinal!: JugadorLeague;
+    for(const jugadorcitos of this.equipo()[1].team.players) { // ARREGLAR TODO
+        if (jugadorcitos.player.id === jugador.id) {
+            jugadorFinal = jugadorcitos;
+        }
+    }
+    if (!jugadorFinal) {
+        console.warn("Em supongo que ese jugador no existe, lo cual es raro porque la lista de jugadores ha pasado por aqui de antemano");
+        return;
+    }
     try {
-      const response = await this.auth.buyPlayer(jugador);
+      const response = await this.auth.buyPlayer(jugadorFinal);
       response.subscribe({
         next: (chachi) => {
           console.log("HIP HIP HURRAAA: ", chachi);

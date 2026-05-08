@@ -1,4 +1,4 @@
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, UrlTree } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { AuthService, DictionaryLeagueTeam } from '../services/auth.service';
 
@@ -9,14 +9,15 @@ export class RequireNoTeamGuard implements CanActivate {
 
   constructor(private router: Router, private auth: AuthService) { }
 
-  async canActivate(): Promise<boolean> {
+  async canActivate(activeRoute: ActivatedRouteSnapshot): Promise<boolean | UrlTree> {
+    const id = Number(activeRoute.paramMap.get("id"));
+    const currentTeam : DictionaryLeagueTeam | null = await this.auth.getTeamSesion();
 
-    const currentUser : DictionaryLeagueTeam | null = await this.auth.getTeamSesion();
-
-    if(currentUser && Object.keys(currentUser).length === 0){
+    if(!currentTeam || !id || !currentTeam[id] ){
+        return this.router.parseUrl('/ligas');
+    } else if (currentTeam[id].team.players.length === 0) {
         return true;
     }
-    this.router.navigate(['/equipo']);
-    return false;
+    return this.router.parseUrl(`/equipo/${id}`);
   }
 }

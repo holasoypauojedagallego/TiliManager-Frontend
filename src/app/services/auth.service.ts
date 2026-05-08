@@ -85,7 +85,7 @@ export interface SecretUser {
 
 export interface SellTeam {
   teamUpdateDTO: SecretTeam;
-  player: Jugador;
+  player: JugadorLeague;
 }
 
 export interface LoginRequest {
@@ -116,6 +116,7 @@ export class AuthService {
   public user = this.userSignal.asReadonly();
 
   public id = signal<number>(0);
+  public idget = this.id.asReadonly();
 
   private pereza_teamVacio: Team = {
     id: 0,
@@ -153,6 +154,8 @@ export class AuthService {
     }
     this.userSignal.set(user);
     this.teamSignal.set(leagueTeam);
+    const keys = Object.keys(leagueTeam);
+    this.id.set(Number(keys[0]));
   }
 
   login(data: LoginRequest): Observable<any> {
@@ -183,14 +186,14 @@ export class AuthService {
     return this.http.get<boolean>(`${this.apiURL}/equipos/exists/name/${data}`);
   }
 
-  async sellPlayer(player: Jugador): Promise<Observable<Team>> {
+  async sellPlayer(player: JugadorLeague, id: number): Promise<Observable<Team>> {
     const dictionaryLeagueTeam = await this.getTeamSesion();
     const user = await this.getSesion();
 
     if (!dictionaryLeagueTeam || !user) {
       throw new Error("No se encontró el equipo o el usuario en la sesión para realizar la venta.");
     }
-    const team: Team = dictionaryLeagueTeam[676767].team; // ARREGLAR EN UN FUTURO TODO
+    const team: Team = dictionaryLeagueTeam[id].team;
     const teamUpdateDTO: SecretTeam = {
       id: team.id,
       name: team.name,
@@ -208,7 +211,7 @@ export class AuthService {
     return this.http.put<Team>(`${this.apiURL}/equipos/vender`, data);
   }
 
-  async buyPlayer(player: Jugador): Promise<Observable<Team>> {
+  async buyPlayer(player: JugadorLeague): Promise<Observable<Team>> {
     const dictionaryLeagueTeam = await this.getTeamSesion();
     const user = await this.getSesion();
 

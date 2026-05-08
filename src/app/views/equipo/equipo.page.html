@@ -5,11 +5,11 @@
     
     <div class="w-full max-w-169.5 content-center shrink-0">
       <div class="example-list">
-        @for (player of equipo()[this.leagueid].team.players; track player.id; let i = $index) {
+        @for (player of equipo()[this.id].team.players; track player.id; let i = $index) {
           <div cdkDropList [cdkDropListData]="i" (cdkDropListDropped)="drop($event)" class="drop-slot">
             <div class="w-23 sm:w-25 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
               <div *cdkDragPlaceholder class="cdk-drag-placeholder"></div>
-              <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.leagueid].team.players.length" (onVender)="venderJugador($event)"/>
+              <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
             </div>
           </div>
         }
@@ -17,11 +17,11 @@
     </div>
 
     <div class="w-full p-1">
-  <h2 class="text-center italic">{{equipo()[this.leagueid].team.name}}</h2>
+  <h2 class="text-center italic">{{equipo()[this.id].team.name}}</h2>
 
   <div class="grid grid-cols-2 sm:grid-cols-3 gap-1 justify-items-center mt-4 sm:mt-3 xl:mt-0">
     
-    @for (player of equipo()[this.leagueid].team.players; track player.id; let i = $index) {
+    @for (player of equipo()[this.id].team.players; track player.id; let i = $index) {
       
       @if (i === 0) {
         <div class="col-span-full w-full">
@@ -47,7 +47,7 @@
         </div>
       }
 
-      <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.leagueid].team.players.length" (onVender)="venderJugador($event)"/>
+      <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
       
     }
   </div>

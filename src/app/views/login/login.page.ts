@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonContent, IonItem, IonInput, IonButton, IonIcon, IonInputPasswordToggle, NavController } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
-import { AuthService, SecretUser, Team } from '../../services/auth.service';
+import { AuthService, SecretUser } from '../../services/auth.service';
 
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -61,7 +61,7 @@ export class LoginPage implements OnInit {
         console.log(this.auth.getTeamSesion());
         this.loged = true;
         this.loginForm.controls['password'].reset();
-        this.navCtrl.navigateRoot('/', { animated: true });
+        this.navCtrl.navigateRoot('/', { animated: true, queryParams: { alertaaEnsenar: true }});
       },
 
       error: (err) => {

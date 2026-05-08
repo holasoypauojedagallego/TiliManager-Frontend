@@ -1,13 +1,14 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent } from '@ionic/angular/standalone';
+import { IonContent, NavController } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { JugadorMiniCardComponent } from "src/app/components/jugador-mini-card/jugador-mini-card.component";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, JugadorLeague } from 'src/app/services/auth.service';
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';   
 import { Jugador } from 'src/app/services/jugadores.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-equipo',
@@ -18,21 +19,28 @@ import { Jugador } from 'src/app/services/jugadores.service';
 })
 export class EquipoPage implements OnInit {
 
-  leagueid: number = 0;
+  id: number = 0;
   equipo = this.auth.team;
 
-  constructor(private auth: AuthService) { }
+  constructor(private auth: AuthService, private activeRoute: ActivatedRoute, private navCtrl: NavController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.id = Number(this.activeRoute.snapshot.paramMap.get("id"));
+    if (!this.equipo()[this.id]) {
+      this.navCtrl.navigateRoot('/', { animated: true });
+      return;
+    }
+    this.auth.id.set(this.id);
+  }
 
   drop(event: CdkDragDrop<any>) {
     const previousIndex = event.previousContainer.data;
     const currentIndex = event.container.data;
     if (previousIndex != currentIndex) {
-      const jugadorMovido = this.equipo()[this.leagueid].team.players[previousIndex];
+      const jugadorMovido = this.equipo()[this.id].team.players[previousIndex];
 
-      this.equipo()[this.leagueid].team.players[previousIndex] = this.equipo()[this.leagueid].team.players[currentIndex];
-      this.equipo()[this.leagueid].team.players[currentIndex] = jugadorMovido;
+      this.equipo()[this.id].team.players[previousIndex] = this.equipo()[this.id].team.players[currentIndex];
+      this.equipo()[this.id].team.players[currentIndex] = jugadorMovido;
     }
   }
 
@@ -42,8 +50,18 @@ export class EquipoPage implements OnInit {
 
   async venderJugador(jugador: Jugador) {
     console.log("Vender, ", jugador);
+    let jugadorFinal!: JugadorLeague;
+    for(const jugadorcitos of this.equipo()[this.id].team.players) {
+        if (jugadorcitos.player.id === jugador.id) {
+            jugadorFinal = jugadorcitos;
+        }
+    }
+    if (!jugadorFinal) {
+        console.warn("Em supongo que ese jugador no existe, lo cual es raro porque la lista de jugadores ha pasado por aqui de antemano");
+        return;
+    }
     try {
-      const response = await this.auth.sellPlayer(jugador);
+      const response = await this.auth.sellPlayer(jugadorFinal, this.id);
       response.subscribe({
         next: (chachi) => {
           console.log("HIP HIP HURRAAA: ", chachi);
