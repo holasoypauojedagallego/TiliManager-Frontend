@@ -19,6 +19,18 @@ export interface Jugador {
   price: number;
 }
 
+export interface LeagueIdDTO {
+  id: number,
+  name: string
+}
+
+export interface JugadorLeague {
+  id: number,
+  player: Jugador,
+  league: LeagueIdDTO,
+  team: number
+}
+
 export interface LeagueTeamIdDTO {
   id: number
 }
@@ -27,14 +39,14 @@ export interface Team {
   id: number;
   name: string;
   owner: User;
-  players: Jugador[];
+  players: JugadorLeague[];
   money: number;
   leagueTeam: LeagueTeamIdDTO;
 }
 
 export interface LeagueTeam {
   id: number,
-  league: { id: number, name: string },
+  league: LeagueIdDTO,
   team: Team,
   wins: number,
   losses: number,
@@ -60,8 +72,9 @@ export interface SecretTeam {
   id: number;
   name: string;
   owner: SecretUser;
-  players: Jugador[];
+  players: JugadorLeague[];
   money: number;
+  leagueTeam: LeagueTeamIdDTO;
 }
 
 export interface SecretUser {
@@ -101,6 +114,8 @@ export class AuthService {
 
   private userSignal = signal<User>(this.pereza_UserVacio);
   public user = this.userSignal.asReadonly();
+
+  public id = signal<number>(0);
 
   private pereza_teamVacio: Team = {
     id: 0,
@@ -181,7 +196,8 @@ export class AuthService {
       name: team.name,
       owner: user,
       players: team.players,
-      money: team.money
+      money: team.money,
+      leagueTeam: team.leagueTeam
     };
 
     const data: SellTeam = {
@@ -205,7 +221,8 @@ export class AuthService {
       name: team.name,
       owner: user,
       players: team.players,
-      money: team.money
+      money: team.money,
+      leagueTeam: team.leagueTeam
     };
 
     const data: SellTeam = {
@@ -216,20 +233,21 @@ export class AuthService {
     return this.http.put<Team>(`${this.apiURL}/equipos/comprar`, data);
   }
 
-  async updateTeam(name: string, players: Jugador[], money: number): Promise<Observable<any> | undefined> {
+  async updateTeam(name: string, players: JugadorLeague[], money: number, id:number): Promise<Observable<any> | undefined> {
     const dictionaryLeagueTeam: DictionaryLeagueTeam | null = await this.getTeamSesion();
     let user: SecretUser | null = await this.getSesion();
     if (dictionaryLeagueTeam == null || user == null) {
       console.warn("No hay usuario o equipo");
       return;
     }
-    const team: Team = dictionaryLeagueTeam[676767].team; // ARREGLAR EN UN FUTURO TODO
+    const team: Team = dictionaryLeagueTeam[id].team;
     const teamFinal: SecretTeam = {
       id: team.id = team.id,
       name: name = name,
       owner: user = user,
       players: players = players,
-      money: team.money = team.money - money
+      money: team.money = team.money - money,
+      leagueTeam: team.leagueTeam
     }
 
     const t = await this.http.put<SecretTeam>(`${this.apiURL}/equipos`, teamFinal);
@@ -290,7 +308,7 @@ export class AuthService {
     const teamreciencogido = await this.getTeamSesion();
     let team: Team = this.pereza_teamVacio;
     if (teamreciencogido && teamreciencogido != null) {
-      team = teamreciencogido[676767].team; // NECESITARA REVISION TODO !! (basicamente, se le tendra que pasar el valor del id de la liga)
+      team = teamreciencogido[this.id()].team;
     }
     return team.money;
   }

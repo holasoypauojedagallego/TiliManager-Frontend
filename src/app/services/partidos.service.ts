@@ -60,7 +60,8 @@ export class PartidosService {
       name: dataTeam.name,
       owner: dataUser,
       players: dataTeam.players,
-      money: dataTeam.money
+      money: dataTeam.money,
+      leagueTeam: dataTeam.leagueTeam
     }
     return this.http.post(`${this.apiURL}/partidos/t1`, equipo);
   }
@@ -77,7 +78,8 @@ export class PartidosService {
       name: dataTeam.name,
       owner: dataUser,
       players: dataTeam.players,
-      money: dataTeam.money
+      money: dataTeam.money,
+      leagueTeam: dataTeam.leagueTeam
     }
     return this.http.post(`${this.apiURL}/partidos`, equipo);
   }

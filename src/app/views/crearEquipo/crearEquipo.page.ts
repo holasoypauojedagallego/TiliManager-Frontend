@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { IonContent, IonItem, IonInput, IonButton, IonAlert, IonIcon, NavController } from '@ionic/angular/standalone';
-import { Jugador, JugadoresService } from '../../services/jugadores.service';
+import { JugadoresService } from '../../services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
 import { JugadorCard } from "src/app/components/jugador-card/jugador-card.component";
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { AuthService } from 'src/app/services/auth.service';
+import { AuthService, Jugador, JugadorLeague } from 'src/app/services/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-crear-equipo',
@@ -18,9 +19,10 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CrearEquipoPage implements OnInit {
 
   teamForm : FormGroup = new FormGroup({});
+  id: number = 0;
 
-  jugadoresSinEquipo: Jugador[] = [];
-  jugadoresParaFichar: Jugador[] = [];
+  jugadoresSinEquipo: JugadorLeague[] = [];
+  jugadoresParaFichar: JugadorLeague[] = [];
   dineroTotalJugadores: number = 0;
 
   teamUpdated: boolean = false;
@@ -31,15 +33,18 @@ export class CrearEquipoPage implements OnInit {
   alertaName: boolean = false;
   alertButtons = ['Aceptar'];
 
-  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController) { }
+  constructor(private jugadores : JugadoresService, private fb : FormBuilder, private auth: AuthService, private navCtrl: NavController, private activeRouter: ActivatedRoute) { }
 
   async ngOnInit() {
+    const idparam = this.activeRouter.snapshot.paramMap.get('id');
+    this.id = Number(idparam);
+    this.auth.id.set(this.id);
     this.teamForm = this.fb.group({
      name : ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9._+-]([a-zA-Z0-9._+ -]*[a-zA-Z0-9._+-])?$')]],
     });
     try {
-      this.jugadoresSinEquipo = await firstValueFrom(this.jugadores.getJugadoresTeamIdNull());
-      this.jugadoresSinEquipo.sort((a, b) => a.price - b.price);
+      this.jugadoresSinEquipo = await firstValueFrom(this.jugadores.getJugadoresTeamIdNull(this.id.toString()));
+      this.jugadoresSinEquipo.sort((a, b) => a.player.price - b.player.price);
     } catch (error) {
       console.error("Ha ocurrido un error al buscar los jugadores")
     }
@@ -47,15 +52,18 @@ export class CrearEquipoPage implements OnInit {
 
   ficharJugador(jugador: Jugador){
     for (let i = 0; i < this.jugadoresParaFichar.length; i++) {
-      if (this.jugadoresParaFichar[i] == jugador){
+      if (this.jugadoresParaFichar[i].player == jugador){
         this.jugadoresParaFichar.splice(i, 1);
         this.dineroTotalJugadores = this.dineroTotalJugadores - jugador.price;
         return;
       }
-      
     }
-    this.jugadoresParaFichar.push(jugador);
-    this.dineroTotalJugadores = this.dineroTotalJugadores + jugador.price;
+    const jugadorAFichar:JugadorLeague | undefined = this.jugadoresSinEquipo.find(pla => pla.player.id === jugador.id);
+    if (jugadorAFichar){
+      this.jugadoresParaFichar.push(jugadorAFichar);
+      this.dineroTotalJugadores = this.dineroTotalJugadores + jugadorAFichar.player.price;
+    }
+
   }
 
   async onCreateTeam() {
@@ -75,7 +83,7 @@ export class CrearEquipoPage implements OnInit {
       return;
     }
 
-    const response = await this.auth.updateTeam(nameData.name, this.jugadoresParaFichar, this.dineroTotalJugadores);
+    const response = await this.auth.updateTeam(nameData.name, this.jugadoresParaFichar, this.dineroTotalJugadores, this.id);
 
     if (response == undefined || response == null) {
       return;

@@ -36,8 +36,8 @@ export const routes: Routes = [
     loadComponent: () => import('./views/equipo/equipo.page').then( m => m.EquipoPage)
   },
   {
-    path: 'crearequipo',
-    canActivate: [CanActivateAuthGuard, RequireNoTeamGuard],
+    path: 'crearequipo/:id',
+    canActivate: [CanActivateAuthGuard],
     loadComponent: () => import('./views/crearEquipo/crearEquipo.page').then( m => m.CrearEquipoPage)
   },
   {

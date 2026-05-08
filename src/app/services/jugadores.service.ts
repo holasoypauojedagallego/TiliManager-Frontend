@@ -32,8 +32,8 @@ export class JugadoresService {
     return this.http.get(`${this.apiURL}/jugadores`);
   }
 
-  getJugadoresTeamIdNull() : Observable<any> {
-    return this.http.get(`${this.apiURL}/jugadores/teamid`);
+  getJugadoresTeamIdNull(id: string) : Observable<any> {
+    return this.http.get(`${this.apiURL}/jugadores_liga/liga_vacios/${id}`);
   }
 
   getMercadoJugadores() : Observable<Mercado> {

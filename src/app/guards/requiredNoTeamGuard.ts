@@ -1,6 +1,6 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { AuthService, DictionaryLeagueTeam, Team } from '../services/auth.service';
+import { AuthService, DictionaryLeagueTeam } from '../services/auth.service';
 
 @Injectable({
     providedIn: 'root'

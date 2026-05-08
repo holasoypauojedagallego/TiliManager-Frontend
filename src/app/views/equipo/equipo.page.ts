@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { JugadorMiniCardComponent } from "src/app/components/jugador-mini-card/jugador-mini-card.component";
-import { AuthService, Team } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';   
 import { Jugador } from 'src/app/services/jugadores.service';

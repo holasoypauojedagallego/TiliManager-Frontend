@@ -51,8 +51,8 @@
       @for (jugador of jugadoresSinEquipo; track jugador.id) {
       <div
         class="relative group cursor-pointer transition-all duration-200 hover:-translate-y-1 hover:shadow-xl rounded-xl">
-        <app-jugador-card [jugador]="jugador" [totalJugadores]="jugadoresParaFichar.length"
-          (onFichar)="ficharJugador($event)" class="block w-full h-full"></app-jugador-card>
+        <app-jugador-card [jugador]="jugador.player" [totalJugadores]="jugadoresParaFichar.length"
+          (onFichar)="ficharJugador($event)" [idliga]="id" class="block w-full h-full"></app-jugador-card>
       </div>
       }
 

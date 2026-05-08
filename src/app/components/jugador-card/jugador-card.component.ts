@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Jugador } from 'src/app/services/jugadores.service';
 import { IonCard, IonButton, IonAlert, IonImg } from "@ionic/angular/standalone";
+import { Jugador } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-jugador-card',
@@ -10,6 +10,7 @@ import { IonCard, IonButton, IonAlert, IonImg } from "@ionic/angular/standalone"
 })
 export class JugadorCard {
     @Input() jugador!: Jugador;
+    @Input() idliga: number = 0;
     @Output() onFichar: EventEmitter<Jugador> = new EventEmitter<Jugador>();
     @Input() totalJugadores: number = 0;
     @Input() isFichable: boolean = false;

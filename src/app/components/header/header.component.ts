@@ -69,4 +69,12 @@ export class HeaderComponent  implements OnInit {
     }
   }
 
+  goToLeague(id: string){
+    this.popOver.dismiss();
+    if (document.activeElement instanceof HTMLElement){
+      document.activeElement.blur();
+    }
+    this.navCtrl.navigateRoot(`/liga/${id}`, { animated: true });  
+  }
+
 }
