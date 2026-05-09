@@ -13,6 +13,7 @@ export class JugadorMiniCardComponent  implements OnInit {
   @Input() jugador!: Jugador;
   @Output() onVender: EventEmitter<Jugador> = new EventEmitter<Jugador>();
   @Input() totalJugadores: number = 0;
+  @Input() teamId: number | null = null;
   alerta = false;
   alerta2 = false;
 

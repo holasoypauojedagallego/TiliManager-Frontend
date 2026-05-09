@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { IonContent, IonItem, IonInput, IonButton, IonAlert, IonIcon, NavController } from '@ionic/angular/standalone';
+import { IonContent, IonItem, IonInput, IonButton, IonAlert, IonIcon, NavController, IonLoading } from '@ionic/angular/standalone';
 import { JugadoresService } from '../../services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
 import { JugadorCard } from "src/app/components/jugador-card/jugador-card.component";
@@ -14,7 +14,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './crearEquipo.page.html',
   styleUrls: ['./crearEquipo.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, JugadorCard, IonItem, IonInput, IonButton, IonAlert, IonIcon, HeaderComponent, ReactiveFormsModule]
+  imports: [IonContent, CommonModule, FormsModule, JugadorCard, IonItem, IonInput, IonButton, IonAlert, IonIcon, HeaderComponent, ReactiveFormsModule, IonLoading]
 })
 export class CrearEquipoPage implements OnInit {
 

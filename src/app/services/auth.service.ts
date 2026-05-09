@@ -28,7 +28,7 @@ export interface JugadorLeague {
   id: number,
   player: Jugador,
   league: LeagueIdDTO,
-  team: number
+  teamId: number
 }
 
 export interface LeagueTeamIdDTO {
@@ -218,7 +218,7 @@ export class AuthService {
     if (!dictionaryLeagueTeam || !user) {
       throw new Error("No se encontró el equipo o el usuario en la sesión para realizar la venta.");
     }
-    const team: Team = dictionaryLeagueTeam[676767].team; // ARREGLAR EN UN FUTURO TODO
+    const team: Team = dictionaryLeagueTeam[this.idget()].team; 
     const teamUpdateDTO: SecretTeam = {
       id: team.id,
       name: team.name,

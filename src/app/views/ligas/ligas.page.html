@@ -53,9 +53,10 @@
                 Entrar
               </ion-button>
             } @else {
-              <ion-button [disabled]="liga.teams.length >= 20" shape="round" size="small" fill="solid" class="h-9 hover:scale-99 transition-all duration-100 text-[12.5px] font-semibold uppercase" (click)="addThisTeamToLeague(liga.id)">
+              <ion-button [id]="liga.name" [disabled]="liga.teams.length >= 20" shape="round" size="small" fill="solid" class="h-9 hover:scale-99 transition-all duration-100 text-[12.5px] font-semibold uppercase" (click)="addThisTeamToLeague(liga.id)">
                 Unirse
               </ion-button>
+              <ion-loading [trigger]="liga.name" message="Uniendose a la liga..." [duration]="1400"/>
             }
           </div>
         </ion-card>

@@ -9,7 +9,7 @@
           <div cdkDropList [cdkDropListData]="i" (cdkDropListDropped)="drop($event)" class="drop-slot">
             <div class="w-23 sm:w-25 hover:cursor-grab focus:cursor-grabbing" cdkDrag>
               <div *cdkDragPlaceholder class="cdk-drag-placeholder"></div>
-              <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
+              <app-jugador-mini-card [teamId]="player.teamId" [jugador]="player.player" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
             </div>
           </div>
         }
@@ -47,7 +47,7 @@
         </div>
       }
 
-      <app-jugador-mini-card [jugador]="player.player" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
+      <app-jugador-mini-card [jugador]="player.player" [teamId]="player.teamId" [totalJugadores]="equipo()[this.id].team.players.length" (onVender)="venderJugador($event)"/>
       
     }
   </div>

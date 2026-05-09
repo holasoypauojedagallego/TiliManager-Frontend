@@ -1,12 +1,13 @@
-import { Component, OnInit, signal, Signal, WritableSignal } from '@angular/core';
+import { Component, OnInit, signal, WritableSignal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonContent, IonSearchbar, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { Jugador, JugadoresService, Mercado } from 'src/app/services/jugadores.service';
+import { JugadoresService, Mercado } from 'src/app/services/jugadores.service';
 import { firstValueFrom } from 'rxjs';
-import { AuthService, JugadorLeague } from 'src/app/services/auth.service';
+import { AuthService, Jugador, JugadorLeague } from 'src/app/services/auth.service';
 import { JugadorCardComprarComponent } from "src/app/components/jugador-card-comprar/jugador-card-comprar.component";
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mercado',
@@ -17,7 +18,7 @@ import { JugadorCardComprarComponent } from "src/app/components/jugador-card-com
 })
 export class MercadoPage implements OnInit {
 
-  jugadoresDisponibles: Jugador[] = [];
+  jugadoresDisponibles: JugadorLeague[] = [];
   fichable: boolean = false;
 
   jugadorAFichar: Jugador = {id : 0, name : '', attack: 0, defense: 0, rating: 0, price : 0, teamId: 0};
@@ -26,15 +27,23 @@ export class MercadoPage implements OnInit {
   dineroTotalJugadores: number = 0;
   alerta: boolean = false;
 
-  constructor(private mercadoJugadores:JugadoresService, private auth: AuthService) { }
+  id: number = 0;
+
+  constructor(private mercadoJugadores:JugadoresService, private auth: AuthService, private activeRoute: ActivatedRoute) { }
 
   async ngOnInit() {
-    await this.onCargar();
+    this.id = Number(this.activeRoute.snapshot.paramMap.get("id"));
+    try {
+      await this.onCargar(); 
+      this.auth.id.set(this.id);
+    } catch (error) {
+      console.warn("Ha habido un error")
+    }
   }
 
   async onCargar() {
-    const c:Mercado = await firstValueFrom(this.mercadoJugadores.getMercadoJugadores());
-    this.numeroParaFichar.set(this.equipo()[1].team.players.length); // ARREGLAR TODO
+    const c:Mercado = await firstValueFrom(this.mercadoJugadores.getMercadoJugadores(this.id));
+    this.numeroParaFichar.set(this.equipo()[this.id].team.players.length);
     this.jugadoresDisponibles = c.players;
     this.fichable = c.fichable;
   }
@@ -47,18 +56,19 @@ export class MercadoPage implements OnInit {
   }
 
   async ficharJugador(jugador: Jugador){
-    if (this.equipo()[1].team.players.length > 6) { // ARREGLAR TODO
+    if (this.equipo()[this.id].team.players.length > 6) {
       this.alerta = true;
       console.log("equipo.size > 6 alerta true")
       return;
     }
     let jugadorFinal!: JugadorLeague;
-    for(const jugadorcitos of this.equipo()[1].team.players) { // ARREGLAR TODO
+    for(const jugadorcitos of this.jugadoresDisponibles) {
         if (jugadorcitos.player.id === jugador.id) {
             jugadorFinal = jugadorcitos;
         }
     }
     if (!jugadorFinal) {
+        console.log(jugador.id);
         console.warn("Em supongo que ese jugador no existe, lo cual es raro porque la lista de jugadores ha pasado por aqui de antemano");
         return;
     }

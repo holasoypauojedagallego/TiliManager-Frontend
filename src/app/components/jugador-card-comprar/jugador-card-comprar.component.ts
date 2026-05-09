@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Jugador } from 'src/app/services/jugadores.service';
 import { IonCard, IonButton, IonAlert, IonImg, IonModal } from "@ionic/angular/standalone";
+import { Jugador } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-jugador-card-comprar',
@@ -13,6 +13,8 @@ export class JugadorCardComprarComponent {
     @Output() onFichar: EventEmitter<Jugador> = new EventEmitter<Jugador>();
     @Input() totalJugadores: number = 0;
     @Input() dineroEquipo: number = 0;
+    @Input() idliga: number = 0;
+    @Input() teamId: number | null = null;
     alerta44: boolean = false
     
 

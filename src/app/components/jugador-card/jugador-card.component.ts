@@ -14,6 +14,7 @@ export class JugadorCard {
     @Output() onFichar: EventEmitter<Jugador> = new EventEmitter<Jugador>();
     @Input() totalJugadores: number = 0;
     @Input() isFichable: boolean = false;
+    @Input() teamId: number | null = null;
 
     fichable: boolean = true;
     alerta: boolean = false;

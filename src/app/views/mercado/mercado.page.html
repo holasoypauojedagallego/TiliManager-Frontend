@@ -22,7 +22,7 @@
 
   <div class="flex justify-between items-end mb-4">
     <h2 class="text-xl font-bold text-gray-200">
-      Disponibles 
+      Disponibles de la Liga {{id}}
       @if (!fichable) { 
         <span class="text-sm ml-2.5">(Mercado Cerrado)</span> 
       }
@@ -34,10 +34,12 @@
   @for (jugador of jugadoresDisponibles; track jugador.id) {
     <app-jugador-card-comprar
       class="w-full max-w-92 pb-2.5"
-      [jugador]="jugador" 
+      [jugador]="jugador.player" 
+      [idliga]="jugador.league.id"
       (onFichar)="ficharJugador($event)" 
-      [totalJugadores]="equipo()[1].team.players.length"
-      [dineroEquipo]="equipo()[1].team.money"/> <!--ARREGLAR TODO -->
+      [teamId]="jugador.teamId"
+      [totalJugadores]="equipo()[id].team.players.length"
+      [dineroEquipo]="equipo()[id].team.money"/> <!--ARREGLAR TODO -->
     
   } @empty {
     <div class="col-span-full flex flex-col items-center justify-center py-16">

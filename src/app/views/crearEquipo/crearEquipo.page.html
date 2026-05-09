@@ -56,11 +56,12 @@
         </ion-item>
 
 
-        <ion-button type="input" shape="round" [disabled]="teamForm.invalid"
+        <ion-button id="submitCrearEquipo" type="submit" shape="round" [disabled]="teamForm.invalid"
             class="h-14 mt-4 px-4 m-auto font-bold tracking-wide">
             ¡FORMAR EQUIPO!
         </ion-button>
       </div>
+      <ion-loading trigger="submitCrearEquipo" message="Uniendose a la liga..." [duration]="1400"/>
 
     <div class="px-2 my-5 flex flex-col md:items-center justify-between gap-1">
       <h3 class="text-3xl font-black italic tracking-wider text-white">

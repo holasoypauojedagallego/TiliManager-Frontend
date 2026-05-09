@@ -2,19 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-
-export interface Jugador {
-  id: number;
-  name: string;
-  rating: number;
-  attack: number;
-  defense: number;
-  teamId: number | null;
-  price: number;
-}
+import { JugadorLeague } from './auth.service';
 
 export interface Mercado {
-  players: Jugador[],
+  id: number,
+  players: JugadorLeague[],
   fichable: boolean;
 }
 
@@ -28,16 +20,12 @@ export class JugadoresService {
   
   constructor(private http: HttpClient) {}
 
-  getJugadores() : Observable<any> {
-    return this.http.get(`${this.apiURL}/jugadores`);
-  }
-
   getJugadoresTeamIdNull(id: string) : Observable<any> {
     return this.http.get(`${this.apiURL}/jugadores_liga/liga_vacios/${id}`);
   }
 
-  getMercadoJugadores() : Observable<Mercado> {
-    return this.http.get<Mercado>(`${this.apiURL}/mercado`);
+  getMercadoJugadores(id: number) : Observable<Mercado> {
+    return this.http.get<Mercado>(`${this.apiURL}/mercado/${id}`);
   }
 
 }

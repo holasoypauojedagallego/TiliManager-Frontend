@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonButton, NavController, IonCard, IonRefresher, IonIcon, IonRefresherContent, RefresherCustomEvent, IonAlert, IonModal, IonInput, IonItem } from '@ionic/angular/standalone';
+import { IonContent, IonButton, NavController, IonCard, IonRefresher, IonIcon, IonRefresherContent, RefresherCustomEvent, IonAlert, IonModal, IonInput, IonItem, IonLoading } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { League, LeaguesService } from '../../services/leagues.service';
 import { firstValueFrom } from 'rxjs';
@@ -12,7 +12,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './ligas.page.html',
   styleUrls: ['./ligas.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, IonButton, IonCard, HeaderComponent, IonRefresher, IonRefresherContent, IonAlert, IonModal, IonIcon, IonInput, IonItem, ReactiveFormsModule]
+  imports: [IonContent, CommonModule, IonButton, IonCard, HeaderComponent, IonRefresher, IonRefresherContent, IonAlert, IonModal, IonIcon, IonInput, IonItem, ReactiveFormsModule, IonLoading]
 })
 export class LigasPage implements OnInit {
 

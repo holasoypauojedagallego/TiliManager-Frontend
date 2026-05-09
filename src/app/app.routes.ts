@@ -46,8 +46,8 @@ export const routes: Routes = [
     loadComponent: () => import('./views/partidoonline/partidoonline.page').then( m => m.PartidoonlinePage)
   },
   {
-    path: 'mercado',
-    canActivate: [CanActivateAuthGuard],
+    path: 'mercado/:id',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/mercado/mercado.page').then( m => m.MercadoPage)
   },
   {
