@@ -174,6 +174,10 @@ export class AuthService {
     return this.http.get<boolean>(`${this.apiURL}/users/exists/name/${data}`);
   }
 
+  empezarConexiónRender(): Promise<boolean> {
+    return firstValueFrom(this.http.get<boolean>(`${this.apiURL}/users/exists/name/prueba`));
+  }
+
   getTeam(data: SecretUser): Observable<Team> {
     return this.http.post<Team>(`${this.apiURL}/equipos/owner`, data);
   }

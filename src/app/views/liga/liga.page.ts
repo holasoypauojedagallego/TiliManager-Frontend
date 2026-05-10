@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { ActivatedRoute } from '@angular/router';
 import { League, LeaguesService, LeagueTeam } from 'src/app/services/leagues.service';
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './liga.page.html',
   styleUrls: ['./liga.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonButton]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent]
 })
 export class LigaPage implements OnInit {
 
@@ -25,6 +25,10 @@ export class LigaPage implements OnInit {
   constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute, private auth: AuthService) { }
 
   async ngOnInit() {
+    await this.onCargar();
+  }
+
+  async onCargar() {
     this.id = Number(this.activeRouter.snapshot.paramMap.get("id"));
     try {
       this.league.set(await firstValueFrom(this.leagueService.getLeague(this.id)));
@@ -33,6 +37,13 @@ export class LigaPage implements OnInit {
       console.warn("Ha habido un error")
     }
   }
+
+    handleRefresh(event: RefresherCustomEvent) {
+      setTimeout(async () => {
+        await this.onCargar();
+        event.target.complete();
+      }, 1000);
+    }
 
   diferenciaGoles(goles: number, recibidos: number): string {
     return (goles - recibidos).toString();
@@ -48,7 +59,7 @@ export class LigaPage implements OnInit {
       const pointsA = this.calcularPuntos(a);
       const pointsB = this.calcularPuntos(b);
       if (pointsB !== pointsA) return pointsB - pointsA;
-      return (b.goalsScored - b.goalsRecieved) - (a.goalsScored - a.goalsRecieved);
+      return (b.goalsScored - b.goalsReceived) - (a.goalsScored - a.goalsReceived);
     });
   }
 

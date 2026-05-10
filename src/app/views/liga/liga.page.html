@@ -1,6 +1,9 @@
 <app-header [returnBack]="true" [title]="league().name" />
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
   <div class="max-w-6xl mx-auto mt-4">
     
     <!-- Header de la Liga -->
@@ -71,8 +74,8 @@
               <td class="px-4 py-4 text-center text-white font-bold">{{ team.draws }}</td>
               <td class="px-4 py-4 text-center text-white font-bold">{{ team.losses }}</td>
               <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsScored }}</td>
-              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsRecieved }}</td>
-              <td class="px-4 py-4 text-center font-bold">{{ diferenciaGoles(team.goalsScored, team.goalsRecieved)}}</td>
+              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsReceived }}</td>
+              <td class="px-4 py-4 text-center font-bold">{{ diferenciaGoles(team.goalsScored, team.goalsReceived)}}</td>
               <td class="px-4 py-4 text-center bg-white/5">
                 <span class="text-xl font-black text-white italic">{{ calcularPuntos(team) }}</span>
               </td>

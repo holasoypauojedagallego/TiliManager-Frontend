@@ -20,7 +20,7 @@ export interface LeagueTeam {
     losses: number,
     draws: number,
     goalsScored: number,
-    goalsRecieved: number,
+    goalsReceived: number,
 }
 
 export interface DeleteLeague {

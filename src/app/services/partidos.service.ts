@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AuthService, Team, Jugador, SecretTeam } from './auth.service';
+import { AuthService, Team, Jugador, SecretTeam, LeagueIdDTO } from './auth.service';
 import { environment } from 'src/environments/environment';
 
 export interface PartidoEmulado {
@@ -22,6 +22,7 @@ export interface Match {
   partidoEncapsulado: PartidoEmulado[];
   localTeamGoals: number;
   visitorTeamGoals: number;
+  league: LeagueIdDTO
 }
 
 @Injectable({
