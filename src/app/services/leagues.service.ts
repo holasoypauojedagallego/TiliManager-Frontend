@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { lastValueFrom, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService, SecretTeam, SecretUser, Team, User } from './auth.service';
+import { PartidoEmulado } from './partidos.service';
 
 export interface League {
     id: number,
@@ -95,6 +96,15 @@ export class LeaguesService {
     }
 
     return await lastValueFrom(this.http.post(`${this.apiURL}/ligas/add/${id}`, user));
+  }
+
+  async playLeagueMatch(id: number): Promise<PartidoEmulado[]> {
+    const user: SecretUser | null = await this.auth.getSesion();
+    if (user == null) {
+        throw new Error("No hay sesión de usuario");
+    }
+
+    return await lastValueFrom(this.http.post<PartidoEmulado[]>(`${this.apiURL}/ligas/jugarliga/${id}`, user));
   }
 
 

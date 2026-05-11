@@ -6,14 +6,7 @@
     <ion-row class="pb-2.5 justify-between gap-6 md:gap-0">
       <ion-col size="12" sizeMd="7.9">
         <ion-card routerLink="/liga/{{id()}}">
-          <div class="relative aspect-video w-full h-full max-h-70 flex items-center justify-center bg-amber-200">
-            <div class="flex justify-between items-center w-[90%] max-w-200 md:text-lg">
-              <div class="w-16 flex justify-center">Local</div>
-              <div class="w-16 flex justify-center">VS</div>
-              <div class="w-16 flex justify-center">Visitante</div>
-            </div>
-          </div>
-
+          <img alt="Foto Liga" src="assets/img/foton.webp" class="md:h-[14.8vw] w-full" />
           <ion-card-header class="py-2 pl-4">
             <div class="flex justify-between items-start">
               <div>
@@ -125,12 +118,12 @@
   
 
     <ion-alert [isOpen]="alertaaEnsenar" header="¡Bienvenido!" subHeader="Funcionamiento"
-        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la págin, en su perfil ¡Podra elegir entre sus diversos equipos!'"
+        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la página, en su perfil ¡Podra elegir entre sus diversos equipos!'"
         [buttons]="['Aceptar']" (didDismiss)="salirAlert()">
     </ion-alert>
 
         <ion-alert [isOpen]="alertaTocha" header="¡Bienvenido!" subHeader="Funcionamiento"
-        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la págin, en su perfil ¡Podra elegir entre sus diversos equipos!'"
+        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la página, en su perfil ¡Podra elegir entre sus diversos equipos!'"
         [buttons]="['Aceptar']" (didDismiss)="alertaTocha = false">
     </ion-alert>
 </ion-content>

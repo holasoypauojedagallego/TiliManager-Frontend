@@ -1,4 +1,4 @@
-<app-header title="Encuentro" [returnBack]="true" />
+<app-header title="Encuentro" [returnBack]="!enEjecucion" />
 <ion-content [fullscreen]="true">
     <div class="h-full w-full flex flex-col items-center max-w-400 mx-auto px-4 py-7">
 
@@ -56,7 +56,7 @@
               <div class="text-amber-50 flex-1 flex flex-wrap items-baseline gap-1" [class.flex-row-reverse]="!e.local">
                 <span class="font-bold tracking-wide">{{e.equipo.name}}</span>
                 <span class="opacity-80 text-sm md:text-base"> : </span>
-                <span> {{e.jugador.name}}</span>
+                <span> {{e.jugador.player.name}}</span>
                 <span> - </span>
                 <span class="font-bold text-white">{{e.sucede}}</span>
               </div>

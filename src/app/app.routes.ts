@@ -65,6 +65,11 @@ export const routes: Routes = [
     canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/liga/liga.page').then( m => m.LigaPage)
   },
+  {
+    path: 'partidoliga/:id',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    loadComponent: () => import('./views/partidoliga/partidoliga.page').then( m => m.PartidoligaPage)
+  },
 
 
   {

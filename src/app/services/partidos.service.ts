@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { firstValueFrom, Observable } from 'rxjs';
-import { AuthService, Team, Jugador, SecretTeam, LeagueIdDTO } from './auth.service';
+import { AuthService, Team, SecretTeam, LeagueIdDTO, JugadorLeague } from './auth.service';
 import { environment } from 'src/environments/environment';
 
 export interface PartidoEmulado {
   minuto: number;
   equipo: Team;
-  jugador: Jugador;
+  jugador: JugadorLeague;
   local: boolean;
   sucede: number;
   golesLocal: number;

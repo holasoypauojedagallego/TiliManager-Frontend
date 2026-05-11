@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent, NavController, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonLabel, IonBadge, IonNote, IonAvatar } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { ActivatedRoute } from '@angular/router';
 import { League, LeaguesService, LeagueTeam } from 'src/app/services/leagues.service';
@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './liga.page.html',
   styleUrls: ['./liga.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonList, IonItem, IonLabel, IonBadge, IonNote, IonAvatar]
 })
 export class LigaPage implements OnInit {
 
@@ -22,7 +22,7 @@ export class LigaPage implements OnInit {
   id: number = 0;
   league = signal<League>(this.liga_vacia);
 
-  constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute, private auth: AuthService) { }
+  constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute, private auth: AuthService, private navCtrl: NavController) { }
 
   async ngOnInit() {
     await this.onCargar();
@@ -51,6 +51,10 @@ export class LigaPage implements OnInit {
 
   calcularPuntos(team: LeagueTeam) : number{
     return ((team.wins * 3) + team.draws);
+  }
+
+  jugarPartido() {
+    this.navCtrl.navigateForward(`/partidoliga/${this.id}`, {animated: true});
   }
 
   get sortedTeams() {

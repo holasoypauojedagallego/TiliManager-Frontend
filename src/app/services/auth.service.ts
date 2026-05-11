@@ -28,7 +28,8 @@ export interface JugadorLeague {
   id: number,
   player: Jugador,
   league: LeagueIdDTO,
-  teamId: number
+  teamId: number,
+  goles: number
 }
 
 export interface LeagueTeamIdDTO {
