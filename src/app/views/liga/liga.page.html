@@ -1,101 +1,194 @@
-<app-header [returnBack]="true" [title]="league().name" />
+<app-header [returnBack]="true" title="{{ league().name }}"/>
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="max-w-6xl mx-auto mt-4">
-    
-    <!-- Header de la Liga -->
-    <div class="mb-8 flex flex-col md:flex-row justify-between items-end gap-4 border-b border-white/10 pb-6">
+
+    <div class="w-full m-auto justify-between mt-2 mb-6 flex flex-col sm:flex-row gap-4 sm:items-baseline xl:items-center">
       <div>
-        <h1 class="text-4xl font-black text-white uppercase italic tracking-tighter">
-          {{ league().name }}
-        </h1>
-        <p class="text-gray-400 font-medium">Panel de clasificación y estadísticas generales</p>
+        <h1 class="text-3xl font-bold tracking-tight">{{ league().name }}</h1>
+        <p class="text-sm text-gray-300">Organizada por: {{ league().owner.name }}</p>
       </div>
-      
-      <div class="flex gap-4">
-        <div class="bg-white/5 p-3 rounded-xl text-center min-w-24 border border-white/10">
+      <div class="flex flex-row items-baseline h-full gap-6">
+        <div class="">
           <span class="block text-xs text-gray-400 uppercase font-bold">Equipos</span>
-          <span class="text-xl font-black text-[#e5d570]">{{ league().teams.length }}/20</span>
+          <span class="text-xl font-black text-gray-200">{{league().teams.length}}/20</span>
         </div>
-        <div class="bg-white/5 p-3 rounded-xl text-center min-w-24 border border-white/10">
+        <div class="">
           <span class="block text-xs text-gray-400 uppercase font-bold">Estado</span>
-          <span class="text-xl font-black" [class.text-green-400]="!league().closed" [class.text-pink-400]="league().closed">
-            {{ league().closed ? 'CERRADA' : 'ACTIVA' }}
-          </span>
+          <span class="text-xl font-black text-gray-200">{{league().closed ? "Privada" : "Pública"}}</span>
         </div>
       </div>
     </div>
+    <div class="divide-y divide-[#333] w-full h-1"></div>
 
-    <!-- Tabla de Clasificación -->
-    <div class="overflow-x-auto rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest">
-            <th class="px-4 py-4 font-black">Pos</th>
-            <th class="px-4 py-4 font-black">Equipo</th>
-            <th class="px-4 py-4 text-center font-black">PJ</th>
-            <th class="px-4 py-4 text-center font-black text-green-400">G</th>
-            <th class="px-4 py-4 text-center font-black text-yellow-400">E</th>
-            <th class="px-4 py-4 text-center font-black text-red-400">P</th>
-            <th class="px-4 py-4 text-center font-black">GF</th>
-            <th class="px-4 py-4 text-center font-black">GC</th>
-            <th class="px-4 py-4 text-center font-black">DG</th>
-            <th class="px-4 py-4 text-center font-black text-white bg-white/10">PTS</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-white/5">
-          @for (team of sortedTeams; track team.id; let i = $index) {
-            <tr class="hover:bg-white/5 transition-colors group">
-              <td class="px-4 py-4">
-                <span [ngClass]="{
-                  'bg-yellow-500 text-black': i === 0,
-                  'bg-gray-400 text-black': i === 1,
-                  'bg-orange-600 text-white': i === 2,
-                  'text-gray-400': i > 2
-                }" class="w-7 h-7 flex items-center justify-center rounded-full font-black text-xs">
-                  {{ i + 1 }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg flex items-center justify-center border border-white/10 uppercase font-bold text-[10px]">
-                    {{ team.team.name.substring(0,2) }}
-                  </div>
-                  <span class="text-white font-bold group-hover:text-[#e5d570] transition-colors">
-                    {{ team.team.name }}
-                  </span>
+    <ion-grid class="py-0.5">
+      <ion-row class="pb-2.5 justify-between gap-6 md:gap-2 flex">
+        <ion-col size="12" sizeLg="5.73">
+          <ion-card (click)="jugarPartido()" class="w-full h-full animate-saltos-hover active:scale-90 duration-75 cursor-pointer m-0">
+            <img alt="Foto Liga" src="assets/img/foton.webp" class="lg:h-[18vw] w-full object-cover object-center" />
+            <ion-card-header class="py-2 pl-4">
+              <div class="flex">
+                <div>
+                  <ion-card-title class="text-2xl font-bold tracking-tight">
+                    ¡Jugar Próximo Partido!
+                  </ion-card-title>
+                  <ion-card-subtitle class="mt-0.5 uppercase">
+                    Siguiente Encuentro
+                  </ion-card-subtitle>
                 </div>
-              </td>
-              <td class="px-4 py-4 text-center text-gray-300 font-medium">{{ team.wins + team.draws + team.losses }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.wins }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.draws }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.losses }}</td>
-              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsScored }}</td>
-              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsReceived }}</td>
-              <td class="px-4 py-4 text-center font-bold">{{ diferenciaGoles(team.goalsScored, team.goalsReceived)}}</td>
-              <td class="px-4 py-4 text-center bg-white/5">
-                <span class="text-xl font-black text-white italic">{{ calcularPuntos(team) }}</span>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="10" class="text-center py-20 text-gray-500 font-bold uppercase tracking-widest">
-                No hay equipos inscritos todavía
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
+              </div>
+            </ion-card-header>
 
-    <!-- Botón de Acción -->
-    <div class="mt-8 flex justify-center">
-        <ion-button fill="clear" (click)="jugarPartido()">
-            Jugar encuentro
-        </ion-button>
-    </div>
-  </div>
+            <ion-card-content>
+              Disfruta de tu próximo encuentro ¡Buena suerte y a por todas, recuerda que esto es fútbol al rojo vivo!
+            </ion-card-content>
+
+            <ion-button fill="clear" color="primary">¡Jugar Ahora!</ion-button>
+          </ion-card>
+        </ion-col>
+        
+        <ion-col size="12" sizeLg="3.61">
+          <ion-card class="m-0 h-full">
+            <ion-card-header class="py-3 px-4 border-b border-[#333]">
+              <ion-card-title class="text-xl font-bold flex items-center gap-2">
+                Clasificación
+              </ion-card-title>
+              <ion-card-subtitle>Tabla general de posiciones</ion-card-subtitle>
+            </ion-card-header>
+            
+            <ion-card-content class="p-0">
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left whitespace-nowrap">
+                  <thead class="text-xs uppercase bg-[#252525] text-gray-300">
+                    <tr>
+                      <th class="px-4 py-3 text-center">Pos</th>
+                      <th class="px-4 py-3">Equipo</th>
+                      <th class="px-4 py-3 text-center font-bold">PTS</th>
+                      <th class="px-4 py-3 text-center">V</th>
+                      <th class="px-4 py-3 text-center">E</th>
+                      <th class="px-4 py-3 text-center">D</th>
+                      <th class="px-4 py-3 text-center">GF</th>
+                      <th class="px-4 py-3 text-center">GC</th>
+                      <th class="px-4 py-3 text-center">DIF</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[#333]">
+                    @for (team of league().teams; track team.team.name; let i = $index) {
+                      <tr class="">
+                        <td class="px-4 py-3 text-center font-bold" [class.text-[var(--ion-color-primary)]]="i === 0">{{ i + 1 }}</td>
+                        <td class="px-4 py-3 font-medium truncate text-gray-200">{{ team.team.name || 'Equipo' }}</td>
+                        <td class="px-4 py-3 text-center font-bold text-(--ion-color-primary)">{{ calcularPuntos(team) }}</td>
+                        <td class="px-4 py-3 text-center text-gray-200">{{ team.wins }}</td>
+                        <td class="px-4 py-3 text-center">{{ team.draws }}</td>
+                        <td class="px-4 py-3 text-center opacity-50">{{ team.losses }}</td>
+                        <td class="px-4 py-3 text-center text-gray-200">{{ team.goalsScored }}</td>
+                        <td class="px-4 py-3 text-center">{{ team.goalsReceived }}</td>
+                            @if (team.goalsScored > team.goalsReceived) {
+                              <td class="px-4 py-3 text-center font-medium text-green-400" >{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                            }
+                            @else if (team.goalsScored < team.goalsReceived) {
+                              <td class="px-4 py-3 text-center font-medium text-red-400" >{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                            }
+                            @else {
+                              <td class="px-4 py-3 text-center font-medium" >{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                            }
+                      </tr>
+                    } @empty {
+                      <tr>
+                        <td colspan="9" class="px-4 py-8 text-center opacity-50">No hay equipos en esta liga.</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" sizeLg="2.46">
+          <ion-card class="m-0 h-full w-full">
+            <ion-card-header class="px-4 py-2 border-b border-[#333]">
+              <ion-card-title class="text-xl font-bold flex items-center gap-2">Pichichi</ion-card-title>
+              <ion-card-subtitle>Máximos goleadores de la liga</ion-card-subtitle>
+            </ion-card-header>
+            
+            <ion-card-content class="p-0">
+              <div class="overflow-x-auto">
+                <table class="w-full text-sm text-left whitespace-nowrap">
+                  <thead class="text-xs uppercase bg-[#252525] text-gray-300">
+                    <tr>
+                      <th class="px-4 py-3 text-center w-12">Pos</th>
+                      <th class="px-4 py-3">Jugador</th>
+                      <th class="px-4 py-3">Equipo</th>
+                      <th class="px-4 py-3 text-center text-(--ion-color-primary) font-bold">Goles</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-[#333]">
+                    @for (player of jugadores; track player.id; let i = $index) {
+                      <tr>
+                        <td class="px-4 py-3 text-center font-bold" [class.text-[var(--ion-color-primary)]]="i === 0">{{ i + 1 }}</td>
+                        <td class="px-4 py-3 font-medium">{{ player.player.name }}</td>
+                        <td class="px-4 py-3 opacity-70">{{ equipoJugador(player.teamId) }}</td>
+                        <td class="px-4 py-3 text-center font-bold text-(--ion-color-primary) text-lg">{{ player.goles }}</td>
+                      </tr>
+                    } @empty {
+                      <tr>
+                        <td colspan="4" class="px-4 py-8 text-center opacity-50">Aún no hay goleadores registrados.</td>
+                      </tr>
+                    }
+                  </tbody>
+                </table>
+              </div>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+      </ion-row>
+      <ion-row class="mt-2 justify-between gap-6 md:gap-0">
+        <ion-col size="12" size-md="3.92">
+          <ion-card routerLink="/torneo" class="animate-saltos-hover active:scale-90 duration-75">
+            <img alt="Prueba Partido" src="assets/img/jugar.webp" class="md:h-[18vw]" />
+            <ion-card-header class="p-2">
+              <ion-card-title>Torneo</ion-card-title>
+              <ion-card-subtitle>Torneo de 3 partidos</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              Aquí te batiras en duelos de 1 contra 1 empezando desde cuartos, con varias recompensas.
+            </ion-card-content>
+            <ion-button fill="clear">Jugar ahora</ion-button>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="3.92">
+          <ion-card routerLink="/mercado/{{id}}">
+            <img alt="Menu Mercado" src="assets/img/mercado.webp" class="md:h-[18vw] w-full" />
+            <ion-card-header class="p-2">
+              <ion-card-title>Mercado</ion-card-title>
+              <ion-card-subtitle>Mercado de fichajes</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              Compre sus jugadores al mejorp recio y forme el mejor equipo.
+            </ion-card-content>
+            <ion-button fill="clear" color="secondary">Comprar</ion-button>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12" size-md="3.9">
+          <ion-card routerLink="/equipo/{{id}}">
+            <img alt="Menu Equipo" src="assets/img/equipo.webp" class="md:h-[18vw]" />
+            <ion-card-header class="p-2">
+              <ion-card-title>Gestionar Equipo</ion-card-title>
+              <ion-card-subtitle>Equipo</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              Gestiona tu propio equipo y llévalo a la gloria en la Champions.
+            </ion-card-content>
+            <ion-button fill="clear" color="secondary">Gestionar equipo</ion-button>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  
 </ion-content>

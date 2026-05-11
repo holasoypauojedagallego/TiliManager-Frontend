@@ -70,10 +70,16 @@ export const routes: Routes = [
     canActivate: [CanActivateAuthGuard, RequireTeamGuard],
     loadComponent: () => import('./views/partidoliga/partidoliga.page').then( m => m.PartidoligaPage)
   },
+    {
+    path: 'clasificacion/:id',
+    canActivate: [CanActivateAuthGuard, RequireTeamGuard],
+    loadComponent: () => import('./views/clasificacion/clasificacion.page').then( m => m.ClasificacionPage)
+  },
 
 
   {
     path: '**',
     loadComponent: () => import('./views/error404/error404.page').then( m => m.Error404Page)
   }
+
 ];

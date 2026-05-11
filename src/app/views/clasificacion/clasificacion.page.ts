@@ -1,28 +1,26 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent, NavController, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid } from '@ionic/angular/standalone';
+import { IonContent, IonRefresher, IonRefresherContent, RefresherCustomEvent, NavController } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { League, LeaguesService, LeagueTeam } from 'src/app/services/leagues.service';
 import { firstValueFrom } from 'rxjs';
-import { AuthService, JugadorLeague } from 'src/app/services/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
-  selector: 'app-liga',
-  templateUrl: './liga.page.html',
-  styleUrls: ['./liga.page.scss'],
+  selector: 'app-clasificacion',
+  templateUrl: './clasificacion.page.html',
+  styleUrls: ['./clasificacion.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, RouterLink, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid]
+  imports: [IonContent, CommonModule, FormsModule, HeaderComponent, IonRefresher, IonRefresherContent]
 })
-export class LigaPage implements OnInit {
+export class ClasificacionPage implements OnInit {
 
-  private liga_vacia: League = {id: 0, name: '', owner: {name: '', email: ''}, teams: [], closed: false};
+private liga_vacia: League = {id: 0, name: '', owner: {name: '', email: ''}, teams: [], closed: false};
 
   id: number = 0;
   league = signal<League>(this.liga_vacia);
-
-  jugadores: JugadorLeague[] = [];
 
   constructor(private leagueService: LeaguesService, private activeRouter: ActivatedRoute, private auth: AuthService, private navCtrl: NavController) { }
 
@@ -38,8 +36,6 @@ export class LigaPage implements OnInit {
     } catch (error) {
       console.warn("Ha habido un error")
     }
-    this.equiposOrden();
-    this.goleadores();
   }
 
     handleRefresh(event: RefresherCustomEvent) {
@@ -61,32 +57,14 @@ export class LigaPage implements OnInit {
     this.navCtrl.navigateForward(`/partidoliga/${this.id}`, {animated: true});
   }
 
-  equipoJugador(teamid: number) : string | undefined {
-    return this.league().teams.find(team => teamid === team.team.id)?.team.name;
-  }
-
-  equiposOrden() {
-    this.league().teams.sort((a, b) => {
+  get sortedTeams() {
+    const teams = this.league()?.teams || [];
+    return [...teams].sort((a, b) => {
       const pointsA = this.calcularPuntos(a);
       const pointsB = this.calcularPuntos(b);
       if (pointsB !== pointsA) return pointsB - pointsA;
       return (b.goalsScored - b.goalsReceived) - (a.goalsScored - a.goalsReceived);
     });
-  }
-
-  goleadores() {
-    const teams = this.league().teams;
-
-    teams.forEach(team => {
-      if (team.team.players) {
-      team.team.players.map( player => {
-        this.jugadores.push(player);
-      });
-      }
-    });
-
-    this.jugadores.sort((a, b) => (b.goles) - (a.goles));
-    this.jugadores.splice(7,9999);
   }
 
 }

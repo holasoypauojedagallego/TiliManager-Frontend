@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   id = this.auth.idget;
   alertaaEnsenar: boolean = false;
   alertaTocha: boolean = false;
+  equipo = this.auth.team;
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
