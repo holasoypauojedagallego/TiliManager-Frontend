@@ -34,12 +34,12 @@ export class LigaPage implements OnInit {
     this.id = Number(this.activeRouter.snapshot.paramMap.get("id"));
     try {
       this.league.set(await firstValueFrom(this.leagueService.getLeague(this.id)));
+      this.goleadores();
       this.auth.id.set(this.id);
     } catch (error) {
       console.warn("Ha habido un error")
     }
     this.equiposOrden();
-    this.goleadores();
   }
 
     handleRefresh(event: RefresherCustomEvent) {
@@ -75,9 +75,8 @@ export class LigaPage implements OnInit {
   }
 
   goleadores() {
-    const teams = this.league().teams;
-
-    teams.forEach(team => {
+    this.jugadores = [];
+    this.league().teams.forEach(team => {
       if (team.team.players) {
       team.team.players.map( player => {
         this.jugadores.push(player);
