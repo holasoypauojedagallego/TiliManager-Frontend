@@ -1,14 +1,18 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary" class="px-3 flex justify-items-center">
+  <ion-toolbar color="primary" class="px-3">
     @if (returnBack) {
         <ion-buttons slot="start">
-          <div (click)="goToHome()" class="cursor-pointer text-3xl mr-5 w-auto"><span><-</span></div>
+          <div (click)="goToHome()" class="cursor-pointer text-3xl mr-1 w-auto"><span><-</span></div>
+        </ion-buttons>
+    } @else if (ayuda) {
+        <ion-buttons slot="start">
+          <ion-icon src="assets/icon/svg/icono-pregunta.svg" class="md:w-10 md:h-10 w-8 h-8 cursor-pointer text-3xl mr-1 bg-gray-900 md:rounded-3xl rounded-2xl" (click)="onAyudar()" />
         </ion-buttons>
     }
-    <ion-title class="w-[50vw] sm:w-auto pl-[10vw] sm:pl-10 truncate" [title]="title">
-      {{title.toUpperCase()}}
-    </ion-title>
-    <ion-buttons slot="end">
+      <ion-title class="flex-1 min-w-0 px-2 sm:px-4 truncate" [title]="title">
+        {{title.toUpperCase()}}
+      </ion-title>
+    <ion-buttons slot="end" class="shrink-0">
       @if (user().name == '') {
       <ion-button id="{{title}}: Iniciar Sesión" class="h-auto">
         <div class="flex items-center justify-center w-10 h-10 bg-[#222] rounded-full border-2 overflow-hidden">
@@ -41,11 +45,17 @@
       } @else { 
         @if (equipo()[leagueId()]) {
           @if (dineroGastado > equipo()[leagueId()].team.money) {
-            <div class="w-[30vw]"><span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> >{{smallerPrice(equipo()[leagueId()].team.money)}}</div>
+            <div (click)="popover.present($event)" class="cursor-pointer truncate max-w-[30vw] sm:max-w-[20vw] mr-2 text-right">
+              <span class="text-red-700 font-bold">-{{smallerPrice(dineroGastado)}}</span> >{{smallerPrice(equipo()[leagueId()].team.money)}}
+            </div>
           } @else if (dineroGastado > 0) {
-            <div class="w-[30vw]"><span class="text-red-700 ">-{{smallerPrice(dineroGastado)}}</span> <span class="text-[#08c0d9]"> _ </span> {{smallerPrice(equipo()[leagueId()].team.money)}}</div>
+            <div (click)="popover.present($event)" class="cursor-pointer truncate max-w-[30vw] sm:max-w-[20vw] mr-2 text-right">
+              <span class="text-red-700">-{{smallerPrice(dineroGastado)}}</span> <span class="text-[#08c0d9]"> _ </span> {{smallerPrice(equipo()[leagueId()].team.money)}}
+            </div>
           } @else {
-            <div class="w-[30vw]">{{equipo()[leagueId()].team.name}}: {{smallerPrice(equipo()[leagueId()].team.money)}}</div>
+            <div (click)="popover.present($event)" class="cursor-pointer truncate max-w-[30vw] sm:max-w-[20vw] mr-2 text-right">
+              {{equipo()[leagueId()].team.name}}: {{smallerPrice(equipo()[leagueId()].team.money)}}
+            </div>
           }
         }
         <ion-button id="{{title}}: Sesión" class="h-auto">
@@ -53,7 +63,7 @@
             <span class="text-xl text-cyan-400"><strong>{{user().name.charAt(0).toUpperCase()}}</strong></span>
           </div>
         </ion-button>
-        <ion-popover trigger="{{title}}: Sesión" side="bottom" alignment="center">
+        <ion-popover #popover trigger="{{title}}: Sesión" side="bottom" alignment="center">
           <ng-template>
             <div class="flex flex-col overflow-hidden">
               

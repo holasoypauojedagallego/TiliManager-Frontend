@@ -1,0 +1,21 @@
+.t {
+  border-radius: 8px;
+  background-color: rgb(29, 29 ,29);
+  transition: transform 0.3s;
+  @media (width <= 48rem) {
+      background-color: rgb(42,42,42);
+    }
+
+}
+
+td {
+    padding-top: 4px;
+    padding-bottom: 3px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+th {
+    padding-right: 4px;
+    padding-left: 4px;
+}

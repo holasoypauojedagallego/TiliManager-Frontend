@@ -17,9 +17,12 @@ export class HomePage implements OnInit {
   constructor(private auth: AuthService, private activeRoute: ActivatedRoute, private navCtrl: NavController) {}
 
   id = this.auth.idget;
+  equipo = this.auth.team;
+
   alertaaEnsenar: boolean = false;
   alertaTocha: boolean = false;
-  equipo = this.auth.team;
+  alertaTocha2: boolean = false;
+  alertaTocha3: boolean = false;
 
   ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
@@ -28,6 +31,12 @@ export class HomePage implements OnInit {
         }
     });
     console.log("Hola, esto es únicamente para que el backend en Render vaya iniciando", this.auth.empezarConexiónRender());
+  }
+
+  ayuda(isAyuda: boolean) {
+    if (isAyuda) {
+      this.alertaTocha = true;
+    }
   }
 
   salirAlert() {

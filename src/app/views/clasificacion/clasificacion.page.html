@@ -1,94 +1,112 @@
-<app-header [returnBack]="true" title="Clasificación" />
+<app-header [returnBack]="true" title="Clasificación: {{league().name}}" />
 
 <ion-content [fullscreen]="true" class="ion-padding">
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="max-w-6xl mx-auto mt-4">
-    
-    <div class="mb-8 flex flex-col sm:flex-row justify-between sm:items-end gap-4 border-b border-white/10 pb-6">
-      <div>
-        <h1 class="text-4xl font-black text-white uppercase italic tracking-tighter">
-          {{ league().name }}
-        </h1>
-        <p class="text-gray-400 font-medium">Panel de clasificación y estadísticas generales</p>
-      </div>
-      
-      <div class="flex gap-5">
-        <div>
-          <span class="block text-xs text-gray-400 uppercase font-bold">Equipos</span>
-          <span class="text-xl font-black text-gray-200">{{ league().teams.length }}/20</span>
-        </div>
-        <div>
-          <span class="block text-xs text-gray-400 uppercase font-bold">Estado</span>
-          <span class="text-xl font-black text-gray-200">
-            {{ league().closed ? 'Privada' : 'Pública' }}
-          </span>
-        </div>
-      </div>
-    </div>
 
-    <!-- Tabla de Clasificación -->
-    <div class="overflow-x-auto rounded-2xl border border-white/10 bg-black/20 backdrop-blur-md">
-      <table class="w-full text-left border-collapse">
-        <thead>
-          <tr class="bg-white/5 text-gray-400 text-xs uppercase tracking-widest">
-            <th class="px-4 py-4 font-black">Pos</th>
-            <th class="px-4 py-4 font-black">Equipo</th>
-            <th class="px-4 py-4 text-center font-black">PJ</th>
-            <th class="px-4 py-4 text-center font-black text-green-400">G</th>
-            <th class="px-4 py-4 text-center font-black text-yellow-400">E</th>
-            <th class="px-4 py-4 text-center font-black text-red-400">P</th>
-            <th class="px-4 py-4 text-center font-black">GF</th>
-            <th class="px-4 py-4 text-center font-black">GC</th>
-            <th class="px-4 py-4 text-center font-black">DG</th>
-            <th class="px-4 py-4 text-center font-black text-white bg-white/10">PTS</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-white/5">
-          @for (team of sortedTeams; track team.id; let i = $index) {
-            <tr class="hover:bg-white/5 transition-colors group">
-              <td class="px-4 py-4">
-                <span [ngClass]="{
-                  'bg-yellow-500 text-black': i === 0,
-                  'bg-gray-400 text-black': i === 1,
-                  'bg-orange-600 text-white': i === 2,
-                  'text-gray-400': i > 2
-                }" class="w-7 h-7 flex items-center justify-center rounded-full font-black text-xs">
-                  {{ i + 1 }}
-                </span>
-              </td>
-              <td class="px-4 py-4">
-                <div class="flex items-center gap-3">
-                  <div class="w-8 h-8 rounded-lg flex items-center justify-center border border-white/10 uppercase font-bold text-[10px]">
-                    {{ team.team.name.substring(0,2) }}
-                  </div>
-                  <span class="text-white font-bold group-hover:text-[#e5d570] transition-colors">
-                    {{ team.team.name }}
-                  </span>
-                </div>
-              </td>
-              <td class="px-4 py-4 text-center text-gray-300 font-medium">{{ team.wins + team.draws + team.losses }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.wins }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.draws }}</td>
-              <td class="px-4 py-4 text-center text-white font-bold">{{ team.losses }}</td>
-              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsScored }}</td>
-              <td class="px-4 py-4 text-center text-gray-400">{{ team.goalsReceived }}</td>
-              <td class="px-4 py-4 text-center font-bold">{{ diferenciaGoles(team.goalsScored, team.goalsReceived)}}</td>
-              <td class="px-4 py-4 text-center bg-white/5">
-                <span class="text-xl font-black text-white italic">{{ calcularPuntos(team) }}</span>
-              </td>
-            </tr>
-          } @empty {
-            <tr>
-              <td colspan="10" class="text-center py-20 text-gray-500 font-bold uppercase tracking-widest">
-                No hay equipos inscritos todavía
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
-    </div>
-
+  <div class="pb-2 uppercase">
+    <h1>Clasificación {{league().name}}</h1>
   </div>
+
+  <ion-grid class="py-0.5">
+    
+    <ion-row class="mb-6 flex justify-between">
+      <ion-col size="12" sizeMd="6.33" class="pb-10 md:pb-0">
+        <div class="t h-full">
+          <div class="border border-[#333] rounded-lg overflow-hidden h-full">
+            <div class="pb-3 px-4 border-b border-[#333]">
+              <h2 class="text-xl font-bold m-0">Clasificación</h2>
+              <p class="text-sm opacity-70 m-0 mt-1">Tabla general de posiciones</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm text-left whitespace-nowrap">
+                <thead class="text-xs uppercase bg-[#252525] text-gray-300">
+                  <tr>
+                    <th class="px-4 py-3 text-center md:text-[15px]">Pos</th>
+                    <th class="px-4 py-3 md:text-[15px]">Equipo</th>
+                    <th class="px-4 py-3 text-center font-bold md:text-[15px]">PTS</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">V</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">E</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">D</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">PJ</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">GF</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">GC</th>
+                    <th class="px-4 py-3 text-center md:text-[15px]">DIF</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#333] pb-2">
+                  @for (team of league().teams; track team.team.name; let i = $index) {
+                    <tr>
+                      <td class="px-4 py-3 text-center font-bold md:text-[16px]" [class.text-[var(--ion-color-primary)]]="i === 0">{{ i + 1 }}</td>
+                      <td class="px-4 py-3 font-medium truncate text-gray-200  md:text-[16px]">{{ team.team.name || 'Equipo' }}</td>
+                      <td class="px-4 py-3 text-center font-bold text-(--ion-color-primary) text-[16px]">{{ calcularPuntos(team) }}</td>
+                      <td class="px-4 py-3 text-center text-gray-200  text-[16px]">{{ team.wins }}</td>
+                      <td class="px-4 py-3 text-center text-[16px]">{{ team.draws }}</td>
+                      <td class="px-4 py-3 text-center opacity-67 text-[16px]">{{ team.losses }}</td>
+                      <td class="px-4 py-3 text-center text-gray-300 text-[16px]">{{ team.wins + team.draws + team.losses }}</td>
+                      <td class="px-4 py-3 text-center text-gray-200 text-[16px]">{{ team.goalsScored }}</td>
+                      <td class="px-4 py-3 text-center text-[16px]">{{ team.goalsReceived }}</td>
+                      @if (team.goalsScored > team.goalsReceived) {
+                        <td class="px-4 py-3 text-center font-medium text-green-400 text-[16px]">{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                      } @else if (team.goalsScored < team.goalsReceived) {
+                        <td class="px-4 py-3 text-center font-medium text-red-400 text-[16px]">{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                      } @else {
+                        <td class="px-4 py-3 text-center font-medium text-[16px]">{{ diferenciaGoles(team.goalsScored, team.goalsReceived) }}</td>
+                      }
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="10" class="px-4 py-8 text-center opacity-50">No hay equipos en esta liga.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" sizeMd="5.6">
+        <div class="t">
+          <div class="border border-[#333] rounded-lg overflow-hidden">
+            <div class="px-4 pb-3 border-b border-[#333]">
+              <h2 class="text-xl font-bold m-0">Pichichi</h2>
+              <p class="text-sm opacity-70 m-0 mt-1">Máximos goleadores de la liga</p>
+            </div>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-sm text-left whitespace-nowrap">
+                <thead class="text-xs uppercase bg-[#252525] text-gray-300">
+                  <tr>
+                    <th class="px-4 py-3 text-center w-12">Pos</th>
+                    <th class="px-4 py-3">Jugador</th>
+                    <th class="px-4 py-3">Equipo</th>
+                    <th class="px-4 py-3 text-center text-(--ion-color-primary) font-bold">Goles</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#333]">
+                  @for (player of jugadores; track player.id; let i = $index) {
+                    <tr>
+                      <td class="px-4 py-3 text-center font-bold" [class.text-[var(--ion-color-primary)]]="i === 0">{{ i + 1 }}</td>
+                      <td class="px-4 py-3 font-medium">{{ player.player.name }}</td>
+                      <td class="px-4 py-3 opacity-70">{{ equipoJugador(player.teamId) }}</td>
+                      <td class="px-4 py-3 text-center font-bold text-(--ion-color-primary) text-lg">{{ player.goles }}</td>
+                    </tr>
+                  } @empty {
+                    <tr>
+                      <td colspan="4" class="px-4 py-8 text-center opacity-50">Aún no hay goleadores registrados.</td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
 </ion-content>

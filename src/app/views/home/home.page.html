@@ -1,4 +1,4 @@
-<app-header />
+<app-header [ayuda]="true" (clickAyudar)="ayuda($event)"/>
 <ion-content [fullscreen]="true" class="ion-padding">
 
   <ion-grid class="py-0.5">
@@ -29,16 +29,16 @@
         </ion-card>
       </ion-col>
       <ion-col size="12" sizeMd="4" class="mb-4 md:mb-1">
-        <ion-card routerLink="/mercado/{{id()}}">
-          <img alt="Foto Mercado" src="assets/img/mercado.webp" class="md:h-[14.8vw] w-full" />
+        <ion-card routerLink="/historial">
+          <img alt="Foto Mercado" src="assets/img/historial.webp" class="md:h-[14.8vw] w-full" />
           <ion-card-header class="py-2 pl-4">
             <div class="flex justify-between items-start">
               <div>
                 <ion-card-title class="font-bold">
-                  Mercado
+                  Historial
                 </ion-card-title>
                 <ion-card-subtitle>
-                  Mercado de fichajes
+                  Últimos partidos
                 </ion-card-subtitle>
               </div>
 
@@ -46,10 +46,10 @@
           </ion-card-header>
 
           <ion-card-content>
-            Disfruta de tu próxima encuentro
+            Revive esos mágicos encuentros
           </ion-card-content>
 
-          <ion-button fill="clear" color="secondary">¡Jugar Ahora!</ion-button>
+          <ion-button fill="clear" color="secondary">Ver Historial!</ion-button>
 
         </ion-card>
       </ion-col>
@@ -57,14 +57,14 @@
 
     <ion-row class="justify-between gap-6 md:gap-0">
       <ion-col size="12" size-md="3.92">
-        <ion-card routerLink="/torneo" class="animate-saltos-hover active:scale-90 duration-75">
-          <img alt="Prueba Partido" src="assets/img/jugar.webp" class="md:h-[18vw]" />
+        <ion-card routerLink="/partidoonline" class="animate-saltos-hover active:scale-97 duration-75">
+          <img alt="Prueba Partido" src="assets/img/amistosos.webp" class="md:h-[18vw]" />
           <ion-card-header class="p-2">
-            <ion-card-title>Torneo</ion-card-title>
-            <ion-card-subtitle>Torneo de 3 partidos</ion-card-subtitle>
+            <ion-card-title>Amistosos Online</ion-card-title>
+            <ion-card-subtitle>Partido Online</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            Aquí te batiras en duelos de 1 contra 1 empezando desde cuartos, con varias recompensas.
+            Aquí puedes jugar partiditos contra otros equipos, sin necesidad de que esten en tu liga
           </ion-card-content>
           <ion-button fill="clear">Jugar ahora</ion-button>
         </ion-card>
@@ -72,7 +72,7 @@
 
       <ion-col size="12" size-md="3.92">
         <ion-card routerLink="/ligas">
-          <img alt="Menu Historial" src="assets/img/ligas.webp" class="md:h-[18vw] w-full" />
+          <img alt="Menu Ligas" src="assets/img/ligas.webp" class="md:h-[18vw] w-full" />
           <ion-card-header class="p-2">
             <ion-card-title>Ligas</ion-card-title>
             <ion-card-subtitle>Unirse a Ligas</ion-card-subtitle>
@@ -80,7 +80,7 @@
           <ion-card-content>
             Unase a ligas, juegue encuentros y mire como sube su posición.
           </ion-card-content>
-          <ion-button fill="clear" color="secondary">Ver Historial</ion-button>
+          <ion-button fill="clear" color="secondary">Entrar en ligas</ion-button>
         </ion-card>
       </ion-col>
 
@@ -104,25 +104,27 @@
     <ion-list-header>
       <ion-label>Otras Categorías</ion-label>
     </ion-list-header>
-    <ion-item button>
-      <ion-label routerLink="/historial">Historial</ion-label>
-    </ion-item>
-    <ion-item button>
-      <ion-label routerLink="/partidoonline">Amistosos</ion-label>
-    </ion-item>
-    <ion-item button>
-      <ion-label (click)="alertaTocha = true">Ayuda</ion-label>
+    <ion-item button (click)="alertaTocha = true">
+      <ion-label>Ayuda</ion-label>
     </ion-item>
   </ion-list>
   
 
-    <ion-alert [isOpen]="alertaaEnsenar" header="¡Bienvenido!" subHeader="Funcionamiento"
-        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la página, en su perfil ¡Podra elegir entre sus diversos equipos!'"
+    <ion-alert [isOpen]="alertaaEnsenar" header="Ayuda" subHeader="Funcionamiento"
+        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la app, en su perfil, ¡Podra elegir entre sus diversos equipos!'"
         [buttons]="['Aceptar']" (didDismiss)="salirAlert()">
     </ion-alert>
 
-        <ion-alert [isOpen]="alertaTocha" header="¡Bienvenido!" subHeader="Funcionamiento"
-        [message]="'¡Bien! Ahora que ya ha iniciado sesión, deberá unirse a una liga para poder jugar, y en caso de que este en más de una liga, arriba a la derecha de la página, en su perfil ¡Podra elegir entre sus diversos equipos!'"
-        [buttons]="['Aceptar']" (didDismiss)="alertaTocha = false">
+    <ion-alert [isOpen]="alertaTocha" header="¡Bienvenido!" subHeader="Funcionamiento 1/3"
+        [message]="'¡Buenas! Vale, para empezar a usar la app, lo primero es registrarse, y si tiene cuenta, iniciar sesión. No se olvide del correo y de la contraseña ya que no la podrá cambiar de nuevo (Si después de iniciar sesión, quiere cambiarla, tiene que pulsar en su perfil arriba a la derecha en la app y cerrar sesión)'"
+        [buttons]="['Siguiente']" (didDismiss)="alertaTocha = false; alertaTocha2 = true">
+    </ion-alert>
+    <ion-alert [isOpen]="alertaTocha2" header="Ayuda" subHeader="Funcionamiento 2/3"
+        [message]="'¡Bien! Una vez con un usuario, lo siguiente será unirse a una liga, en cada liga al empezar se le dará 133 Millones para que pueda empezar a crear el equipo, una vez con equipo en esa liga, ya podrá jugar partidos de liga, jugar torneos contra la ia para ganar (o perder) dinero y también podrá ver la clasificación de esa liga'"
+        [buttons]="['Siguiente']" (didDismiss)="alertaTocha2 = false; alertaTocha3 = true">
+    </ion-alert>
+        <ion-alert [isOpen]="alertaTocha3" header="Ayuda" subHeader="Funcionamiento 3/3"
+        [message]="'Por último, en el caso de que este en más de una liga, al pulsar en su perfil (Arriba a la derecha del todo de la app), usted podrá cambiar entre sus diferentes equipos de las ligas a las que se haya unido, y así poder gestionar su equipo de una liga, o su otro equipo de otra liga, y ya ¡A DISFRUTAR!'"
+        [buttons]="['Aceptar']" (didDismiss)="alertaTocha3 = false">
     </ion-alert>
 </ion-content>

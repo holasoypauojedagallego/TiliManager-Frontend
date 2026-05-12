@@ -7,7 +7,7 @@
 
     <div class="w-full m-auto justify-between mt-2 mb-6 flex flex-col sm:flex-row gap-4 sm:items-baseline xl:items-center">
       <div>
-        <h1 class="text-3xl font-bold tracking-tight">{{ league().name }}</h1>
+        <h1 class="text-3xl font-bold tracking-tight">Liga: {{ league().name }}</h1>
         <p class="text-sm text-gray-300">Organizada por: {{ league().owner.name }}</p>
       </div>
       <div class="flex flex-row items-baseline h-full gap-6">
@@ -26,7 +26,7 @@
     <ion-grid class="py-0.5">
       <ion-row class="pb-2.5 justify-between gap-6 md:gap-2 flex">
         <ion-col size="12" sizeLg="5.73">
-          <ion-card (click)="jugarPartido()" class="w-full h-full animate-saltos-hover active:scale-90 duration-75 cursor-pointer m-0">
+          <ion-card (click)="jugarPartido()" class="w-full h-full animate-saltos-hover active:scale-97 duration-75 cursor-pointer m-0">
             <img alt="Foto Liga" src="assets/img/foton.webp" class="lg:h-[18vw] w-full object-cover object-center" />
             <ion-card-header class="py-2 pl-4">
               <div class="flex">
@@ -50,7 +50,7 @@
         </ion-col>
         
         <ion-col size="12" sizeLg="3.61">
-          <ion-card class="m-0 h-full">
+          <ion-card class="m-0 h-full" routerLink="/clasificacion/{{id}}">
             <ion-card-header class="py-3 px-4 border-b border-[#333]">
               <ion-card-title class="text-xl font-bold flex items-center gap-2">
                 Clasificación
@@ -69,6 +69,7 @@
                       <th class="px-4 py-3 text-center">V</th>
                       <th class="px-4 py-3 text-center">E</th>
                       <th class="px-4 py-3 text-center">D</th>
+                      <th class="px-4 py-3 text-center">PJ</th>
                       <th class="px-4 py-3 text-center">GF</th>
                       <th class="px-4 py-3 text-center">GC</th>
                       <th class="px-4 py-3 text-center">DIF</th>
@@ -82,7 +83,8 @@
                         <td class="px-4 py-3 text-center font-bold text-(--ion-color-primary)">{{ calcularPuntos(team) }}</td>
                         <td class="px-4 py-3 text-center text-gray-200">{{ team.wins }}</td>
                         <td class="px-4 py-3 text-center">{{ team.draws }}</td>
-                        <td class="px-4 py-3 text-center opacity-50">{{ team.losses }}</td>
+                        <td class="px-4 py-3 text-center opacity-67">{{ team.losses }}</td>
+                        <td class="px-4 py-3 text-center text-gray-300">{{ team.wins + team.draws +team.losses }}</td>
                         <td class="px-4 py-3 text-center text-gray-200">{{ team.goalsScored }}</td>
                         <td class="px-4 py-3 text-center">{{ team.goalsReceived }}</td>
                             @if (team.goalsScored > team.goalsReceived) {
@@ -108,7 +110,7 @@
         </ion-col>
 
         <ion-col size="12" sizeLg="2.46">
-          <ion-card class="m-0 h-full w-full">
+          <ion-card class="m-0 h-full w-full" routerLink="/clasificacion/{{id}}">
             <ion-card-header class="px-4 py-2 border-b border-[#333]">
               <ion-card-title class="text-xl font-bold flex items-center gap-2">Pichichi</ion-card-title>
               <ion-card-subtitle>Máximos goleadores de la liga</ion-card-subtitle>

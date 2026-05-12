@@ -1,13 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { KeyValuePipe } from '@angular/common';
-import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController, IonRouterOutlet } from "@ionic/angular/standalone";
+import { IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, NavController, PopoverController, IonRouterOutlet, IonIcon } from "@ionic/angular/standalone";
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
     selector: 'app-header',
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
-    imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, KeyValuePipe]
+    imports: [IonHeader, IonToolbar, IonTitle, IonButtons, IonButton, IonPopover, KeyValuePipe, IonIcon]
 })
     
 export class HeaderComponent  implements OnInit {
@@ -15,6 +15,8 @@ export class HeaderComponent  implements OnInit {
     @Input() title: string = 'TiliManager';
     @Input() dineroGastado: number = 0;
     @Input() returnBack: boolean = false;
+    @Input() ayuda: boolean = false;
+    @Output() clickAyudar: EventEmitter<boolean> = new EventEmitter<boolean>();
     leagueId = this.auth.idget;
     equipo = this.auth.team;
     user = this.auth.user;
@@ -69,6 +71,10 @@ export class HeaderComponent  implements OnInit {
         } else {
         this.navCtrl.navigateRoot('/', { animated: true , animationDirection: 'back'});  
         }
+    }
+
+    onAyudar() {
+        this.clickAyudar.emit(true);
     }
 
     changeTeam(id: string){

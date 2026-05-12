@@ -77,10 +77,10 @@ export class LigasPage implements OnInit {
     this.submit = true;
     try {
       const t:League = await this.leagueService.createLeague(name, false);
+      this.modalCrear = false;
       await this.addThisTeamToLeague(t.id);
       await this.onCargar();
       await this.auth.setSesionTeam();
-      this.modalCrear = false;
     } catch (error) {
       console.warn("Ha habido un error al crear la liga");
     }
@@ -92,6 +92,7 @@ export class LigasPage implements OnInit {
       await this.onCargar();
       await this.auth.setSesionTeam();
       this.modalCrear = false;
+      this.goToLeague(id);
     } catch (error) {
       console.warn("Ha habido un error al unir el equipo a la liga");
     }
