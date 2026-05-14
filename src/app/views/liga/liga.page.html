@@ -11,6 +11,11 @@
         <p class="text-sm text-gray-300">Organizada por: {{ league().owner.name }}</p>
       </div>
       <div class="flex flex-row items-baseline h-full gap-6">
+        @if (owner().email == league().owner.email) {
+          <div class="items-center">
+            <ion-button color="danger" (click)="alerta = true;">Eliminar Equipo de la liga</ion-button>
+          </div>
+        }
         <div class="">
           <span class="block text-xs text-gray-400 uppercase font-bold">Equipos</span>
           <span class="text-xl font-black text-gray-200">{{league().teams.length}}/20</span>
@@ -192,5 +197,49 @@
         </ion-col>
       </ion-row>
     </ion-grid>
+
+<ion-modal [isOpen]="alerta" (didDismiss)="alerta = false">
+  <ng-template>
+    <div class="flex flex-col h-full bg-[#1e1e1e] p-4 border border-white/10">
+      
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl text-white font-bold">Equipos para borrar en la Liga</h2>
+        <ion-button (click)="alerta = false" fill="clear" color="medium"/>
+      </div>
+
+      <div class="overflow-y-auto flex-1 pr-2 space-y-3">
+        @for (leagueTeam of league().teams; track leagueTeam.id) {
+          @if (leagueTeam.team.owner.email != owner().email) {
+          <div class="flex items-center justify-between p-3 bg-[#252525] rounded-xl border border-[#676767] transition-all">
+            
+            <div class="flex items-center gap-3">
+              <span class="text-white font-medium">{{ leagueTeam.team.name }}</span>
+            </div>
+
+            <ion-button 
+              (click)="onEliminateTeam(leagueTeam.id)" 
+              color="danger" 
+              size="small" 
+              shape="round">
+              Eliminar
+            </ion-button>
+          </div>
+          } 
+        }@empty {
+          <div class="text-center py-10">
+            <p class="text-gray-500">No quedan equipos en esta liga.</p>
+          </div>
+        }
+      </div>
+
+      <div class="mt-4 pt-2 border-t border-white/10">
+        <ion-button (click)="alerta = false" expand="block" fill="clear">
+          Cerrar Panel
+        </ion-button>
+      </div>
+
+    </div>
+  </ng-template>
+</ion-modal>
   
 </ion-content>

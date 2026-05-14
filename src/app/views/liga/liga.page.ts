@@ -1,7 +1,7 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent, NavController, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid } from '@ionic/angular/standalone';
+import { IonContent, IonButton, IonRefresher, IonRefresherContent, RefresherCustomEvent, NavController, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid, IonModal } from '@ionic/angular/standalone';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { League, LeaguesService, LeagueTeam } from 'src/app/services/leagues.service';
@@ -13,7 +13,7 @@ import { AuthService, JugadorLeague } from 'src/app/services/auth.service';
   templateUrl: './liga.page.html',
   styleUrls: ['./liga.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, RouterLink, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid]
+  imports: [IonContent, CommonModule, RouterLink, FormsModule, HeaderComponent, IonButton, IonRefresher, IonRefresherContent, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonCol, IonRow, IonGrid, IonModal]
 })
 export class LigaPage implements OnInit {
 
@@ -21,6 +21,9 @@ export class LigaPage implements OnInit {
 
   id: number = 0;
   league = signal<League>(this.liga_vacia);
+  owner = this.auth.user;
+
+  alerta: boolean = false;
 
   jugadores: JugadorLeague[] = [];
 
@@ -86,6 +89,11 @@ export class LigaPage implements OnInit {
 
     this.jugadores.sort((a, b) => (b.goles) - (a.goles));
     this.jugadores.splice(7,9999);
+  }
+
+  async onEliminateTeam(leagueTeamId: number) {
+    await this.leagueService.deleteTeamLeague(this.league().id, leagueTeamId);
+    await this.onCargar();
   }
 
 }

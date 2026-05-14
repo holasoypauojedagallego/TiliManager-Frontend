@@ -98,6 +98,19 @@ export class LeaguesService {
     return await lastValueFrom(this.http.post(`${this.apiURL}/ligas/add/${id}`, user));
   }
 
+    async deleteTeamLeague(id: number, idTeam: number): Promise<any> {
+    const user: SecretUser | null = await this.auth.getSesion();
+    if (user == null) {
+        throw new Error("No hay sesión de usuario");
+    }
+
+    const options = {
+        body: user
+    };
+
+    return await lastValueFrom(this.http.delete(`${this.apiURL}/ligas/delete/${id}/${idTeam}`, options));
+  }
+
   async playLeagueMatch(id: number): Promise<PartidoEmulado[]> {
     const user: SecretUser | null = await this.auth.getSesion();
     if (user == null) {
