@@ -91,7 +91,7 @@ export class PartidoligaPage implements OnInit {
         }
       }
       await this.correrTiempo();
-
+      await this.auth.setSesionTeam();
     } catch (error) {
       this.errorCode = true;
     } finally {this.enEjecucion = false;}

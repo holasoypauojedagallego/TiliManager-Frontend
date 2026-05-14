@@ -24,14 +24,14 @@ export class HomePage implements OnInit {
   alertaTocha2: boolean = false;
   alertaTocha3: boolean = false;
 
-  ngOnInit() {
+  async ngOnInit() {
     this.activeRoute.queryParams.subscribe(params => {
         if (params['alertaaEnsenar']) {
         this.alertaaEnsenar = true;
         }
     });
     try {
-      this.auth.setSesionTeam();
+      await this.auth.setSesionTeam();
     } catch (error) {
       console.error(error);
     }
