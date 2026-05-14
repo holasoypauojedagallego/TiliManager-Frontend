@@ -30,6 +30,11 @@ export class HomePage implements OnInit {
         this.alertaaEnsenar = true;
         }
     });
+    try {
+      this.auth.setSesionTeam();
+    } catch (error) {
+      console.error(error);
+    }
     console.log("Hola, esto es únicamente para que el backend en Render vaya iniciando", this.auth.empezarConexiónRender());
   }
 
