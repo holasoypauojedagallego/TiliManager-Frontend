@@ -8,6 +8,7 @@ import { AuthService, Jugador, JugadorLeague } from 'src/app/services/auth.servi
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { DragDropModule } from '@angular/cdk/drag-drop';   
 import { ActivatedRoute } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-equipo',
@@ -60,14 +61,9 @@ export class EquipoPage implements OnInit {
         return;
     }
     try {
-      const response = await this.auth.sellPlayer(jugadorFinal, this.id);
-      response.subscribe({
-        next: (chachi) => {
-          console.log("HIP HIP HURRAAA: ", chachi);
-          this.auth.setSesionTeam();
-        },
-        error: (err) => console.error('Error en la venta', err)
-      });
+      const response = await firstValueFrom(await this.auth.sellPlayer(jugadorFinal, this.id));
+      console.log("HIP HIP HURRAAA: ", response);
+      await this.auth.setSesionTeam();
     } catch (error) {
       console.warn("Ha ocurrido un error al intentar vender al jugador", error);
     }

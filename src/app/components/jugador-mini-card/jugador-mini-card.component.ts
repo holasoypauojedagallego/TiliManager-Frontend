@@ -17,6 +17,8 @@ export class JugadorMiniCardComponent  implements OnInit {
   alerta = false;
   alerta2 = false;
 
+  isSelling = false;
+
   constructor() { }
 
   ngOnInit() {}
@@ -26,8 +28,11 @@ export class JugadorMiniCardComponent  implements OnInit {
       this.alerta2 = true;
       return;
     }
+    if (this.isSelling) {return;}
+    this.isSelling = true;
     this.onVender.emit(this.jugador);
     this.alerta = false;
+    this.isSelling = false;
   }
 
   smallerPrice(i: number) : String {
