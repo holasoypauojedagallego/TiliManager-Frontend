@@ -39,6 +39,7 @@ export class LigaPage implements OnInit {
       this.league.set(await firstValueFrom(this.leagueService.getLeague(this.id)));
       this.goleadores();
       this.auth.id.set(this.id);
+      await this.auth.setSesionTeam();
     } catch (error) {
       console.warn("Ha habido un error")
     }
