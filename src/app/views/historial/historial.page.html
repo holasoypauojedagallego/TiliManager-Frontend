@@ -35,6 +35,12 @@
         </ion-item>
       </ion-accordion>
       }
+      @if (isLoading) {
+        <div class="flex flex-col items-center justify-center p-15 text-lg text-gray-300">
+          <ion-spinner name="bubbles"></ion-spinner>
+          <p class="mt-2">Cargando historial...</p>
+        </div>
+      }
     </ion-accordion-group>
   </div>
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonContent, IonRefresher, IonRefresherContent, RefresherCustomEvent, IonItem, IonLabel, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar } from '@ionic/angular/standalone';
+import { IonContent, IonRefresher, IonRefresherContent, RefresherCustomEvent, IonItem, IonLabel, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar, IonSpinner } from '@ionic/angular/standalone';
 import { Match, PartidoEmulado, PartidosService } from 'src/app/services/partidos.service';
 import { HeaderComponent } from "src/app/components/header/header.component";
 import { Router } from '@angular/router';
@@ -11,12 +11,14 @@ import { Router } from '@angular/router';
   templateUrl: './historial.page.html',
   styleUrls: ['./historial.page.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule, FormsModule, IonRefresher, IonRefresherContent, IonItem, IonLabel, HeaderComponent, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar]
+  imports: [IonContent, CommonModule, FormsModule, IonRefresher, IonRefresherContent, IonItem, IonLabel, HeaderComponent, IonAccordion, IonAccordionGroup, IonButton, IonSearchbar, IonSpinner]
 })
 export class HistorialPage implements OnInit {
 
   historialPartidos: Match[] = [];
   expandedMatchId: number | null = null;
+
+  isLoading: boolean = true;
 
   constructor(private partidos: PartidosService, private router: Router) { }
 
@@ -25,9 +27,17 @@ export class HistorialPage implements OnInit {
   }
 
   async onCargar() {
-    await this.partidos.onCargar();
-    this.historialPartidos = this.partidos.getHistorialPartido();
-    console.log(this.historialPartidos);
+    try {
+      await this.partidos.onCargar();
+      this.historialPartidos = this.partidos.getHistorialPartido();
+      console.log(this.historialPartidos);
+    } catch (error) {
+      console.warn("No va creo");
+    }
+    finally {
+      this.isLoading = false
+    }
+
   }
 
   handleRefresh(event: RefresherCustomEvent) {
