@@ -52,6 +52,7 @@ export class LigasPage implements OnInit {
       this.loading = true;
       const data = await firstValueFrom(this.leagueService.getLeagues());
       this.ligas = data;
+      await this.auth.setSesionTeam();
     } catch (error) {
       console.error("Error al obtener las ligas", error);
     } finally {
