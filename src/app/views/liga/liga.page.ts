@@ -41,8 +41,10 @@ export class LigaPage implements OnInit {
       this.auth.id.set(this.id);
       await this.auth.setSesionTeam();
     } catch (error) {
-      console.warn("Ha habido un error")
+      console.warn("Ha habido un error");
+      this.navCtrl.navigateBack(`/`, {animated: true});
     }
+    if (!this.auth.team()[this.id]) { this.navCtrl.navigateBack(`/`, {animated: true}); }
     this.equiposOrden();
   }
 
