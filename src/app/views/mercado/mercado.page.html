@@ -4,9 +4,6 @@
   <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-  <div class="p-2 bg-[#222] rounded-b-xl sticky top-0 z-67">
-    <ion-searchbar mode="ios" placeholder="Buscar jugador..." class="my-2"></ion-searchbar>
-  </div>
 
 @if (!fichable) {
   <div class="fixed top-30 z-69 m-2 p-3 border bg-[#1d1d1d]/90 border-amber-900 rounded-lg flex text-justify 2xl:left-[24vw]">
